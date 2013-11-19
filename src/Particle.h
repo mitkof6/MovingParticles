@@ -1,0 +1,35 @@
+#ifndef PARTICLE_H_
+#define PARTICLE_H_
+
+#include "Renderable.h"
+#include "Vector3D.h"
+
+#include "Constants.h"
+
+class Particle :public Renderable{
+
+public:
+	
+	Particle(
+		float r, float g, float b,
+		float px, float py, float pz,
+		float vx, float vy, float vz,
+		float rad, float m);
+	~Particle();
+
+	float getRadius();
+
+	float getMass();
+
+	Vector3D getPosition();
+	Vector3D getVelocity();
+
+	void draw();
+	void update();
+
+private:
+	float radius, mass;
+	Vector3D position, velocity;
+};
+
+#endif
