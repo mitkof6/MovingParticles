@@ -55,4 +55,10 @@ void Particle::update(){
 
 }
 
+void Particle::collisionHandler(Vector3D wallDir){
+	Vector3D normWallDir = wallDir.normalize();
+
+	velocity = velocity - normWallDir*velocity.dot(normWallDir)*2;
+}
+
 

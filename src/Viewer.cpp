@@ -4,9 +4,11 @@
  *  Created on: Oct 22, 2013
  *      Author: Jim Stanev
  */
+
 #include "Viewer.h"
 
 #include "GL\glut.h"
+
 
 Viewer *Viewer::instance = NULL;
 
@@ -18,6 +20,7 @@ Viewer::Viewer(int argc, char** argv) {
 		Vector3D(CAM_POS_X, CAM_POS_Y ,CAM_POS_Z),
 		Vector3D(CAM_VIEW_X, CAM_VIEW_Y, CAM_VIEW_Z),
 		Vector3D(CAM_UP_X, CAM_UP_Y, CAM_UP_Z));
+
 
 	mousePros = false;
 
@@ -51,7 +54,7 @@ Viewer::~Viewer() {
 }
 
 void Viewer::addToDraw(Renderable *r){
-	drawable.push_back(r);
+	drawable.push_back(r);	
 }
 
 void Viewer::start(){
@@ -102,7 +105,7 @@ void Viewer::render(){
 
 void Viewer::update(){
 	for(unsigned i = 0;i<drawable.size();i++){
-		drawable.at(i)->update();
+		drawable[i]->update();
 	}
 
 	glutPostRedisplay();

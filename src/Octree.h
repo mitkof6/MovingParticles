@@ -6,17 +6,23 @@
 #include "Vector3D.h"
 #include "Particle.h"
 #include "Constants.h"
+#include "Renderable.h"
+#include "ParticleWallContainer.h"
+#include "ParticlePairContainer.h"
 
 using namespace std;
 
-class Octree{
+class Octree : public Renderable{
 
 public:
+	//Octree(){};
 	Octree(Vector3D c1, Vector3D c2, int d);
 	~Octree(void);
 
-	void add(Particle &p);
-	//void findWallColitions(vector<
+	void add(Particle p);
+
+	void draw();
+	void update();
 private:
 	Octree *children[2][2][2];
 	
@@ -27,11 +33,18 @@ private:
 
 	vector<Particle> particles;
 
-	void fileParticle(Particle &p, Vector3D pos, bool add);
+	void fileParticle(Particle p, bool add);
 	void destroyChildren();
 	void collectParticles(vector<Particle> &ps);
 	void createChildren();
-	void remove(Particle p, Vector3D pos);
+	void remove(Particle p);
+	
+	void findWallCollisions(vector<ParticleWallContainer> &container);
+	void Octree::checkWall(vector<ParticleWallContainer> &container, Wall w, char coord, int dir);
+	void handleWallCollision();
+
+	void findParticleCollisions(vector<ParticlePairContainer> &container);
+	void handleParticlePairCollision();
 };
 
 

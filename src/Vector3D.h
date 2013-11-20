@@ -26,6 +26,11 @@ public:
 	Vector3D operator *(float c);
 	Vector3D operator /(float c);
 
+	float dot(Vector3D other);
+
+	float magnitude();
+	float magnitudeSquared();
+
 	Vector3D normalize();
 
 	bool equals(Vector3D other);

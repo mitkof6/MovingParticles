@@ -44,6 +44,9 @@ Vector3D Vector3D::operator /(float c){
 	return Vector3D(x/c, y/c, z/c);
 }
 
+float Vector3D::dot(Vector3D other){
+	return x*other.x+y*other.y+z*other.z;
+}
 
 Vector3D Vector3D::normalize(){
 	float d = x*x+y*y+z*z;
@@ -62,6 +65,14 @@ bool Vector3D::equals(Vector3D other){
 	}else{
 		return false;
 	}
+}
+
+float Vector3D::magnitudeSquared() {
+	return x * x + y * y + z * z;
+}
+
+float Vector3D::magnitude(){
+	return sqrt(x*x+y*y+z*z);
 }
 /*
 void Vector3D::operator *(Vector3D other){

@@ -17,7 +17,7 @@ Octree::~Octree(void){
 	}
 }
 
-void Octree::add(Particle &p){
+void Octree::add(Particle p){
 	numParticles++;
 	if(!hasChildren &&
 		depth<MAX_OCTREE_DEPTH &&
@@ -27,15 +27,15 @@ void Octree::add(Particle &p){
 	}
 
 	if(hasChildren){
-		fileParticle(p, p.getPosition(), true);
+		fileParticle(p, true);
 	}else{
 		particles.push_back(p);
-		//std::cout<<numParticles<<" push\n";
 	}
 }
 
-void Octree::fileParticle(Particle &p, Vector3D pos, bool add){
+void Octree::fileParticle(Particle p, bool add){
 
+	Vector3D pos = p.getPosition();
 	float r = p.getRadius();
 
 	for(int x = 0;x<2;x++){
@@ -69,28 +69,27 @@ void Octree::fileParticle(Particle &p, Vector3D pos, bool add){
 				//add or remove	
 				if (add) {
 					children[x][y][z]->add(p);
-					//std::cout<<x<<", "<<y<<", "<<z<<"\n";
 				}else {
-					children[x][y][z]->remove(p, pos);
+					children[x][y][z]->remove(p);
 				}
 			}
 		}
 	}
 }
 
-void Octree::remove(Particle p, Vector3D pos){
+void Octree::remove(Particle p){
 	numParticles--;
 	if (hasChildren && numParticles < MIN_BALLS_PER_OCTREE){
 		destroyChildren();
 	}
 			
 	if (hasChildren) {
-		fileParticle(p, pos, false);
+		fileParticle(p, false);
 	}
 	else {
 		for(unsigned i = 0;i<particles.size();i++){
-			if(particles[i].getPosition().equals(pos)){
-				particles.erase(particles.begin()+i);//problem ?
+			if(particles[i].getPosition().equals(p.getPosition())){
+				particles.erase(particles.begin()+i);
 			}
 		}
 	}
@@ -98,7 +97,7 @@ void Octree::remove(Particle p, Vector3D pos){
 }
 
 void Octree::destroyChildren() {
-	//Move all balls in descendants of this to the "balls" set
+
 	collectParticles(particles);
 			
 	for(int x = 0; x < 2; x++) {
@@ -122,9 +121,8 @@ void Octree::collectParticles(vector<Particle> &ps) {
 			}
 		}
 	}else {
-		for(vector<Particle>::iterator it = particles.begin(); it != particles.end();it++) {
-			Particle p = *it;
-			ps.push_back(p);
+		for(unsigned i = 0;i<particles.size();i++){
+			ps.push_back(particles[i]);
 		}
 	}
 }
@@ -172,11 +170,149 @@ void Octree::createChildren(){
 	}
 			
 	//Remove all balls from "balls" and add them to the new children
-	for(vector<Particle>::iterator it = particles.begin(); it != particles.end();it++) {
-		Particle p = *it;
-		fileParticle(p, p.getPosition(), true);
+	for(unsigned i = 0;i<particles.size();i++) {
+		fileParticle(particles[i], true);
 	}
 	particles.clear();
 			
 	hasChildren = true;
+}
+
+void Octree::findWallCollisions(vector<ParticleWallContainer> &container){
+	checkWall(container, WALL_LEFT, 'x', 0);
+	checkWall(container, WALL_RIGHT, 'x', 1);
+	checkWall(container, WALL_BOTTOM, 'y', 0);
+	checkWall(container, WALL_TOP, 'y', 1);
+	checkWall(container, WALL_FAR, 'z', 0);
+	checkWall(container, WALL_NEAR, 'z', 1);
+}
+
+
+void Octree::checkWall(vector<ParticleWallContainer> &container, Wall w, char coord, int dir) {
+	if (hasChildren) {
+		//Recursively call potentialBallWallCollisions on the correct
+		//half of the children (e.g. if w is WALL_TOP, call it on
+		//children above centerY)
+		for(int dir2 = 0; dir2 < 2; dir2++) {
+			for(int dir3 = 0; dir3 < 2; dir3++) {
+				Octree *child;
+				switch (coord) {
+					case 'x':
+						child = children[dir][dir2][dir3];
+						break;
+					case 'y':
+						child = children[dir2][dir][dir3];
+						break;
+					case 'z':
+						child = children[dir2][dir3][dir];
+						break;
+				}
+						
+				child->checkWall(container, w, coord, dir);
+			}
+		}
+	}else {
+		//Add (ball, w) for all balls in this
+		for(unsigned i = 0;i<particles.size();i++) {
+			ParticleWallContainer cont(&particles[i], w);
+			container.push_back(cont);
+		}
+	}
+}
+
+void Octree::draw(){
+	if(hasChildren){
+		for(int x = 0;x<2;x++){
+			for(int y = 0;y<2;y++){
+				for(int z = 0;z<2;z++){
+					children[x][y][z]->draw();
+				}
+			}
+		}
+	}else{
+		for(unsigned i = 0;i<particles.size();i++){
+			particles[i].draw();
+		}
+	}
+}
+
+void Octree::update(){
+	if(hasChildren){
+		for(int x = 0;x<2;x++){
+			for(int y = 0;y<2;y++){
+				for(int z = 0;z<2;z++){
+					children[x][y][z]->update();
+				}
+			}
+		}
+	}else{
+		for(unsigned i = 0;i<particles.size();i++){
+			Particle p =  particles[i];
+			remove(p);
+			p.update();
+			add(p);
+		}
+
+		handleWallCollision();
+
+		handleParticlePairCollision();
+	}
+}
+
+void Octree::handleWallCollision(){
+	vector<ParticleWallContainer> container;
+
+	findWallCollisions(container);
+
+	for(unsigned i = 0;i<container.size();i++){
+
+		if(container[i].checkCollision()){
+			container[i].getParticle()->collisionHandler(
+				container[i].getWall().getWallDirection());
+		}
+	}
+}
+
+void Octree::findParticleCollisions(vector<ParticlePairContainer> &container){
+	if (hasChildren) {
+		for(int x = 0; x < 2; x++) {
+			for(int y = 0; y < 2; y++) {
+				for(int z = 0; z < 2; z++) {
+					children[x][y][z]->
+						findParticleCollisions(container);
+				}
+			}
+		}
+	}else {
+		//Add all pairs (ball1, ball2) from balls
+		for(unsigned i = 0;i<particles.size();i++){
+			Particle *p1 = &particles[i];
+			for(unsigned j = 0;j<particles.size();j++) {
+				Particle *p2 = &particles[j];
+				//This test makes sure that we only add each pair once
+				if (i < j) {
+					container.push_back(ParticlePairContainer(p1, p2));
+				}
+			}
+		}
+	}
+}
+
+void Octree::handleParticlePairCollision(){
+
+	vector<ParticlePairContainer> container;
+
+	findParticleCollisions(container);
+
+	for(unsigned i = 0;i<container.size();i++){
+
+		if(container[i].checkCollision()){
+			
+			Vector3D displacement = 
+				container[i].getP1()->getPosition()-container[i].getP2()->getPosition();
+			container[i].getP1()->collisionHandler(displacement);
+			container[i].getP2()->collisionHandler(displacement);
+			
+		}
+	}
 }

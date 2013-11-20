@@ -6,13 +6,13 @@
 #define MIN_BALLS_PER_OCTREE 3
 #define MAX_BALLS_PER_OCTREE 6
 
-//box
-#define BOX_SIZE 20
+enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM};
 
-enum Wall {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM};
+//box
+#define BOX_SIZE 8
 
 //particles
-#define PARTICLES 7
+#define PARTICLES 15
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f
@@ -20,18 +20,18 @@ enum Wall {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM};
 #define MIN_Z -BOX_SIZE/2.0f
 #define MAX_Z BOX_SIZE/2.0f
 #define MIN_VX -2
-#define MAX_VX 2
+#define MAX_VX 4
 #define MIN_VY -2
-#define MAX_VY 2
+#define MAX_VY 4
 #define MIN_VZ -2
-#define MAX_VZ 2
+#define MAX_VZ 4
 #define MIN_R 0.3
 #define MAX_R 0.7
 #define MIN_M 1
 #define MAX_M 10
 
 
-#define SLICES 40
+#define SLICES 10
 #define STACKS 10
 
 #define dt 0.01

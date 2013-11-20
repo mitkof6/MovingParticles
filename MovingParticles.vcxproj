@@ -17,8 +17,11 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Octree.cpp" />
     <ClCompile Include="src\Particle.cpp" />
+    <ClCompile Include="src\ParticlePairContainer.cpp" />
+    <ClCompile Include="src\ParticleWallContainer.cpp" />
     <ClCompile Include="src\Vector3D.cpp" />
     <ClCompile Include="src\Viewer.cpp" />
+    <ClCompile Include="src\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Box.h" />
@@ -27,10 +30,13 @@
     <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\Octree.h" />
     <ClInclude Include="src\Particle.h" />
+    <ClInclude Include="src\ParticlePairContainer.h" />
+    <ClInclude Include="src\ParticleWallContainer.h" />
     <ClInclude Include="src\Renderable.h" />
     <ClInclude Include="src\TeaPot.h" />
     <ClInclude Include="src\Vector3D.h" />
     <ClInclude Include="src\Viewer.h" />
+    <ClInclude Include="src\Wall.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7A2034C2-0017-455D-A0AE-DC9D43DF9582}</ProjectGuid>

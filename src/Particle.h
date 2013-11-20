@@ -9,7 +9,7 @@
 class Particle :public Renderable{
 
 public:
-	
+	Particle(){};
 	Particle(
 		float r, float g, float b,
 		float px, float py, float pz,
@@ -26,6 +26,8 @@ public:
 
 	void draw();
 	void update();
+
+	void collisionHandler(Vector3D wallDir);
 
 private:
 	float radius, mass;

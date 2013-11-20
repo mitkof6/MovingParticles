@@ -29,7 +29,7 @@ public:
 	void start();
 private:
 	vector<Renderable *> drawable;
-	
+
 	Camera camera;
 
 	int sX, sY, eX, eY;
