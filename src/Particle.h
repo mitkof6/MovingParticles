@@ -17,6 +17,7 @@ public:
 		float rad, float m);
 	~Particle();
 
+	bool operator==(Particle &p);
 	float getRadius();
 
 	float getMass();

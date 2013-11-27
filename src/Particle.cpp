@@ -18,6 +18,11 @@ Particle::~Particle(){
 
 }
 
+bool Particle::operator==(Particle &p){
+	if(this==&p) return true;
+	return false;
+}
+
 float Particle::getRadius(){
 	return radius;
 }
