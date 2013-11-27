@@ -246,6 +246,11 @@ void Octree::update(){
 			}
 		}
 	}else{
+
+		handleWallCollision();
+
+		handleParticlePairCollision();
+
 		for(unsigned i = 0;i<particles.size();i++){
 			Particle p =  particles[i];
 			remove(p);
@@ -253,9 +258,7 @@ void Octree::update(){
 			add(p);
 		}
 
-		handleWallCollision();
-
-		handleParticlePairCollision();
+		
 	}
 }
 
@@ -307,12 +310,12 @@ void Octree::handleParticlePairCollision(){
 	for(unsigned i = 0;i<container.size();i++){
 
 		if(container[i].checkCollision()){
-			
-			Vector3D displacement = 
-				container[i].getP1()->getPosition()-container[i].getP2()->getPosition();
-			container[i].getP1()->collisionHandler(displacement);
-			container[i].getP2()->collisionHandler(displacement);
-			
+
+			container[i].getP1()->collisionHandler(*container[i].getP2());
+			container[i].getP1()->setColor(1.0, 1.0, 1.0);
+			container[i].getP2()->collisionHandler(*container[i].getP1());
+			container[i].getP2()->setColor(1.0, 1.0, 1.0);
+
 		}
 	}
 }

@@ -31,8 +31,6 @@ int main(int argc, char** argv){
 	viewer.start();
 
 	//TODO
-	delete box;
-	delete octree;
 
 	return 0;
 }

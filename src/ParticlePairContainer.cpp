@@ -15,10 +15,10 @@ bool ParticlePairContainer::checkCollision(){//TODO
 	float r = particle1->getRadius() + particle2->getRadius();
 	Vector3D displacement = particle1->getPosition() - particle2->getPosition();
 	if (displacement.magnitude() <= r) {
-		//Check whether the balls are moving toward each other
-		//Vector3D netVelocity = particle1->getVelocity() - particle2->getVelocity();
-		//Vector3D displacement = particle1->getPosition() - particle2->getPosition();
-		//return netVelocity.dot(displacement) < 0;
+
+		Vector3D netVelocity = particle1->getVelocity() - particle2->getVelocity();
+		return netVelocity.dot(displacement) > 0;
+
 		return true;
 	}else
 		return false;

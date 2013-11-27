@@ -9,10 +9,10 @@
 enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM};
 
 //box
-#define BOX_SIZE 8
+#define BOX_SIZE 15
 
 //particles
-#define PARTICLES 15
+#define PARTICLES 60
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f
@@ -34,7 +34,7 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM
 #define SLICES 10
 #define STACKS 10
 
-#define dt 0.01
+#define dt 0.02
 
 //window
 #define WINDOW_NAME "Viewer"
