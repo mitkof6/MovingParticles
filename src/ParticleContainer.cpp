@@ -93,10 +93,8 @@ void ParticleContainer::findParticleParticleCollisions(){
 					}
 
 					particles[i].collisionHandler(particles[j]);
-					particles[j].collisionHandler(particles[i]);
 
 					collisionPairs.push_back(ParticlePair(particles[i], particles[j]));
-					std::cout<<"Add Size: "<<collisionPairs.size()<<"\n";
 				}
 			}
 		}
@@ -123,7 +121,6 @@ void ParticleContainer::resolveRepaitedCollisions(){
 			*collisionPairs[i].getParticle2())){
 			
 			collisionPairs.erase(collisionPairs.begin()+i);
-			std::cout<<"Size: "<<collisionPairs.size()<<"\n";
 		}
 	}
 }

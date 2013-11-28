@@ -9,8 +9,6 @@ Particle::Particle(float r, float g, float b,
 	mass = m;
 	position = Vector3D(px, py, pz);
 	velocity = Vector3D(vx, vy, vz);
-
-	collision = false;
 }
 
 
@@ -39,12 +37,8 @@ Vector3D Particle::getVelocity(){
 	return velocity;
 }
 
-void Particle::setCollision(bool flag){
-	collision = flag;
-}
-
-bool Particle::getCollision(){
-	return collision;
+void Particle::setVelocity(Vector3D v){
+	velocity = v;
 }
 
 void Particle::draw(){
@@ -73,20 +67,44 @@ void Particle::collisionHandler(Vector3D wallDir){
 	velocity = velocity - normWallDir*velocity.dot(normWallDir)*2;
 }
 
-void Particle::collisionHandler(Particle p){
-	velocity = 
-		(velocity*(mass-p.getMass()) + p.getVelocity()*p.getMass()*2)/
-		(mass+p.getMass());
-	/*
+void Particle::collisionHandler(Particle &p){
+
 	Vector3D dis = position-p.getPosition();
-	Vector3D disn = dis.normalize();
+	Vector3D n = dis.normalize();
+	float dr = (radius+p.getRadius()-dis.magnitude())/2;
 
-	float amount = velocity.dot(disn);
+	position = position+n*dr;
+	dis = position-p.getPosition();
+	
+	n = dis.normalize();
 
-	while( (position-p.getPosition()).magnitude() < radius+p.getRadius()){
-		position = position + disn*amount*0.1;
+	Vector3D t(1, 0, 0);
+
+	t = n.cross(t);
+	if(t.magnitude()==0){
+		Vector3D t(0, 1, 0);
+		t = n.cross(t);
 	}
-	 */
+
+	Vector3D o = n.cross(t);
+
+	float m11 = (mass-p.getMass())/(mass+p.getMass());
+	float m12 = 2*p.getMass()/(mass+p.getMass());
+
+	float v1n = n.dot(velocity)*m11+n.dot(p.getVelocity())*m12;
+	float v1t = t.dot(velocity)*m11+t.dot(p.getVelocity())*m12;
+	float v1o = o.dot(velocity)*m11+o.dot(p.getVelocity())*m12;
+
+	float m21 = (p.getMass()-mass)/(mass+p.getMass());
+	float m22 = 2*mass/(mass+p.getMass());
+
+	float v2n = n.dot(p.getVelocity())*m21+n.dot(velocity)*m22;
+	float v2t = t.dot(p.getVelocity())*m21+t.dot(velocity)*m22;
+	float v2o = o.dot(p.getVelocity())*m21+o.dot(velocity)*m22;
+
+	velocity = n*v1n+t*v1t+o*v1o;
+	p.setVelocity(n*v2n+t*v2t+o*v2o);
+
 
 }
 

@@ -27,6 +27,7 @@ public:
 	Vector3D operator /(float c);
 
 	float dot(Vector3D other);
+	Vector3D cross(Vector3D other);
 
 	float magnitude();
 	float magnitudeSquared();

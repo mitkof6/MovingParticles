@@ -21,13 +21,7 @@
     <ClCompile Include="src\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Grid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Octree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Particle.cpp">
@@ -39,13 +33,13 @@
     <ClCompile Include="src\Viewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ParticlePairContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ParticleWallContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Wall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticlePair.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,19 +53,10 @@
     <ClInclude Include="src\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Grid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Octree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Particle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TeaPot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Vector3D.h">
@@ -80,13 +65,13 @@
     <ClInclude Include="src\Viewer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ParticlePairContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleWallContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Wall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticlePair.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

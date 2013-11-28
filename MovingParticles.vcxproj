@@ -13,12 +13,10 @@
   <ItemGroup>
     <ClCompile Include="src\Box.cpp" />
     <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Octree.cpp" />
     <ClCompile Include="src\Particle.cpp" />
-    <ClCompile Include="src\ParticlePairContainer.cpp" />
-    <ClCompile Include="src\ParticleWallContainer.cpp" />
+    <ClCompile Include="src\ParticleContainer.cpp" />
+    <ClCompile Include="src\ParticlePair.cpp" />
     <ClCompile Include="src\Vector3D.cpp" />
     <ClCompile Include="src\Viewer.cpp" />
     <ClCompile Include="src\Wall.cpp" />
@@ -27,13 +25,10 @@
     <ClInclude Include="src\Box.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Constants.h" />
-    <ClInclude Include="src\Grid.h" />
-    <ClInclude Include="src\Octree.h" />
     <ClInclude Include="src\Particle.h" />
-    <ClInclude Include="src\ParticlePairContainer.h" />
-    <ClInclude Include="src\ParticleWallContainer.h" />
+    <ClInclude Include="src\ParticleContainer.h" />
+    <ClInclude Include="src\ParticlePair.h" />
     <ClInclude Include="src\Renderable.h" />
-    <ClInclude Include="src\TeaPot.h" />
     <ClInclude Include="src\Vector3D.h" />
     <ClInclude Include="src\Viewer.h" />
     <ClInclude Include="src\Wall.h" />

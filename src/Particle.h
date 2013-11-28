@@ -25,18 +25,17 @@ public:
 	Vector3D getPosition();
 	Vector3D getVelocity();
 
+	void setVelocity(Vector3D v);
+
 	void draw();
 	void update();
 
 	void collisionHandler(Vector3D wallDir);
-	void collisionHandler(Particle p);
+	void collisionHandler(Particle &p);
 
-	void setCollision(bool flag);
-	bool getCollision();
 private:
 	float radius, mass;
 	Vector3D position, velocity;
-	bool collision;
 };
 
 #endif

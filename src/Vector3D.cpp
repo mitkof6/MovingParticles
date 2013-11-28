@@ -48,6 +48,13 @@ float Vector3D::dot(Vector3D other){
 	return x*other.x+y*other.y+z*other.z;
 }
 
+Vector3D Vector3D::cross(Vector3D other) {
+	return Vector3D(
+		y * other.z - z * other.y,
+		z * other.x - x * other.z,
+		x * other.y - y * other.x);
+}
+
 Vector3D Vector3D::normalize(){
 	float d = x*x+y*y+z*z;
 	return Vector3D(x/d, y/d, z/d);
