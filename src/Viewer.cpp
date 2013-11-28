@@ -12,7 +12,7 @@
 
 Viewer *Viewer::instance = NULL;
 
-Viewer::Viewer(int argc, char** argv) {
+Viewer::Viewer(int argc, char** argv, ParticleContainer pc) {
 
 	instance = this;
 
@@ -21,6 +21,8 @@ Viewer::Viewer(int argc, char** argv) {
 		Vector3D(CAM_VIEW_X, CAM_VIEW_Y, CAM_VIEW_Z),
 		Vector3D(CAM_UP_X, CAM_UP_Y, CAM_UP_Z));
 
+
+	particleContainer = pc;
 
 	mousePros = false;
 
@@ -96,6 +98,10 @@ void Viewer::render(){
 	 //camera
 	camera.draw();
 
+	//particles
+	particleContainer.draw();
+
+	//other objects
 	for(unsigned i = 0;i<drawable.size();i++){
 		drawable.at(i)->draw();
 	}
@@ -104,6 +110,9 @@ void Viewer::render(){
 }
 
 void Viewer::update(){
+
+	particleContainer.update();
+
 	for(unsigned i = 0;i<drawable.size();i++){
 		drawable[i]->update();
 	}
@@ -135,6 +144,12 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 		break;
 	case 'a':
 		camera.strafe(-CAMERA_MOVE_SPEED);
+		break;
+	case '1': //store wall collisions
+		particleContainer.saveWallCollisions();
+		break;
+	case '2': //store ball collisions
+		particleContainer.saveBallCollisions();
 		break;
 	default:
 		break;

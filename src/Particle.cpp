@@ -1,10 +1,12 @@
 #include "Particle.h"
 #include "GL\glut.h"
 
-Particle::Particle(float r, float g, float b,
-		float px, float py, float pz,
-		float vx, float vy, float vz,
-		float rad, float m) : Renderable(r, g, b){
+Particle::Particle(
+	float r, float g, float b,
+	float px, float py, float pz,
+	float vx, float vy, float vz,
+	float rad, float m) : Renderable(r, g, b){
+
 	radius = rad;
 	mass = m;
 	position = Vector3D(px, py, pz);
@@ -42,17 +44,13 @@ void Particle::setVelocity(Vector3D v){
 }
 
 void Particle::draw(){
-	glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
 	glPushMatrix();
-	
 
-	glColor3f(red, green, blue);
+		glColor3f(red, green, blue);
 
-	glTranslatef(position.x, position.y, position.z);
+		glTranslatef(position.x, position.y, position.z);
 
-	glutSolidSphere(radius, SLICES, STACKS);
-
+		glutSolidSphere(radius, SLICES, STACKS);
 
 	glPopMatrix();
 }
@@ -61,8 +59,8 @@ void Particle::update(){
 	position = position + velocity*dt;
 }
 
-void Particle::collisionHandler(Vector3D wallDir){
-	Vector3D normWallDir = wallDir.normalize();
+void Particle::collisionHandler(Vector3D dir){
+	Vector3D normWallDir = dir.normalize();
 
 	velocity = velocity - normWallDir*velocity.dot(normWallDir)*2;
 }
@@ -78,9 +76,18 @@ void Particle::collisionHandler(Particle &p){
 	
 	n = dis.normalize();
 
-	Vector3D t(1, 0, 0);
+	//only changed only
+	if(!BALL_COLLISION_REAL_MODE){
+		collisionHandler(n);
+		p.collisionHandler(n*(-1));
+		return;
+	}
 
+	//find orthonormals
+	Vector3D t(1, 0, 0);
 	t = n.cross(t);
+
+	//if t, n parallel
 	if(t.magnitude()==0){
 		Vector3D t(0, 1, 0);
 		t = n.cross(t);
@@ -88,6 +95,7 @@ void Particle::collisionHandler(Particle &p){
 
 	Vector3D o = n.cross(t);
 
+	//
 	float m11 = (mass-p.getMass())/(mass+p.getMass());
 	float m12 = 2*p.getMass()/(mass+p.getMass());
 
@@ -104,8 +112,6 @@ void Particle::collisionHandler(Particle &p){
 
 	velocity = n*v1n+t*v1t+o*v1o;
 	p.setVelocity(n*v2n+t*v2t+o*v2o);
-
-
 }
 
 

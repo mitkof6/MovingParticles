@@ -2,13 +2,13 @@
 #define PARTICLECONTAINER_H_
 
 #include <vector>
-#include <iostream>
 
 #include "Particle.h"
 #include "ParticlePair.h"
 #include "Constants.h"
 #include "Wall.h"
 #include "Vector3D.h"
+#include "CollisionCounter.h"
 
 using namespace std;
 
@@ -22,11 +22,16 @@ public:
 	void update();
 
 	void add(Particle p);
+
+	void saveWallCollisions();
+	void saveBallCollisions();
 	   
 
 private:
 	vector<Particle> particles;
 	vector<ParticlePair> collisionPairs;
+
+	CollisionCounter wallCollisions, ballCollisions;
 
 	void findWallCollisions();
 	bool checkForCollision(Particle &p, Wall &w);
@@ -34,7 +39,7 @@ private:
 	void findParticleParticleCollisions();
 	bool checkForCollision(Particle &p, Particle &q);
 
-	void resolveRepaitedCollisions();
+	void resolveRepeatedCollisions();
 
 };
 

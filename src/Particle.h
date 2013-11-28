@@ -18,19 +18,20 @@ public:
 	~Particle();
 
 	bool operator==(Particle &p);
+
 	float getRadius();
 
 	float getMass();
 
 	Vector3D getPosition();
-	Vector3D getVelocity();
 
+	Vector3D getVelocity();
 	void setVelocity(Vector3D v);
 
 	void draw();
 	void update();
 
-	void collisionHandler(Vector3D wallDir);
+	void collisionHandler(Vector3D dir);
 	void collisionHandler(Particle &p);
 
 private:

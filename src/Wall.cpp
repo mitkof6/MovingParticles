@@ -25,6 +25,6 @@ Vector3D Wall::getWallDirection() {
 		case WALL_BOTTOM:
 			return Vector3D(0, -1, 0);
 		default:
-			return Vector3D(0, 0, 0);
+			break;
 	}
 }

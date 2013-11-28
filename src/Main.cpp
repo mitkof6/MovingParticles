@@ -1,5 +1,4 @@
 #include <ctime>
-#include <iostream>
 
 #include "Viewer.h"
 #include "Renderable.h"
@@ -10,15 +9,15 @@
 #include "Constants.h"
 #include "ParticleContainer.h"
 
-void generateParticles(ParticleContainer *pc);
+void generateParticles(ParticleContainer &pc);
 float rand(float min, float max);
 
 int main(int argc, char** argv){
-	Viewer viewer(argc, argv);
+	
 
-	Renderable *pc = new ParticleContainer();
-	generateParticles((ParticleContainer *) pc);
-	viewer.addToDraw(pc);
+	ParticleContainer pc = ParticleContainer();
+	generateParticles(pc);
+	Viewer viewer(argc, argv, pc);
 
 	Renderable *box = new Box(1.0f, 1.0f, 1.0f, BOX_SIZE);
 	viewer.addToDraw(box);
@@ -26,13 +25,12 @@ int main(int argc, char** argv){
 	viewer.start();
 
 	//clean up
-	delete pc;
 	delete box;
 
 	return 0;
 }
 
-void generateParticles(ParticleContainer *pc){
+void generateParticles(ParticleContainer &pc){
 	
 	srand(time(0));
 	
@@ -51,7 +49,7 @@ void generateParticles(ParticleContainer *pc){
 				radius,
 				rand(MIN_M, MAX_M));
 
-		((ParticleContainer *)pc)->add(p);
+		pc.add(p);
 	}
 }
 

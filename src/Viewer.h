@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "Renderable.h"
+#include "ParticleContainer.h"
 #include "Vector3D.h"
 #include "Camera.h"
 #include "Constants.h"
@@ -22,7 +23,7 @@ class Viewer {
 public:
 	static Viewer *instance;
 
-	Viewer(int argc, char** argv);
+	Viewer(int argc, char** argv, ParticleContainer pc);
 	virtual ~Viewer();
 
 	void addToDraw(Renderable *r);
@@ -30,8 +31,10 @@ public:
 private:
 	vector<Renderable *> drawable;
 
-	Camera camera;
+	ParticleContainer particleContainer;
 
+	Camera camera;
+	
 	int sX, sY, eX, eY;
 	bool mousePros;
 
