@@ -36,12 +36,12 @@ void ParticleContainer::update(){
 		particles[i].update();
 	}
 
-	resolveRepeatedCollisions();
+
+	//resolveRepeatedCollisions();
 
 	findWallCollisions();
 
 	findParticleParticleCollisions();
-
 }
 
 void ParticleContainer::findWallCollisions(){
@@ -64,37 +64,64 @@ bool ParticleContainer::checkForCollision(Particle &p, Wall &w){
 	float r = p.getRadius();
 
 	if(pos.x-r<=-BOX_SIZE/2.0){
+		//correction
+		float dis = -BOX_SIZE/2.0-(pos.x-r);
+		p.setPosition(p.getPosition()+Vector3D(dis, 0, 0));
+
 		w = Wall(WALL_LEFT);
-		return true;
+
 	}else if(pos.x+r>=BOX_SIZE/2.0){
+		//correction
+		float dis = BOX_SIZE/2.0-(pos.x+r);
+		p.setPosition(p.getPosition()+Vector3D(dis, 0, 0));
+
 		w = Wall(WALL_RIGHT);
-		return true;
+		
 	}else if(pos.y-r<=-BOX_SIZE/2.0){
+		//correction
+		float dis = -BOX_SIZE/2.0-(pos.y-r);
+		p.setPosition(p.getPosition()+Vector3D(0, dis, 0));
+
 		w = Wall(WALL_BOTTOM);
-		return true;
+		
 	}else if(pos.y+r>=BOX_SIZE/2.0){
+		//correction
+		float dis = BOX_SIZE/2.0-(pos.y+r);
+		p.setPosition(p.getPosition()+Vector3D(0, dis, 0));
+
 		w = Wall(WALL_TOP);
-		return true;
+		
 	}else if(pos.z-r<=-BOX_SIZE/2.0){
+		//correction
+		float dis = -BOX_SIZE/2.0-(pos.z-r);
+		p.setPosition(p.getPosition()+Vector3D(0, 0, dis));
+
 		w = Wall(WALL_NEAR);
-		return true;
+		
 	}else if(pos.z+r>=BOX_SIZE/2.0){
+		//correction
+		float dis = BOX_SIZE/2.0-(pos.z+r);
+		p.setPosition(p.getPosition()+Vector3D(0, 0, dis));
+
 		w = Wall(WALL_FAR);
-		return true;
+		
 	}else{
 		return false;
 	}
+
+	return true;
 }
 
 void ParticleContainer::findParticleParticleCollisions(){
 	
-	bool collisionRepeated = false;
+	//bool collisionRepeated = false;
 	for(unsigned i = 0;i<particles.size();i++){
 		
 		for(unsigned j = 0;j<particles.size();j++){
 			
 			if(j>i){
 				if(checkForCollision(particles[i], particles[j])){
+					/*
 					for(unsigned k = 0;k<collisionPairs.size();k++){
 						if(collisionPairs[k].equals(particles[i], particles[j])){
 							collisionRepeated = true;
@@ -106,13 +133,14 @@ void ParticleContainer::findParticleParticleCollisions(){
 						collisionRepeated = false;
 						continue;
 					}
+					*/
 
 					ballCollisions.incCounter();
 					ballCollisions.registerEvent();
 
 					particles[i].collisionHandler(particles[j]);
 
-					collisionPairs.push_back(ParticlePair(particles[i], particles[j]));
+					//collisionPairs.push_back(ParticlePair(particles[i], particles[j]));
 				}
 			}
 		}

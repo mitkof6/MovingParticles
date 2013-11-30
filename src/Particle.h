@@ -24,6 +24,7 @@ public:
 	float getMass();
 
 	Vector3D getPosition();
+	void setPosition(Vector3D p);
 
 	Vector3D getVelocity();
 	void setVelocity(Vector3D v);

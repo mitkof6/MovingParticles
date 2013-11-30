@@ -56,7 +56,7 @@ Vector3D Vector3D::cross(Vector3D other) {
 }
 
 Vector3D Vector3D::normalize(){
-	float d = x*x+y*y+z*z;
+	float d = sqrt(x*x+y*y+z*z);
 	return Vector3D(x/d, y/d, z/d);
 }
 

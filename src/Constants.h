@@ -10,7 +10,7 @@
 enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM};
 
 //box
-#define BOX_SIZE 15
+#define BOX_SIZE 20
 
 //particles
 #define PARTICLES 50
@@ -26,10 +26,10 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM
 #define MAX_VY 200
 #define MIN_VZ -200
 #define MAX_VZ 200
-#define MIN_R 0.4
+#define MIN_R 0.8
 #define MAX_R 0.8
-#define MIN_M 5
-#define MAX_M 8
+#define MIN_M 1
+#define MAX_M 10
 
 
 #define SLICES 10
@@ -47,7 +47,7 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM
 //camera
 #define CAMERA_MOVE_SPEED 10
 #define CAMERA_ROTATE_SPEED 0.03
-#define CAM_POS_X 15
+#define CAM_POS_X 0
 #define CAM_POS_Y 0
 #define CAM_POS_Z 15
 #define CAM_VIEW_X 0
