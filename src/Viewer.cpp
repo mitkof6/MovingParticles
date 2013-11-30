@@ -145,6 +145,12 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 	case 'a':
 		camera.strafe(-CAMERA_MOVE_SPEED);
 		break;
+	case 'q':
+		camera.rotateY(CAMERA_ROTATE_SPEED);
+		break;
+	case 'e':
+		camera.rotateY(-CAMERA_ROTATE_SPEED);
+		break;
 	case '1': //store wall collisions
 		particleContainer.saveWallCollisions();
 		break;
@@ -177,12 +183,13 @@ void Viewer::mouseMove(int x, int y){
 		int difX = x-WINDOW_WIDTH/2;
 		int difY = y-WINDOW_HEIGHT/2;
 
+		if(abs(difX)>abs(difY)){
+			camera.rotateY(-difX*CAMERA_ROTATE_SPEED);
+		}else{
+			camera.rotateX(-difY*CAMERA_ROTATE_SPEED);
+		}
 		
-		//camera.rotateX(difX*0.06);
-		
-		camera.rotateY(-difX*CAMERA_ROTATE_SPEED);
-
-		//glutWarpPointer(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+		glutWarpPointer(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 		just_warped = true;
 		

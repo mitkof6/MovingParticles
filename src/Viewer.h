@@ -1,10 +1,3 @@
-/*
- * Viewer.h
- *
- *  Created on: Oct 22, 2013
- *      Author: Jim Stanev
- */
-
 #ifndef VIEWER_H_
 #define VIEWER_H_
 
