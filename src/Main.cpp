@@ -1,4 +1,5 @@
 #include <ctime>
+#include <stdlib.h>
 
 #include "Viewer.h"
 #include "Renderable.h"
@@ -25,7 +26,7 @@ int main(int argc, char** argv){
 	viewer.start();
 
 	//clean up
-	delete box;
+	//free box;
 
 	return 0;
 }

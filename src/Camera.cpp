@@ -1,6 +1,6 @@
 #include <math.h>
 #include "Camera.h"
-#include "GL\glut.h"
+#include "GL/glut.h"
 
 Camera::Camera(Vector3D poss, Vector3D vieww, Vector3D upp) {
 	pos = poss;

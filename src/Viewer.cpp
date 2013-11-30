@@ -1,6 +1,6 @@
 #include "Viewer.h"
 
-#include "GL\glut.h"
+#include "GL/glut.h"
 
 
 Viewer *Viewer::instance = NULL;

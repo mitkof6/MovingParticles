@@ -1,5 +1,5 @@
 #include "Box.h"
-#include "GL\glut.h"
+#include "GL/glut.h"
 
 Box::Box(float r, float g, float b,
 		float s):Renderable(r, g, b){

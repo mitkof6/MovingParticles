@@ -1,5 +1,5 @@
 #include "Particle.h"
-#include "GL\glut.h"
+#include "GL/glut.h"
 
 Particle::Particle(
 	float r, float g, float b,
