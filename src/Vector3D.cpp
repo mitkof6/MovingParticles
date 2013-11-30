@@ -65,9 +65,10 @@ void Vector3D::toString(){
 }
 
 bool Vector3D::equals(Vector3D other){
-	if(abs(x-other.x) < TOLL && 
-		abs(y-other.y) < TOLL &&
-		abs(z-other.z) < TOLL){
+	if(
+			(x-other.x)*(x-other.x) < TOLL &&
+			(y-other.y)*(y-other.y) < TOLL &&
+			(z-other.z)*(z-other.z) < TOLL){
 		return true;
 	}else{
 		return false;

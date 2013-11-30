@@ -1,13 +1,6 @@
-/*
- * Viewer.cpp
- *
- *  Created on: Oct 22, 2013
- *      Author: Jim Stanev
- */
-
 #include "Viewer.h"
 
-#include "GL\glut.h"
+#include "GL/glut.h"
 
 
 Viewer *Viewer::instance = NULL;
