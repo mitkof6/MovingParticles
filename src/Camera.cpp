@@ -1,9 +1,3 @@
-/*
- * Camera.cpp
- *
- *  Created on: Oct 22, 2013
- *      Author: Jim Stanev
- */
 #include <math.h>
 #include "Camera.h"
 #include "GL\glut.h"

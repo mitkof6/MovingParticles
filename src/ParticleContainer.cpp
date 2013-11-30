@@ -63,44 +63,44 @@ bool ParticleContainer::checkForCollision(Particle &p, Wall &w){
 	Vector3D pos = p.getPosition();
 	float r = p.getRadius();
 
-	if(pos.x-r<=-BOX_SIZE/2.0){
+	if(pos.x-r<=-BOX_SIZE/2.0f){
 		//correction
-		float dis = -BOX_SIZE/2.0-(pos.x-r);
+		float dis = -BOX_SIZE/2.0f-(pos.x-r);
 		p.setPosition(p.getPosition()+Vector3D(dis, 0, 0));
 
 		w = Wall(WALL_LEFT);
 
-	}else if(pos.x+r>=BOX_SIZE/2.0){
+	}else if(pos.x+r>=BOX_SIZE/2.0f){
 		//correction
-		float dis = BOX_SIZE/2.0-(pos.x+r);
+		float dis = BOX_SIZE/2.0f-(pos.x+r);
 		p.setPosition(p.getPosition()+Vector3D(dis, 0, 0));
 
 		w = Wall(WALL_RIGHT);
 		
-	}else if(pos.y-r<=-BOX_SIZE/2.0){
+	}else if(pos.y-r<=-BOX_SIZE/2.0f){
 		//correction
-		float dis = -BOX_SIZE/2.0-(pos.y-r);
+		float dis = -BOX_SIZE/2.0f-(pos.y-r);
 		p.setPosition(p.getPosition()+Vector3D(0, dis, 0));
 
 		w = Wall(WALL_BOTTOM);
 		
-	}else if(pos.y+r>=BOX_SIZE/2.0){
+	}else if(pos.y+r>=BOX_SIZE/2.0f){
 		//correction
-		float dis = BOX_SIZE/2.0-(pos.y+r);
+		float dis = BOX_SIZE/2.0f-(pos.y+r);
 		p.setPosition(p.getPosition()+Vector3D(0, dis, 0));
 
 		w = Wall(WALL_TOP);
 		
-	}else if(pos.z-r<=-BOX_SIZE/2.0){
+	}else if(pos.z-r<=-BOX_SIZE/2.0f){
 		//correction
-		float dis = -BOX_SIZE/2.0-(pos.z-r);
+		float dis = -BOX_SIZE/2.0f-(pos.z-r);
 		p.setPosition(p.getPosition()+Vector3D(0, 0, dis));
 
 		w = Wall(WALL_NEAR);
 		
-	}else if(pos.z+r>=BOX_SIZE/2.0){
+	}else if(pos.z+r>=BOX_SIZE/2.0f){
 		//correction
-		float dis = BOX_SIZE/2.0-(pos.z+r);
+		float dis = BOX_SIZE/2.0f-(pos.z+r);
 		p.setPosition(p.getPosition()+Vector3D(0, 0, dis));
 
 		w = Wall(WALL_FAR);

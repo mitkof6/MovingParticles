@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="src\Box.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\CollisionCounter.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\ParticleContainer.cpp" />
@@ -24,6 +25,7 @@
   <ItemGroup>
     <ClInclude Include="src\Box.h" />
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\CollisionCounter.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Particle.h" />
     <ClInclude Include="src\ParticleContainer.h" />

@@ -1,10 +1,3 @@
-/*
- * Vector3D.h
- *
- *  Created on: Oct 22, 2013
- *      Author: crow
- */
-
 #ifndef VECTOR3D_H_
 #define VECTOR3D_H_
 
@@ -21,22 +14,22 @@ public:
 	Vector3D(float xx, float yy, float zz);
 	virtual ~Vector3D();
 
-	Vector3D operator +(Vector3D other);
-	Vector3D operator -(Vector3D other);
-	Vector3D operator *(float c);
-	Vector3D operator /(float c);
+	Vector3D operator +(const Vector3D &other) const;
+	Vector3D operator -(const Vector3D &other) const;
+	Vector3D operator *(float c) const;
+	Vector3D operator /(float c) const;
 
-	float dot(Vector3D other);
-	Vector3D cross(Vector3D other);
+	float dot(const Vector3D &other) const;
+	Vector3D cross(const Vector3D &other) const;
 
-	float magnitude();
-	float magnitudeSquared();
+	float magnitude() const;
+	float magnitudeSquared() const;
 
-	Vector3D normalize();
+	Vector3D normalize() const;
 
-	bool equals(Vector3D other);
+	bool equals(const Vector3D &other) const;
 
-	void toString();
+	void toString() const;
 
 
 };

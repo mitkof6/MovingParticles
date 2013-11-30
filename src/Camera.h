@@ -1,10 +1,3 @@
-/*
- * Camera.h
- *
- *  Created on: Oct 22, 2013
- *      Author: Jim Stanev
- */
-
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
