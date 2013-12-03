@@ -20,7 +20,10 @@ void Box::draw(){
 	glPushMatrix();
 
 		glColor3f(red, green, blue);
+
+		glLineWidth(2);
 		glutWireCube(size);
+		glLineWidth(1);
 
 	glPopMatrix();
 

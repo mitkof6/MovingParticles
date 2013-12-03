@@ -6,6 +6,8 @@
 
 #include "Constants.h"
 
+#include "GL/glut.h"
+
 class Particle :public Renderable{
 
 public:
@@ -16,6 +18,13 @@ public:
 		float vx, float vy, float vz,
 		float rad, float m);
 	~Particle();
+
+	void setMatirial(
+		float ax, float ay, float az, float aw,
+		float dx, float dy, float dz, float dw,
+		float sx, float sy, float sz, float sw,
+		float sh);
+
 
 	bool operator==(Particle &p);
 
@@ -40,6 +49,12 @@ private:
 	Vector3D position, velocity;
 
 	float red, green, blue;
+
+	GLfloat ambient[4];
+	GLfloat diffuse[4];
+	GLfloat specular[4];
+	float shininess;
+
 };
 
 #endif

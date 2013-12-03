@@ -50,6 +50,11 @@ void generateParticles(ParticleContainer &pc){
 				rand(MIN_VX, MAX_VX), 
 				radius,
 				mass);
+		p.setMatirial(
+			rand(AB_MIN, AB_MAX), rand(AB_MIN, AB_MAX), rand(AB_MIN, AB_MAX), 1.0,
+			rand(DI_MIN, DI_MAX), rand(DI_MIN, DI_MAX), rand(DI_MIN, AB_MAX), 1.0,
+			rand(SP_MIN, SP_MAX), rand(SP_MIN, SP_MAX), rand(SP_MIN, AB_MAX), 1.0,
+			rand(SH_MIN, SH_MAX));
 
 		pc.add(p);
 	}

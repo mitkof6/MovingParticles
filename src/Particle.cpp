@@ -1,5 +1,4 @@
 #include "Particle.h"
-#include "GL/glut.h"
 
 Particle::Particle(
 	float r, float g, float b,
@@ -20,6 +19,31 @@ Particle::Particle(
 
 Particle::~Particle(){
 
+}
+
+void Particle::setMatirial(
+		float ax, float ay, float az, float aw,
+		float dx, float dy, float dz, float dw,
+		float sx, float sy, float sz, float sw,
+		float sh){
+
+
+	ambient[0] = ax;
+	ambient[1] = ay;
+	ambient[2] = az;
+	ambient[3] = aw;
+
+	diffuse[0] = dx;
+	diffuse[1] = dy;
+	diffuse[2] = dz;
+	diffuse[3] = dw;
+
+	specular[0] = sx;
+	specular[1] = sy;
+	specular[2] = sz;
+	specular[3] = sw;
+
+	shininess = sh;
 }
 
 bool Particle::operator==(Particle &p){
@@ -55,6 +79,12 @@ void Particle::draw(){
 	glPushMatrix();
 
 		glColor3f(red, green, blue);
+
+		//metirial
+		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+		glMaterialf(GL_FRONT, GL_SHININESS, shininess);
 
 		glTranslatef(position.x, position.y, position.z);
 

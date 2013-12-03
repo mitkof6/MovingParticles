@@ -7,7 +7,11 @@
 //real velocity collision
 #define BALL_COLLISION_REAL_MODE true
 
-enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM};
+//rendering setup
+#define SMOTH true
+#define COLOR false
+#define LIGHT true
+#define WIRED false
 
 //box
 #define BOX_SIZE 25
@@ -29,11 +33,30 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR, WALL_NEAR, WALL_TOP, WALL_BOTTOM
 #define MIN_M 5
 #define MAX_M 10
 
+#define SLICES 15
+#define STACKS 15
 
-#define SLICES 10
-#define STACKS 10
-
+//simulation
 #define dt 0.001
+
+//metirial
+#define AB_MIN 0
+#define AB_MAX 0.2
+#define DI_MIN 0.1
+#define DI_MAX 0.6
+#define SP_MIN 0.6
+#define SP_MAX 1.0
+#define SH_MIN 0
+#define SH_MAX 128
+
+enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR,
+	WALL_NEAR, WALL_TOP, WALL_BOTTOM};
+
+//light
+#define L_POS_X 20.0
+#define L_POS_Y 50.0
+#define L_POS_Z 50.0
+#define L_POS_W 0.0
 
 //window
 #define WINDOW_NAME "Viewer"

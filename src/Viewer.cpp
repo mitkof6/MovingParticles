@@ -1,7 +1,6 @@
 #include "Viewer.h"
 #include "GL/glut.h"
 
-
 Viewer *Viewer::instance = NULL;
 
 Viewer::Viewer(int argc, char** argv, ParticleContainer pc) {
@@ -59,21 +58,52 @@ void Viewer::start(){
 
 void Viewer::init(){
 
-	//Parameter handling
-	glShadeModel (GL_SMOOTH);
+	//shader
+	if(SMOTH){
+		glShadeModel (GL_SMOOTH);
+	}else{
+		glShadeModel(GL_FLAT);
+	}
+
+	//z-buffer
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glClearDepth(1);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	// polygon rendering mode
-	glEnable(GL_COLOR_MATERIAL);
-	glColorMaterial( GL_FRONT, GL_AMBIENT_AND_DIFFUSE );
+	// color
+	if(COLOR){
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE || GL_SPECULAR);
+	}
+	
   
-	//Set up light source
-	GLfloat light_position[] = { 0.0, 30.0,-50.0,0.0 };
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//light source
+	if(LIGHT){
+		GLfloat light_position[] = {L_POS_X, L_POS_Y, L_POS_Z, L_POS_W};
+		glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+		GLfloat ambient[] = {.1, .1, .1, 1.0};
+		glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+
+		GLfloat diffuse[] = {.3, .3, .3, 1.0};
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+
+		GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
+		glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+	}
+	
+	if(WIRED){
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	}else{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+	
 
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
