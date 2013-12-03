@@ -2,8 +2,9 @@
 #define CAMERA_H_
 
 #include "Vector3D.h"
+#include "Renderable.h"
 
-class Camera{
+class Camera : Renderable{
 public:
 	Vector3D pos, view, up;
 

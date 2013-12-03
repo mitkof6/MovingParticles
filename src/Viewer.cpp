@@ -1,5 +1,4 @@
 #include "Viewer.h"
-
 #include "GL/glut.h"
 
 
@@ -46,6 +45,8 @@ Viewer::~Viewer() {
 	for(unsigned i = 0;i<drawable.size();i++){
 		delete drawable.at(i);
 	}
+
+	delete instance;
 }
 
 void Viewer::addToDraw(Renderable *r){

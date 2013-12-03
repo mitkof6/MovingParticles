@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "Particle.h"
-#include "ParticlePair.h"
 #include "Constants.h"
 #include "Wall.h"
 #include "Vector3D.h"
@@ -29,7 +28,6 @@ public:
 
 private:
 	vector<Particle> particles;
-	vector<ParticlePair> collisionPairs;
 
 	CollisionCounter wallCollisions, ballCollisions;
 
@@ -38,8 +36,6 @@ private:
 
 	void findParticleParticleCollisions();
 	bool checkForCollision(Particle &p, Particle &q);
-
-	void resolveRepeatedCollisions();
 
 };
 

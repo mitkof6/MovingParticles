@@ -38,6 +38,8 @@ public:
 private:
 	float radius, mass;
 	Vector3D position, velocity;
+
+	float red, green, blue;
 };
 
 #endif

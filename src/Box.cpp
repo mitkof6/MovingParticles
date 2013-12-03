@@ -1,8 +1,11 @@
 #include "Box.h"
 #include "GL/glut.h"
 
-Box::Box(float r, float g, float b,
-		float s):Renderable(r, g, b){
+Box::Box(float r, float g, float b, float s){
+
+	red = r;
+	green = g;
+	blue = b;
 
 	size = s;
 }

@@ -36,9 +36,6 @@ void ParticleContainer::update(){
 		particles[i].update();
 	}
 
-
-	//resolveRepeatedCollisions();
-
 	findWallCollisions();
 
 	findParticleParticleCollisions();
@@ -114,33 +111,18 @@ bool ParticleContainer::checkForCollision(Particle &p, Wall &w){
 
 void ParticleContainer::findParticleParticleCollisions(){
 	
-	//bool collisionRepeated = false;
 	for(unsigned i = 0;i<particles.size();i++){
 		
 		for(unsigned j = 0;j<particles.size();j++){
 			
 			if(j>i){
 				if(checkForCollision(particles[i], particles[j])){
-					/*
-					for(unsigned k = 0;k<collisionPairs.size();k++){
-						if(collisionPairs[k].equals(particles[i], particles[j])){
-							collisionRepeated = true;
-							break;
-						}
-					}
 					
-					if(collisionRepeated){
-						collisionRepeated = false;
-						continue;
-					}
-					*/
-
 					ballCollisions.incCounter();
 					ballCollisions.registerEvent();
 
 					particles[i].collisionHandler(particles[j]);
 
-					//collisionPairs.push_back(ParticlePair(particles[i], particles[j]));
 				}
 			}
 		}
@@ -161,13 +143,4 @@ bool ParticleContainer::checkForCollision(Particle &p, Particle &q){
 
 }
 
-void ParticleContainer::resolveRepeatedCollisions(){
-	for(unsigned i = 0;i<collisionPairs.size();i++){
-		if(!checkForCollision(*collisionPairs[i].getParticle1(), 
-			*collisionPairs[i].getParticle2())){
-			
-			collisionPairs.erase(collisionPairs.begin()+i);
-		}
-	}
-}
 

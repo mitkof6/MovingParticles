@@ -1,12 +1,15 @@
 #include "Particle.h"
-#include <iostream>
 #include "GL/glut.h"
 
 Particle::Particle(
 	float r, float g, float b,
 	float px, float py, float pz,
 	float vx, float vy, float vz,
-	float rad, float m) : Renderable(r, g, b){
+	float rad, float m){
+
+	red = r;
+	green = g;
+	blue = b;
 
 	radius = rad;
 	mass = m;
@@ -85,15 +88,10 @@ void Particle::collisionHandler(Particle &p){
 
 	//if simulation is not real mode (velocity change in direction)
 	if(!BALL_COLLISION_REAL_MODE){
-
-		Vector3D tt = velocity+p.getVelocity();
-		//std::cout<<tt.magnitude()<<"\n";
-		
+				
 		collisionHandler(n);
 		p.collisionHandler(n*(-1));
-		//Vector3D tta = velocity+p.getVelocity();
-		//std::cout<<tta.magnitude()<<"\n";
-		//std::cout<<"\n";
+		
 		return;
 	}
 
@@ -130,18 +128,9 @@ void Particle::collisionHandler(Particle &p){
 	float v2t = t.dot(p.getVelocity());
 	float v2o = o.dot(p.getVelocity());
 
-	//std::cout << m11 << " " << m12 << " " << m21 << " " << m22<<"\n";
 	//change velocity
-	//Vector3D tt = velocity+p.getVelocity();
-	//std::cout<<tt.magnitude()<<"\n";
-
 	velocity = n*v1n+t*v1t+o*v1o;
 	p.setVelocity(n*v2n+t*v2t+o*v2o);
-
-	//Vector3D tta = velocity+p.getVelocity();
-	//std::cout<<tta.magnitude()<<"\n";
-	//std::cout<<"\n";
-
 }
 
 

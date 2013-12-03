@@ -17,7 +17,6 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\ParticleContainer.cpp" />
-    <ClCompile Include="src\ParticlePair.cpp" />
     <ClCompile Include="src\Vector3D.cpp" />
     <ClCompile Include="src\Viewer.cpp" />
     <ClCompile Include="src\Wall.cpp" />
@@ -29,7 +28,6 @@
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Particle.h" />
     <ClInclude Include="src\ParticleContainer.h" />
-    <ClInclude Include="src\ParticlePair.h" />
     <ClInclude Include="src\Renderable.h" />
     <ClInclude Include="src\Vector3D.h" />
     <ClInclude Include="src\Viewer.h" />

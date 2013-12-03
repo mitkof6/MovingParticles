@@ -6,8 +6,7 @@
 class Box : public Renderable{
 
 public:
-	Box(float r, float g, float b,
-		float s);
+	Box(float r, float g, float b, float s);
 	~Box(void);
 
 	void draw();
@@ -16,6 +15,7 @@ public:
 	float getSize();
 private:
 	float size;
+	float red, green, blue;
 };
 
 #endif

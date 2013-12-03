@@ -20,20 +20,20 @@ int main(int argc, char** argv){
 	generateParticles(pc);
 	Viewer viewer(argc, argv, pc);
 
-	Renderable *box = new Box(1.0f, 1.0f, 1.0f, BOX_SIZE);
+	Renderable *box = new Box(1.0f, 1.0, 1.0, BOX_SIZE);
 	viewer.addToDraw(box);
 
 	viewer.start();
 
 	//clean up
-	//free box;
+	delete box;
 
 	return 0;
 }
 
 void generateParticles(ParticleContainer &pc){
 	
-	srand(time(0));
+	srand((unsigned)time(0));
 	
 	for(int i = 0;i<PARTICLES;i++){
 		
