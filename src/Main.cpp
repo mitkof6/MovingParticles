@@ -37,7 +37,8 @@ void generateParticles(ParticleContainer &pc){
 	
 	for(int i = 0;i<PARTICLES;i++){
 		
-		float radius = rand(MIN_R, MAX_R);
+		float mass = rand(MIN_M, MAX_M);
+		float radius = mass/(MAX_M-MIN_M);
 
 		Particle p = Particle(
 				rand(0, 1),rand(0, 1),rand(0, 1),
@@ -48,7 +49,7 @@ void generateParticles(ParticleContainer &pc){
 				rand(MIN_VX, MAX_VX),
 				rand(MIN_VX, MAX_VX), 
 				radius,
-				rand(MIN_M, MAX_M));
+				mass);
 
 		pc.add(p);
 	}
