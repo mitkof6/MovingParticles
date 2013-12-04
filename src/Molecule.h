@@ -28,6 +28,10 @@ public:
 	void setCenter(Vector3D c);
 
 	float getMaxRadius();
+	int getMoleculeCount();
+
+	Vector3D getDisplacement(int i);
+	float getRadius(int i);
 
 	float randMM(float min, float max);
 

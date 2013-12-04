@@ -5,8 +5,8 @@
 #define BALL_COLLISION_PATH	"ball.dat"
 
 //molecule
-#define MOLECULE false
-#define MOL_TH 120
+#define MOLECULE true
+#define MOL_TH 90
 #define MAX_MOL 4
 
 //real velocity collision
@@ -22,7 +22,7 @@
 #define BOX_SIZE 25
 
 //particles
-#define PARTICLES 3
+#define PARTICLES 20
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f

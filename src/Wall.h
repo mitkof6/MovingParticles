@@ -11,6 +11,7 @@ public:
 	Wall(int dir);
 	~Wall(void);
 
+	int getWall();
 	Vector3D getWallDirection();
 
 private:

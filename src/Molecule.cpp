@@ -102,6 +102,18 @@ float Molecule::getMaxRadius(){
 	return maxRadius;
 }
 
+int Molecule::getMoleculeCount(){
+	return displacement.size();
+}
+
+Vector3D Molecule::getDisplacement(int i){
+	return displacement[i];
+}
+
+float Molecule::getRadius(int i){
+	return radius[i];
+}
+
 float Molecule::randMM(float min, float max){
 	return (min+rand()*(max-min)/RAND_MAX);
 }
@@ -110,3 +122,5 @@ void Molecule::collisionHandler(Vector3D dir){
 	//reflect velocity
 	velocity = velocity - dir*velocity.dot(dir)*2;
 }
+
+

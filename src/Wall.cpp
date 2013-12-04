@@ -10,6 +10,10 @@ Wall::~Wall(void){
 
 }
 
+int Wall::getWall(){
+	return direction;
+}
+
 Vector3D Wall::getWallDirection() {
 	switch (direction) {
 		case WALL_LEFT:

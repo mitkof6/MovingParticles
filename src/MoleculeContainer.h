@@ -27,6 +27,10 @@ private:
 
 	void findWallCollisions();
 	bool checkForCollision(Molecule &m, Wall &w);
+
+	bool checkForCollision(
+		Vector3D pos, float radius, Wall wallDir,
+		Molecule &m, Vector3D col);
 };
 
 #endif
