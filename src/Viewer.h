@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "Renderable.h"
-#include "ParticleContainer.h"
+#include "AbstractContainer.h"
 #include "Vector3D.h"
 #include "Camera.h"
 #include "Constants.h"
@@ -16,15 +16,16 @@ class Viewer {
 public:
 	static Viewer *instance;
 
-	Viewer(int argc, char** argv, ParticleContainer pc);
+	Viewer(int argc, char** argv);
 	virtual ~Viewer();
 
 	void addToDraw(Renderable *r);
+	void setContainer(AbstractContainer *c);
 	void start();
 private:
 	vector<Renderable *> drawable;
 
-	ParticleContainer particleContainer;
+	AbstractContainer *container;
 
 	Camera camera;
 	

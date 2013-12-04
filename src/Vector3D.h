@@ -22,6 +22,8 @@ public:
 	float dot(const Vector3D &other) const;
 	Vector3D cross(const Vector3D &other) const;
 
+	Vector3D rotateX(const float angle) const;
+
 	float magnitude() const;
 	float magnitudeSquared() const;
 

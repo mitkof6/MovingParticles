@@ -1,7 +1,7 @@
 #include "ParticleContainer.h"
 
 
-ParticleContainer::ParticleContainer(void){
+ParticleContainer::ParticleContainer() : AbstractContainer(){
 
 }
 
@@ -63,42 +63,42 @@ bool ParticleContainer::checkForCollision(Particle &p, Wall &w){
 	if(pos.x-r<=-BOX_SIZE/2.0f){
 		//correction
 		float dis = -BOX_SIZE/2.0f-(pos.x-r);
-		p.setPosition(p.getPosition()+Vector3D(dis, 0, 0));
+		p.setPosition(pos+Vector3D(dis, 0, 0));
 
 		w = Wall(WALL_LEFT);
 
 	}else if(pos.x+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.x+r);
-		p.setPosition(p.getPosition()+Vector3D(dis, 0, 0));
+		p.setPosition(pos+Vector3D(dis, 0, 0));
 
 		w = Wall(WALL_RIGHT);
 		
 	}else if(pos.y-r<=-BOX_SIZE/2.0f){
 		//correction
 		float dis = -BOX_SIZE/2.0f-(pos.y-r);
-		p.setPosition(p.getPosition()+Vector3D(0, dis, 0));
+		p.setPosition(pos+Vector3D(0, dis, 0));
 
 		w = Wall(WALL_BOTTOM);
 		
 	}else if(pos.y+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.y+r);
-		p.setPosition(p.getPosition()+Vector3D(0, dis, 0));
+		p.setPosition(pos+Vector3D(0, dis, 0));
 
 		w = Wall(WALL_TOP);
 		
 	}else if(pos.z-r<=-BOX_SIZE/2.0f){
 		//correction
 		float dis = -BOX_SIZE/2.0f-(pos.z-r);
-		p.setPosition(p.getPosition()+Vector3D(0, 0, dis));
+		p.setPosition(pos+Vector3D(0, 0, dis));
 
 		w = Wall(WALL_NEAR);
 		
 	}else if(pos.z+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.z+r);
-		p.setPosition(p.getPosition()+Vector3D(0, 0, dis));
+		p.setPosition(pos+Vector3D(0, 0, dis));
 
 		w = Wall(WALL_FAR);
 		

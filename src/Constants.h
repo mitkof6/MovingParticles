@@ -4,12 +4,17 @@
 #define WALL_COLLISION_PATH	"wall.dat"
 #define BALL_COLLISION_PATH	"ball.dat"
 
+//molecule
+#define MOLECULE false
+#define MOL_TH 120
+#define MAX_MOL 4
+
 //real velocity collision
 #define BALL_COLLISION_REAL_MODE true
 
 //rendering setup
 #define SMOTH true
-#define COLOR false
+#define COLOR true
 #define LIGHT true
 #define WIRED false
 
@@ -17,7 +22,7 @@
 #define BOX_SIZE 25
 
 //particles
-#define PARTICLES 20
+#define PARTICLES 3
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f

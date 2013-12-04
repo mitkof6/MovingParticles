@@ -3,18 +3,18 @@
 
 #include <vector>
 
+#include "AbstractContainer.h"
 #include "Particle.h"
 #include "Constants.h"
 #include "Wall.h"
 #include "Vector3D.h"
-#include "CollisionCounter.h"
 
 using namespace std;
 
 
-class ParticleContainer : public Renderable{
+class ParticleContainer : public AbstractContainer{
 public:
-	ParticleContainer(void);
+	ParticleContainer();
 	~ParticleContainer(void);
 
 	void draw();
@@ -28,8 +28,6 @@ public:
 
 private:
 	vector<Particle> particles;
-
-	CollisionCounter wallCollisions, ballCollisions;
 
 	void findWallCollisions();
 	bool checkForCollision(Particle &p, Wall &w);
