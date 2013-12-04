@@ -26,11 +26,21 @@ private:
 	vector<Molecule> molecules;
 
 	void findWallCollisions();
-	bool checkForCollision(Molecule &m, Wall &w);
-
+	bool possibleCollision(Molecule &m, Wall &w);
+	void investigatePossibleCollision(Molecule &m, Wall wall);
 	bool checkForCollision(
-		Vector3D pos, float radius, Wall wallDir,
-		Molecule &m, Vector3D col);
+		Molecule &m, Vector3D pos, float radius, 
+		Wall wallDir,
+		Vector3D &cp);
+
+	void findMoleculeMoleculeCollisions();
+	bool possibleCollision(Molecule &p, Molecule &q);
+	void investigatePossibleCollision(Molecule &p, Molecule &q);
+	bool checkForCollision(
+		Molecule &p, Vector3D pPos, float pR,
+		Molecule &q, Vector3D qPos, float qR, Vector3D &cp);
+
+	
 };
 
 #endif

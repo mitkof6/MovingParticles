@@ -36,6 +36,7 @@ public:
 	float randMM(float min, float max);
 
 	void collisionHandler(Vector3D dir);
+	void collisionHandler(Molecule &q);
 
 private:
 	vector<float> radius, mass;

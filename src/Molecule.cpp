@@ -123,4 +123,19 @@ void Molecule::collisionHandler(Vector3D dir){
 	velocity = velocity - dir*velocity.dot(dir)*2;
 }
 
+void Molecule::collisionHandler(Molecule &q){
+
+	Vector3D displacement = center-q.getCenter();
+	Vector3D n = displacement.normalize();
+
+	//if simulation is not real mode (velocity change in direction)
+	if(!BALL_COLLISION_REAL_MODE){
+				
+		collisionHandler(n);
+		q.collisionHandler(n*(1));
+		
+		return;
+	}
+}
+
 

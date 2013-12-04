@@ -10,7 +10,7 @@
 #define MAX_MOL 4
 
 //real velocity collision
-#define BALL_COLLISION_REAL_MODE true
+#define BALL_COLLISION_REAL_MODE false
 
 //rendering setup
 #define SMOTH true
@@ -19,10 +19,10 @@
 #define WIRED false
 
 //box
-#define BOX_SIZE 25
+#define BOX_SIZE 15
 
 //particles
-#define PARTICLES 20
+#define PARTICLES 3
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f
