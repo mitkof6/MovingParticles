@@ -22,7 +22,7 @@
 #define BOX_SIZE 15
 
 //particles
-#define PARTICLES 3
+#define PARTICLES 1
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f

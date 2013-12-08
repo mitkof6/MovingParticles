@@ -25,7 +25,7 @@ Molecule::Molecule(int n){
 
 	//center
 	massCenter = Vector3D(0, 0, 0);
-	float totalMass = 0;
+	totalMass = 0;
 	for(unsigned i = 0;i<displacement.size();i++){
 		//color
 		color.push_back(Vector3D(randMM(0, 1), randMM(0, 1), randMM(0, 1)));
@@ -104,7 +104,7 @@ void Molecule::draw(){
 
 void Molecule::update(){
 	massCenter = massCenter + velocity*dt;
-	anglularVelocity = anglularVelocity + Vector3D(2, 1, 0.5);//TODO
+	//anglularVelocity = anglularVelocity + Vector3D(2, 1, 0.5);//TODO
 }
 
 Vector3D Molecule::getMassCenter(){
@@ -158,4 +158,24 @@ void Molecule::collisionHandler(Molecule &q){
 	//TODO real collision
 }
 
+float Molecule::getTotalMass(){
+	return totalMass;
+}
 
+float Molecule::getTotalInertia(){
+	return totalInertia;
+}
+
+void Molecule::setAngularVelocity(Vector3D a){
+	//anglularVelocity = 
+}
+
+void Molecule::applyForce(Molecule &m, Vector3D &cp, Vector3D &cn){
+	Vector3D f = cn*m.getTotalMass();
+	
+	Vector3D t = cp.cross(f);
+
+	Vector3D a = t/m.getTotalInertia();
+
+	
+}

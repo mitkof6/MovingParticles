@@ -93,6 +93,13 @@ void MoleculeContainer::investigatePossibleCollision(Molecule &m, Wall &wall){
 			wall)){
 
 			//TODO collision point
+			Vector3D cp, cn;
+			calculateCollisionPoint(
+				m.getMassCenter()+m.getDisplacement(j), m.getRadius(j),
+				m.getMassCenter()+m.getDisplacement(j)+wall.getWallDirection()*m.getRadius(j), 0,
+				cp, cn);
+			cp.toString();
+			cn.toString();
 
 			//handle collision
 			m.collisionHandler(wall.getWallDirection());
@@ -259,5 +266,5 @@ void MoleculeContainer::calculateCollisionPoint(
 	float t = r1/(r1+r2);
 
 	cp = p1+(p2-p1)*t;
-	cn = (p2-p1).normalize();
+	cn = (p2-p1).normalize()*(-1);
 }

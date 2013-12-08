@@ -33,7 +33,14 @@ public:
 	Vector3D getDisplacement(int i);
 	float getRadius(int i);
 
+	float getTotalMass();
+	float getTotalInertia();
+
+	void setAngularVelocity(Vector3D a);
+
 	float randMM(float min, float max);
+
+	void applyForce(Molecule &m, Vector3D &cp, Vector3D &cn);
 
 	void collisionHandler(Vector3D dir);
 	void collisionHandler(Molecule &q);
@@ -46,6 +53,7 @@ private:
 	Vector3D anglularVelocity;
 	float maxRadius;
 	float totalInertia;
+	float totalMass;
 
 };
 
