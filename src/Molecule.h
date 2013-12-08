@@ -24,8 +24,8 @@ public:
 	void draw();
 	void update();
 
-	Vector3D getCenter();
-	void setCenter(Vector3D c);
+	Vector3D getMassCenter();
+	void setMassCenter(Vector3D c);
 
 	float getMaxRadius();
 	int getMoleculeCount();
@@ -41,9 +41,11 @@ public:
 private:
 	vector<float> radius, mass;
 	vector<Vector3D> displacement, color;
-	Vector3D center;
+	Vector3D massCenter;
 	Vector3D velocity;
+	Vector3D anglularVelocity;
 	float maxRadius;
+	float totalInertia;
 
 };
 

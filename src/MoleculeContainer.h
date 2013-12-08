@@ -27,18 +27,22 @@ private:
 
 	void findWallCollisions();
 	bool possibleCollision(Molecule &m, Wall &w);
-	void investigatePossibleCollision(Molecule &m, Wall wall);
+	void investigatePossibleCollision(Molecule &m, Wall &wall);
 	bool checkForCollision(
-		Molecule &m, Vector3D pos, float radius, 
-		Wall wallDir,
-		Vector3D &cp);
+		Molecule &m, const Vector3D &pos, float radius, 
+		Wall &wallDir);
 
 	void findMoleculeMoleculeCollisions();
 	bool possibleCollision(Molecule &p, Molecule &q);
 	void investigatePossibleCollision(Molecule &p, Molecule &q);
 	bool checkForCollision(
-		Molecule &p, Vector3D pPos, float pR,
-		Molecule &q, Vector3D qPos, float qR, Vector3D &cp);
+		Molecule &p, const Vector3D &pPos, float pR,
+		Molecule &q, const Vector3D &qPos, float qR);
+
+	void calculateCollisionPoint(
+		const Vector3D &p1, float r1,
+		const Vector3D &p2, float r2,
+		Vector3D &cp, Vector3D &cn);
 
 	
 };

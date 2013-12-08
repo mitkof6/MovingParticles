@@ -1,4 +1,4 @@
-#include "Molecule.h"
+﻿#include "Molecule.h"
 
 
 Molecule::Molecule(int n){
@@ -24,19 +24,21 @@ Molecule::Molecule(int n){
 	}
 
 	//center
-	center = Vector3D(0, 0, 0);
+	massCenter = Vector3D(0, 0, 0);
+	float totalMass = 0;
 	for(unsigned i = 0;i<displacement.size();i++){
 		//color
 		color.push_back(Vector3D(randMM(0, 1), randMM(0, 1), randMM(0, 1)));
 
 		//center
-		center = center + displacement[i];
+		totalMass += mass[i];
+		massCenter = massCenter + displacement[i]*mass[i];
 	}
-	center = center/displacement.size();
+	massCenter = massCenter/totalMass;
 
 	//correct relative displacement
 	for(unsigned i = 0;i<displacement.size();i++){
-		Vector3D newD = displacement[i] - center;
+		Vector3D newD = displacement[i] - massCenter;
 		displacement[i] = newD;
 	}
 
@@ -55,6 +57,18 @@ Molecule::Molecule(int n){
 		randMM(MIN_VX, MAX_VX),
 		randMM(MIN_VX, MAX_VX),
 		randMM(MIN_VX, MAX_VX));
+
+	//angular velosity
+	anglularVelocity = Vector3D(0, 0, 0);
+
+	//calculate total inertia
+	//Σ(mi*r^2+mi*di^2)
+	totalInertia = 0;
+	for(unsigned i = 0;i<displacement.size();i++){
+		totalInertia += 2/3*mass[i]*radius[i]*radius[i]+
+			mass[i]*displacement[i].magnitudeSquared();
+	}
+	
 }
 
 
@@ -66,7 +80,10 @@ void Molecule::draw(){
 
 	glPushMatrix();
 
-	glTranslatef(center.x, center.y, center.z);
+	glTranslatef(massCenter.x, massCenter.y, massCenter.z);
+	glRotatef(anglularVelocity.x, 1, 0, 0);
+	glRotatef(anglularVelocity.y, 0, 1, 0);
+	glRotatef(anglularVelocity.z, 0, 0, 1);
 
 	for(unsigned i = 0;i<displacement.size();i++){
 		glPushMatrix();
@@ -86,15 +103,16 @@ void Molecule::draw(){
 }
 
 void Molecule::update(){
-	center = center + velocity*dt;
+	massCenter = massCenter + velocity*dt;
+	anglularVelocity = anglularVelocity + Vector3D(2, 1, 0.5);//TODO
 }
 
-Vector3D Molecule::getCenter(){
-	return center;
+Vector3D Molecule::getMassCenter(){
+	return massCenter;
 }
 
-void Molecule::setCenter(Vector3D c){
-	center = c;
+void Molecule::setMassCenter(Vector3D c){
+	massCenter = c;
 }
 
 
@@ -125,17 +143,19 @@ void Molecule::collisionHandler(Vector3D dir){
 
 void Molecule::collisionHandler(Molecule &q){
 
-	Vector3D displacement = center-q.getCenter();
+	Vector3D displacement = massCenter-q.getMassCenter();
 	Vector3D n = displacement.normalize();
 
 	//if simulation is not real mode (velocity change in direction)
 	if(!BALL_COLLISION_REAL_MODE){
 				
 		collisionHandler(n);
-		q.collisionHandler(n*(1));
+		q.collisionHandler(n*(1));	  //TODO
 		
 		return;
 	}
+
+	//TODO real collision
 }
 
 
