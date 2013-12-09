@@ -22,6 +22,9 @@ public:
 	void saveWallCollisions();
 	void saveBallCollisions();
 
+	void drawWallCollisions();
+	void drawBallCollisions();
+
 private:
 	vector<Molecule> molecules;
 

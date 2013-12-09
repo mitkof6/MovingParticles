@@ -15,6 +15,8 @@ Viewer::Viewer(int argc, char** argv) {
 
 	mousePros = false;
 
+	ballHistogram = wallHistogram = false;
+
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
@@ -121,21 +123,38 @@ void Viewer::render(){
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
 
-	 //camera
-	camera.draw();
+	if(wallHistogram){
+		//histogram
+		glTranslatef(-5, -5, -15);
+		container->drawBallCollisions();
+	}else if(ballHistogram){
+		//histogram
+		glTranslatef(-5, -5, -15);
+		container->drawWallCollisions();
+	}else{
+		//camera
+		camera.draw();
 
-	//particles
-	container->draw();
+		//particles
+		container->draw();
 
-	//other objects
-	for(unsigned i = 0;i<drawable.size();i++){
-		drawable.at(i)->draw();
+
+
+		//other objects
+		for(unsigned i = 0;i<drawable.size();i++){
+			drawable.at(i)->draw();
+		}
 	}
+	 
+
+	
+	
 
 	glutSwapBuffers();
 }
 
 void Viewer::update(){
+
 
 	container->update();
 
@@ -179,9 +198,11 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 		break;
 	case '1': //store wall collisions
 		container->saveWallCollisions();
+		wallHistogram = !wallHistogram;
 		break;
 	case '2': //store ball collisions
 		container->saveBallCollisions();
+		ballHistogram = !ballHistogram;
 		break;
 	default:
 		break;

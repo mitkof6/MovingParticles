@@ -1,11 +1,12 @@
 #include "AbstractContainer.h"
 
 
-AbstractContainer::AbstractContainer(void)
-{
+AbstractContainer::AbstractContainer(void){ 
+	wallCollisions.setName("Wall");
+	ballCollisions.setName("Ball");
 }
 
 
-AbstractContainer::~AbstractContainer(void)
-{
+AbstractContainer::~AbstractContainer(void){
+
 }

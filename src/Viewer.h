@@ -32,6 +32,8 @@ private:
 	int sX, sY, eX, eY;
 	bool mousePros;
 
+	bool ballHistogram, wallHistogram;
+
 	void init();
 
 	void render();

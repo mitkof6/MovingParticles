@@ -2,7 +2,7 @@
 
 
 ParticleContainer::ParticleContainer() : AbstractContainer(){
-
+	
 }
 
 
@@ -20,6 +20,14 @@ void ParticleContainer::saveWallCollisions(){
 
 void ParticleContainer::saveBallCollisions(){
 	ballCollisions.saveToMat(BALL_COLLISION_PATH);
+}
+
+void ParticleContainer::drawWallCollisions(){
+	wallCollisions.draw();
+}
+
+void ParticleContainer::drawBallCollisions(){
+	ballCollisions.draw();
 }
 
 void ParticleContainer::draw(){

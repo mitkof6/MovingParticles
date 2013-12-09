@@ -38,6 +38,14 @@ void MoleculeContainer::saveBallCollisions(){
 
 }
 
+void MoleculeContainer::drawWallCollisions(){
+	
+}
+
+void MoleculeContainer::drawBallCollisions(){
+	
+}
+
 void MoleculeContainer::findWallCollisions(){
 	for(unsigned i = 0;i<molecules.size();i++){
 		Wall wall;
@@ -93,13 +101,15 @@ void MoleculeContainer::investigatePossibleCollision(Molecule &m, Wall &wall){
 			wall)){
 
 			//TODO collision point
+			/*
 			Vector3D cp, cn;
 			calculateCollisionPoint(
 				m.getMassCenter()+m.getDisplacement(j), m.getRadius(j),
 				m.getMassCenter()+m.getDisplacement(j)+wall.getWallDirection()*m.getRadius(j), 0,
 				cp, cn);
-			cp.toString();
-			cn.toString();
+			
+			m.applyForce(m, cp, cn);
+			*/
 
 			//handle collision
 			m.collisionHandler(wall.getWallDirection());

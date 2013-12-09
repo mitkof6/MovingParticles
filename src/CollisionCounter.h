@@ -5,9 +5,13 @@
 #include <stdio.h>
 #include <string>
 
+#include "Constants.h"
+#include "Renderable.h"
+#include "GL/glut.h"
+
 using namespace std;
 
-class CollisionCounter{
+class CollisionCounter : public Renderable{
 
 public:
 	CollisionCounter(void);
@@ -16,10 +20,17 @@ public:
 	void incTime();
 	void incCounter();
 	void registerEvent();
+	void clear();
+
+	void draw();
+	void update();
+
+	void setName(string n);
 
 	void saveToMat(string path);
 
 private:
+	string name;
 	unsigned long time, counter;
 	vector<unsigned long> timeSeq, counterSeq;
 };

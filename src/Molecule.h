@@ -37,6 +37,7 @@ public:
 	float getTotalInertia();
 
 	void setAngularVelocity(Vector3D a);
+	void setRotationAxis(Vector3D rot);
 
 	float randMM(float min, float max);
 
@@ -51,6 +52,7 @@ private:
 	Vector3D massCenter;
 	Vector3D velocity;
 	Vector3D anglularVelocity;
+	Vector3D rotationAxis;
 	float maxRadius;
 	float totalInertia;
 	float totalMass;

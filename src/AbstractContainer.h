@@ -15,6 +15,9 @@ public:
 	virtual void saveWallCollisions() =0;
 	virtual void saveBallCollisions() =0;
 
+	virtual void drawWallCollisions() =0;
+	virtual void drawBallCollisions() =0;
+
 protected:
 
 	CollisionCounter wallCollisions, ballCollisions;
