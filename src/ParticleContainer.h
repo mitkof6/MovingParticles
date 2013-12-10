@@ -17,16 +17,18 @@ public:
 	ParticleContainer();
 	~ParticleContainer(void);
 
+	void add(Particle p);
+
 	void draw();
 	void update();
 
-	void add(Particle p);
-
 	void saveWallCollisions();
 	void saveBallCollisions();
-
 	void drawWallCollisions();
 	void drawBallCollisions();
+
+	void enable3rdPerson();
+	void changeTargert();
 	   
 
 private:

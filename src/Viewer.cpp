@@ -17,6 +17,8 @@ Viewer::Viewer(int argc, char** argv) {
 
 	ballHistogram = wallHistogram = false;
 
+	thirdPerson = false;
+
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
@@ -133,12 +135,12 @@ void Viewer::render(){
 		container->drawWallCollisions();
 	}else{
 		//camera
-		camera.draw();
-
+		if(!thirdPerson){
+			camera.draw();
+		}
+		
 		//particles
 		container->draw();
-
-
 
 		//other objects
 		for(unsigned i = 0;i<drawable.size();i++){
@@ -197,12 +199,19 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 		camera.rotateY(-CAMERA_ROTATE_SPEED);
 		break;
 	case '1': //store wall collisions
-		container->saveWallCollisions();
+		//container->saveWallCollisions();
 		wallHistogram = !wallHistogram;
 		break;
 	case '2': //store ball collisions
-		container->saveBallCollisions();
+		//container->saveBallCollisions();
 		ballHistogram = !ballHistogram;
+		break;
+	case '3': //3rd person camera enabled
+		container->enable3rdPerson();
+		thirdPerson = !thirdPerson;
+		break;
+	case '4': //3rd person camera change target
+		container->changeTargert();
 		break;
 	default:
 		break;

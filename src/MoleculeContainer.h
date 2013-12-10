@@ -21,9 +21,11 @@ public:
 
 	void saveWallCollisions();
 	void saveBallCollisions();
-
 	void drawWallCollisions();
 	void drawBallCollisions();
+
+	void enable3rdPerson();
+	void changeTargert();
 
 private:
 	vector<Molecule> molecules;

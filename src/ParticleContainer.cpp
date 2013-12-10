@@ -14,23 +14,11 @@ void ParticleContainer::add(Particle p){
 	particles.push_back(p);
 }
 
-void ParticleContainer::saveWallCollisions(){
-	wallCollisions.saveToMat(WALL_COLLISION_PATH);
-}
-
-void ParticleContainer::saveBallCollisions(){
-	ballCollisions.saveToMat(BALL_COLLISION_PATH);
-}
-
-void ParticleContainer::drawWallCollisions(){
-	wallCollisions.draw();
-}
-
-void ParticleContainer::drawBallCollisions(){
-	ballCollisions.draw();
-}
-
 void ParticleContainer::draw(){
+	if(thirdPerson){
+		camera.draw();
+	}
+
 	for(unsigned i = 0;i<particles.size();i++){
 		particles[i].draw();
 	}
@@ -39,6 +27,10 @@ void ParticleContainer::draw(){
 void ParticleContainer::update(){
 	wallCollisions.incTime();
 	ballCollisions.incTime();
+
+	if(thirdPerson){
+		camera.update();
+	}
 
 	for(unsigned i = 0;i<particles.size();i++){
 		particles[i].update();
@@ -61,6 +53,37 @@ void ParticleContainer::findWallCollisions(){
 			particles[i].collisionHandler(temp.getWallDirection());
 		}
 	}
+
+}
+
+void ParticleContainer::saveWallCollisions(){
+	wallCollisions.saveToMat(WALL_COLLISION_PATH);
+}
+
+void ParticleContainer::saveBallCollisions(){
+	ballCollisions.saveToMat(BALL_COLLISION_PATH);
+}
+
+void ParticleContainer::drawWallCollisions(){
+	wallCollisions.draw();
+}
+
+void ParticleContainer::drawBallCollisions(){
+	ballCollisions.draw();
+}
+
+void ParticleContainer::enable3rdPerson(){
+	thirdPerson = !thirdPerson;
+	camera.lock(particles[target].getPosition());
+
+}
+
+void ParticleContainer::changeTargert(){
+	target++;
+	if(target==particles.size()){
+		target = 0;
+	}
+	camera.lock(particles[target].getPosition());
 
 }
 

@@ -46,6 +46,14 @@ void MoleculeContainer::drawBallCollisions(){
 	
 }
 
+void MoleculeContainer::enable3rdPerson(){
+
+}
+
+void MoleculeContainer::changeTargert(){
+
+}
+
 void MoleculeContainer::findWallCollisions(){
 	for(unsigned i = 0;i<molecules.size();i++){
 		Wall wall;

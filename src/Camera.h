@@ -6,7 +6,6 @@
 
 class Camera : Renderable{
 public:
-	Vector3D pos, view, up;
 
 	Camera(){};
 	Camera(Vector3D poss, Vector3D vieww, Vector3D upp);
@@ -20,6 +19,8 @@ public:
 	void draw();
 	void update(){};
 
+private:
+	Vector3D pos, view, up;
 };
 
 

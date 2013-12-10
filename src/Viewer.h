@@ -28,6 +28,7 @@ private:
 	AbstractContainer *container;
 
 	Camera camera;
+	bool thirdPerson;
 	
 	int sX, sY, eX, eY;
 	bool mousePros;

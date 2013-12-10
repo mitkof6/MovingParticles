@@ -5,7 +5,7 @@
 #define BALL_COLLISION_PATH	"ball.dat"
 
 //molecule
-#define MOLECULE false
+#define MOLECULE true
 #define MOL_TH 90
 #define MAX_MOL 4
 
@@ -19,10 +19,10 @@
 #define WIRED false
 
 //box
-#define BOX_SIZE 10
+#define BOX_SIZE 40
 
 //particles
-#define PARTICLES 10
+#define PARTICLES 100
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f
@@ -42,7 +42,7 @@
 #define STACKS 15
 
 //simulation
-#define dt 0.001
+#define dt 0.002
 
 //metirial
 #define AB_MIN 0
@@ -82,6 +82,11 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR,
 #define CAM_UP_X 0
 #define CAM_UP_Y 1
 #define CAM_UP_Z 0
+
+//camera 3rd
+#define OFFSET_X 15
+#define OFFSET_Y 15
+#define OFFSET_Z 15
 
 
 #endif

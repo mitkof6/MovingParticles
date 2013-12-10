@@ -51,7 +51,7 @@ void drawText(const char *str,float size, float r, float g, float b){
 	glPushMatrix();
 	glScalef(size,size,size);
 	
-	for (int i=0;i<strlen(str);i++)
+	for (unsigned int i=0;i<strlen(str);i++)
 	  glutStrokeCharacter(GLUT_STROKE_ROMAN,str[i]);
 	glPopMatrix();
 

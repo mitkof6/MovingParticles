@@ -59,7 +59,7 @@ float Particle::getMass(){
 	return mass;
 }
 
-Vector3D Particle::getPosition(){
+Vector3D &Particle::getPosition(){
 	return position;
 }
 
@@ -67,7 +67,7 @@ void Particle::setPosition(Vector3D p){
 	position = p;
 }
 
-Vector3D Particle::getVelocity(){
+Vector3D &Particle::getVelocity(){
 	return velocity;
 }
 
