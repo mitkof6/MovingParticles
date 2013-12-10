@@ -59,7 +59,7 @@ Molecule::Molecule(int n){
 		randMM(MIN_VX, MAX_VX));
 
 	//angular velosity
-	anglularVelocity = Vector3D(0, 0, 0);
+	rotationalVelocity = Vector3D(0, 0, 0);
 	rotationAxis = Vector3D(0, 0, 0);
 
 	//calculate total inertia
@@ -82,7 +82,7 @@ void Molecule::draw(){
 	glPushMatrix();
 
 	glTranslatef(massCenter.x, massCenter.y, massCenter.z);
-	glRotatef(anglularVelocity.magnitude(), 
+	glRotatef(th, 
 		rotationAxis.x, rotationAxis.y, rotationAxis.z);
 	
 
@@ -167,8 +167,8 @@ float Molecule::getTotalInertia(){
 	return totalInertia;
 }
 
-void Molecule::setAngularVelocity(Vector3D a){
-	anglularVelocity = anglularVelocity + a;
+void Molecule::setRotationalVelocity(Vector3D a){
+	rotationalVelocity = rotationalVelocity + a;
 }
 
 void Molecule::setRotationAxis(Vector3D rot){
@@ -183,6 +183,6 @@ void Molecule::applyForce(Molecule &m, Vector3D &cp, Vector3D &cn){
 	Vector3D a = t/m.getTotalInertia();
 
 	m.setRotationAxis((((cp-m.getMassCenter()).cross(cn)+rotationAxis)/2).normalize());
-	m.setAngularVelocity(Vector3D(0, 0, 0));
+	m.setRotationalVelocity(Vector3D(0, 0, 0));
 	
 }
