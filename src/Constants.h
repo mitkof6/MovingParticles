@@ -5,7 +5,7 @@
 #define BALL_COLLISION_PATH	"ball.dat"
 
 //molecule
-#define MOLECULE true
+#define MOLECULE false
 #define MOL_TH 90
 #define MAX_MOL 4
 
@@ -19,10 +19,10 @@
 #define WIRED false
 
 //box
-#define BOX_SIZE 40
+#define BOX_SIZE 20
 
 //particles
-#define PARTICLES 100
+#define PARTICLES 5
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f

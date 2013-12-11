@@ -1,7 +1,7 @@
 #ifndef WALL_H_
 #define WALL_H_
 
-#include "Vector3D.h"
+#include "Math/Vectors.h"
 #include "Constants.h"
 
 class Wall{
@@ -12,7 +12,7 @@ public:
 	~Wall(void);
 
 	int getWall();
-	Vector3D getWallDirection();
+	Vector3 getWallDirection();
 
 private:
 	

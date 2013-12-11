@@ -1,14 +1,14 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-#include "Vector3D.h"
+#include "Math/Vectors.h"
 #include "Renderable.h"
 
 class Camera : Renderable{
 public:
 
 	Camera(){};
-	Camera(Vector3D poss, Vector3D vieww, Vector3D upp);
+	Camera(Vector3 poss, Vector3 vieww, Vector3 upp);
 	virtual ~Camera();
 
 	void move(float speed);
@@ -20,7 +20,7 @@ public:
 	void update(){};
 
 private:
-	Vector3D pos, view, up;
+	Vector3 pos, view, up;
 };
 
 

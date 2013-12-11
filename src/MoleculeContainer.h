@@ -19,11 +19,6 @@ public:
 	void draw();
 	void update();
 
-	void saveWallCollisions();
-	void saveBallCollisions();
-	void drawWallCollisions();
-	void drawBallCollisions();
-
 	void enable3rdPerson();
 	void changeTargert();
 
@@ -34,20 +29,20 @@ private:
 	bool possibleCollision(Molecule &m, Wall &w);
 	void investigatePossibleCollision(Molecule &m, Wall &wall);
 	bool checkForCollision(
-		Molecule &m, const Vector3D &pos, float radius, 
+		Molecule &m, const Vector3 &pos, float radius, 
 		Wall &wallDir);
 
 	void findMoleculeMoleculeCollisions();
 	bool possibleCollision(Molecule &p, Molecule &q);
 	void investigatePossibleCollision(Molecule &p, Molecule &q);
 	bool checkForCollision(
-		Molecule &p, const Vector3D &pPos, float pR,
-		Molecule &q, const Vector3D &qPos, float qR);
+		Molecule &p, const Vector3 &pPos, float pR,
+		Molecule &q, const Vector3 &qPos, float qR);
 
 	void calculateCollisionPoint(
-		const Vector3D &p1, float r1,
-		const Vector3D &p2, float r2,
-		Vector3D &cp, Vector3D &cn);
+		const Vector3 &p1, float r1,
+		const Vector3 &p2, float r2,
+		Vector3 &cp, Vector3 &cn);
 
 	
 };

@@ -56,22 +56,6 @@ void ParticleContainer::findWallCollisions(){
 
 }
 
-void ParticleContainer::saveWallCollisions(){
-	wallCollisions.saveToMat(WALL_COLLISION_PATH);
-}
-
-void ParticleContainer::saveBallCollisions(){
-	ballCollisions.saveToMat(BALL_COLLISION_PATH);
-}
-
-void ParticleContainer::drawWallCollisions(){
-	wallCollisions.draw();
-}
-
-void ParticleContainer::drawBallCollisions(){
-	ballCollisions.draw();
-}
-
 void ParticleContainer::enable3rdPerson(){
 	thirdPerson = !thirdPerson;
 	camera.lock(particles[target].getPosition());
@@ -88,48 +72,48 @@ void ParticleContainer::changeTargert(){
 }
 
 bool ParticleContainer::checkForCollision(Particle &p, Wall &w){
-	Vector3D pos = p.getPosition();
+	Vector3 pos = p.getPosition();
 	float r = p.getRadius();
 
 	if(pos.x-r<=-BOX_SIZE/2.0f){
 		//correction
 		float dis = -BOX_SIZE/2.0f-(pos.x-r);
-		p.setPosition(pos+Vector3D(dis, 0, 0));
+		p.setPosition(pos+Vector3(dis, 0, 0));
 
 		w = Wall(WALL_LEFT);
 
 	}else if(pos.x+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.x+r);
-		p.setPosition(pos+Vector3D(dis, 0, 0));
+		p.setPosition(pos+Vector3(dis, 0, 0));
 
 		w = Wall(WALL_RIGHT);
 		
 	}else if(pos.y-r<=-BOX_SIZE/2.0f){
 		//correction
 		float dis = -BOX_SIZE/2.0f-(pos.y-r);
-		p.setPosition(pos+Vector3D(0, dis, 0));
+		p.setPosition(pos+Vector3(0, dis, 0));
 
 		w = Wall(WALL_BOTTOM);
 		
 	}else if(pos.y+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.y+r);
-		p.setPosition(pos+Vector3D(0, dis, 0));
+		p.setPosition(pos+Vector3(0, dis, 0));
 
 		w = Wall(WALL_TOP);
 		
 	}else if(pos.z-r<=-BOX_SIZE/2.0f){
 		//correction
 		float dis = -BOX_SIZE/2.0f-(pos.z-r);
-		p.setPosition(pos+Vector3D(0, 0, dis));
+		p.setPosition(pos+Vector3(0, 0, dis));
 
 		w = Wall(WALL_NEAR);
 		
 	}else if(pos.z+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.z+r);
-		p.setPosition(pos+Vector3D(0, 0, dis));
+		p.setPosition(pos+Vector3(0, 0, dis));
 
 		w = Wall(WALL_FAR);
 		
@@ -161,11 +145,11 @@ void ParticleContainer::findParticleParticleCollisions(){
 }
 
 bool ParticleContainer::checkForCollision(Particle &p, Particle &q){
-	Vector3D displacement = p.getPosition()-q.getPosition();
+	Vector3 displacement = p.getPosition()-q.getPosition();
 
 	float r = (p.getRadius()+q.getRadius());
 
-	if(displacement.magnitudeSquared()<r*r){
+	if(displacement.lengthSq()<r*r){
 		return true;
 	}else{
 

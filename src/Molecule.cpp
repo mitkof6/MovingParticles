@@ -5,7 +5,7 @@ Molecule::Molecule(int n){
 
 	for(int i = 0;i<n;i++){
 		if(i==0){
-			displacement.push_back(Vector3D(
+			displacement.push_back(Vector3(
 				randMM(MIN_X+2*MAX_M/(MAX_M-MIN_M), MAX_X-2*MAX_M/(MAX_M-MIN_M)),
 				randMM(MIN_Y+2*MAX_M/(MAX_M-MIN_M), MAX_Y-2*MAX_M/(MAX_M-MIN_M)),
 				randMM(MIN_Z+2*MAX_M/(MAX_M-MIN_M), MAX_Z-2*MAX_M/(MAX_M-MIN_M))));
@@ -14,7 +14,7 @@ Molecule::Molecule(int n){
 
 			radius.push_back(mass[i]/(MAX_M-MIN_M));
 		}else{
-			displacement.push_back(displacement[0]+Vector3D(
+			displacement.push_back(displacement[0]+Vector3(
 				radius[0]*sin((i-1)*MOL_TH*PI/180.0),radius[0]*cos((i-1)*MOL_TH*PI/180.0), 0));
 
 			mass.push_back(randMM(MIN_M, MAX_M));
@@ -24,11 +24,11 @@ Molecule::Molecule(int n){
 	}
 
 	//center
-	massCenter = Vector3D(0, 0, 0);
+	massCenter = Vector3(0, 0, 0);
 	totalMass = 0;
 	for(unsigned i = 0;i<displacement.size();i++){
 		//color
-		color.push_back(Vector3D(randMM(0, 1), randMM(0, 1), randMM(0, 1)));
+		color.push_back(Vector3(randMM(0, 1), randMM(0, 1), randMM(0, 1)));
 
 		//center
 		totalMass += mass[i];
@@ -38,14 +38,14 @@ Molecule::Molecule(int n){
 
 	//correct relative displacement
 	for(unsigned i = 0;i<displacement.size();i++){
-		Vector3D newD = displacement[i] - massCenter;
+		Vector3 newD = displacement[i] - massCenter;
 		displacement[i] = newD;
 	}
 
 	//define max radius
 	maxRadius = 0;
 	for(unsigned i = 0;i<displacement.size();i++){
-		float temp = (displacement[i]).magnitude()+radius[i];
+		float temp = (displacement[i]).length()+radius[i];
 
 		if(temp>maxRadius){
 			maxRadius = temp;
@@ -53,21 +53,27 @@ Molecule::Molecule(int n){
 	}
 
 	//velocity
-	velocity = Vector3D(
+	linearVelocity = Vector3(
 		randMM(MIN_VX, MAX_VX),
 		randMM(MIN_VX, MAX_VX),
 		randMM(MIN_VX, MAX_VX));
 
-	//angular velosity
-	rotationalVelocity = Vector3D(0, 0, 0);
-	rotationAxis = Vector3D(0, 0, 0);
+	//angular velosity and orientation
+	orientation = Vector3(
+		randMM(MIN_VX, MAX_VX),
+		randMM(MIN_VX, MAX_VX),
+		randMM(MIN_VX, MAX_VX));
+	angularVelocity = Vector3(
+		randMM(MIN_VX, MAX_VX),
+		randMM(MIN_VX, MAX_VX),
+		randMM(MIN_VX, MAX_VX));
 
 	//calculate total inertia
 	//Σ(mi*r^2+mi*di^2)
 	totalInertia = 0;
 	for(unsigned i = 0;i<displacement.size();i++){
 		totalInertia += 2/3*mass[i]*radius[i]*radius[i]+
-			mass[i]*displacement[i].magnitudeSquared();
+			mass[i]*displacement[i].lengthSq();
 	}
 	
 }
@@ -82,8 +88,8 @@ void Molecule::draw(){
 	glPushMatrix();
 
 	glTranslatef(massCenter.x, massCenter.y, massCenter.z);
-	glRotatef(th, 
-		rotationAxis.x, rotationAxis.y, rotationAxis.z);
+	glRotatef(orientation.length(), 
+		orientation.x, orientation.y, orientation.z);
 	
 
 	for(unsigned i = 0;i<displacement.size();i++){
@@ -104,18 +110,17 @@ void Molecule::draw(){
 }
 
 void Molecule::update(){
-	massCenter = massCenter + velocity*dt;
-	//anglularVelocity = anglularVelocity + Vector3D(10, 0, 0);//TODO
+	massCenter = massCenter + linearVelocity*dt;
+	orientation = orientation + angularVelocity*dt;
 }
 
-Vector3D Molecule::getMassCenter(){
+Vector3 &Molecule::getMassCenter(){
 	return massCenter;
 }
 
-void Molecule::setMassCenter(Vector3D c){
+void Molecule::setMassCenter(Vector3 c){
 	massCenter = c;
 }
-
 
 float Molecule::getMaxRadius(){
 	return maxRadius;
@@ -125,7 +130,7 @@ int Molecule::getMoleculeCount(){
 	return displacement.size();
 }
 
-Vector3D Molecule::getDisplacement(int i){
+Vector3 Molecule::getDisplacement(int i){
 	return displacement[i];
 }
 
@@ -137,15 +142,15 @@ float Molecule::randMM(float min, float max){
 	return (min+rand()*(max-min)/RAND_MAX);
 }
 
-void Molecule::collisionHandler(Vector3D dir){
+void Molecule::collisionHandler(Vector3 dir){
 	//reflect velocity
-	velocity = velocity - dir*velocity.dot(dir)*2;
+	linearVelocity = linearVelocity - dir*linearVelocity.dot(dir)*2;
 }
 
 void Molecule::collisionHandler(Molecule &q){
 
-	Vector3D displacement = massCenter-q.getMassCenter();
-	Vector3D n = displacement.normalize();
+	Vector3 displacement = massCenter-q.getMassCenter();
+	Vector3 n = displacement.normalize();
 
 	//if simulation is not real mode (velocity change in direction)
 	if(!BALL_COLLISION_REAL_MODE){
@@ -167,22 +172,22 @@ float Molecule::getTotalInertia(){
 	return totalInertia;
 }
 
-void Molecule::setRotationalVelocity(Vector3D a){
-	rotationalVelocity = rotationalVelocity + a;
+Vector3 Molecule::getAngularVelocity(){
+	return angularVelocity;
 }
 
-void Molecule::setRotationAxis(Vector3D rot){
-	rotationAxis = rot;
+void Molecule::setAngularVelocity(Vector3 a){
+	angularVelocity = a;
 }
 
-void Molecule::applyForce(Molecule &m, Vector3D &cp, Vector3D &cn){
-	Vector3D f = cn*m.getTotalMass();
+void Molecule::applyForce(Molecule &m, Vector3 &cp, Vector3 &cn){
+	Vector3 f = cn*m.getTotalMass();
 	
-	Vector3D t = cp.cross(f);
+	Vector3 t = cp.cross(f);
 
-	Vector3D a = t/m.getTotalInertia();
+	Vector3 a = t/m.getTotalInertia();
 
-	m.setRotationAxis((((cp-m.getMassCenter()).cross(cn)+rotationAxis)/2).normalize());
-	m.setRotationalVelocity(Vector3D(0, 0, 0));
+	//m.setRotationAxis((((cp-m.getMassCenter()).cross(cn)+rotationAxis)/2).normalize());
+	//m.setRotationalVelocity(Vector3(0, 0, 0));
 	
 }

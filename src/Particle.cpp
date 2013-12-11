@@ -12,8 +12,8 @@ Particle::Particle(
 
 	radius = rad;
 	mass = m;
-	position = Vector3D(px, py, pz);
-	velocity = Vector3D(vx, vy, vz);
+	position = Vector3(px, py, pz);
+	velocity = Vector3(vx, vy, vz);
 }
 
 
@@ -59,19 +59,19 @@ float Particle::getMass(){
 	return mass;
 }
 
-Vector3D &Particle::getPosition(){
+Vector3 &Particle::getPosition(){
 	return position;
 }
 
-void Particle::setPosition(Vector3D p){
+void Particle::setPosition(Vector3 p){
 	position = p;
 }
 
-Vector3D &Particle::getVelocity(){
+Vector3 &Particle::getVelocity(){
 	return velocity;
 }
 
-void Particle::setVelocity(Vector3D v){
+void Particle::setVelocity(Vector3 v){
 	velocity = v;
 }
 
@@ -100,16 +100,16 @@ void Particle::update(){
 /**
 	@param dir must be normalized
 */
-void Particle::collisionHandler(Vector3D dir){
+void Particle::collisionHandler(Vector3 dir){
 	//reflect velocity
 	velocity = velocity - dir*velocity.dot(dir)*2;
 }
 
 void Particle::collisionHandler(Particle &p){
 
-	Vector3D displacement = position-p.getPosition();
-	Vector3D n = displacement.normalize();
-	float dr = (radius+p.getRadius()-displacement.magnitude())/2;
+	Vector3 displacement = position-p.getPosition();
+	Vector3 n = displacement.normalize();
+	float dr = (radius+p.getRadius()-displacement.length())/2;
 
 	//correction
 	position = position+n*dr;
@@ -126,17 +126,17 @@ void Particle::collisionHandler(Particle &p){
 	}
 
 	//find orthonormals	 (n, t, o)
-	Vector3D t(1, 0, 0);
+	Vector3 t(1, 0, 0);
 	t = n.cross(t).normalize();
 
 	//if t, n parallel
-	if(t.magnitude()==0){
+	if(t.length()==0){
 		//std::cout<<"papalel\n";
-		Vector3D t(0, 1, 0);
+		Vector3 t(0, 1, 0);
 		t = n.cross(t).normalize();
 	}
 
-	Vector3D o = n.cross(t).normalize();
+	Vector3 o = n.cross(t).normalize();
 
 	//v1 = v1*m11+v2*m21
 	float m11 = (mass-p.getMass())/(mass+p.getMass());

@@ -2,7 +2,7 @@
 #define PARTICLE_H_
 
 #include "Renderable.h"
-#include "Vector3D.h"
+#include "Math/Vectors.h"
 
 #include "Constants.h"
 
@@ -32,21 +32,21 @@ public:
 
 	float getMass();
 
-	Vector3D &getPosition();
-	void setPosition(Vector3D p);
+	Vector3 &getPosition();
+	void setPosition(Vector3 p);
 
-	Vector3D &getVelocity();
-	void setVelocity(Vector3D v);
+	Vector3 &getVelocity();
+	void setVelocity(Vector3 v);
 
 	void draw();
 	void update();
 
-	void collisionHandler(Vector3D dir);
+	void collisionHandler(Vector3 dir);
 	void collisionHandler(Particle &p);
 
 private:
 	float radius, mass;
-	Vector3D position, velocity;
+	Vector3 position, velocity;
 
 	float red, green, blue;
 

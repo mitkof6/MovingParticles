@@ -2,7 +2,7 @@
 
 
 Camera3rd::Camera3rd(float offsetX, float offsetY, float offsetZ) {
-	camUp = Vector3D(0, 1, 0);
+	camUp = Vector3(0, 1, 0);
 	xOffset = offsetX;
 	yOffset = offsetY;
 	zOffset = offsetZ;
@@ -13,7 +13,7 @@ Camera3rd::~Camera3rd(void){
 	//delete targetPos;
 }
 
-void Camera3rd::lock(Vector3D &pos){
+void Camera3rd::lock(Vector3 &pos){
 	
 	targetPos = &pos;
 	update();
@@ -37,7 +37,7 @@ void Camera3rd::draw(){
 void Camera3rd::update(){
 	//Vector3D n = targetVelocity->normalize();
 	//n = (n*-OFFSET+camPos)/10;
-	camPos = targetPos->operator+(Vector3D(xOffset, yOffset, zOffset));
+	camPos = targetPos->operator+(Vector3(xOffset, yOffset, zOffset));
 	camView = *targetPos;
 	//camUp = n.cross(Vector3D(0, 1, 0));
 }

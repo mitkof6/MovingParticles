@@ -8,9 +8,9 @@ Viewer::Viewer(int argc, char** argv) {
 	instance = this;
 
 	camera = Camera(
-		Vector3D(CAM_POS_X, CAM_POS_Y ,CAM_POS_Z),
-		Vector3D(CAM_VIEW_X, CAM_VIEW_Y, CAM_VIEW_Z),
-		Vector3D(CAM_UP_X, CAM_UP_Y, CAM_UP_Z));
+		Vector3(CAM_POS_X, CAM_POS_Y ,CAM_POS_Z),
+		Vector3(CAM_VIEW_X, CAM_VIEW_Y, CAM_VIEW_Z),
+		Vector3(CAM_UP_X, CAM_UP_Y, CAM_UP_Z));
 
 
 	mousePros = false;

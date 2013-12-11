@@ -2,7 +2,7 @@
 #define CAMERA3RD_H_
 
 #include "Renderable.h"
-#include "Vector3D.h"
+#include "Math/Vectors.h"
 
 #include "GL/glut.h"
 
@@ -12,15 +12,15 @@ public:
 	Camera3rd(float offsetX, float offsetY, float offsetZ);
 	~Camera3rd(void);
 
-	void lock(Vector3D &pos);
+	void lock(Vector3 &pos);
 	void setOffset(float offsetX, float offsetY, float offsetZ);
 
 	void draw();
 	void update();
 
 private:
-	Vector3D camPos, camView, camUp;
-	Vector3D *targetPos;
+	Vector3 camPos, camView, camUp;
+	Vector3 *targetPos;
 	float xOffset, yOffset, zOffset;
 
 };

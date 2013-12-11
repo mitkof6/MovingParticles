@@ -7,7 +7,7 @@
 #include "Particle.h"
 #include "Constants.h"
 #include "Wall.h"
-#include "Vector3D.h"
+#include "Math/Vectors.h"
 
 using namespace std;
 
@@ -21,11 +21,6 @@ public:
 
 	void draw();
 	void update();
-
-	void saveWallCollisions();
-	void saveBallCollisions();
-	void drawWallCollisions();
-	void drawBallCollisions();
 
 	void enable3rdPerson();
 	void changeTargert();

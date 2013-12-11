@@ -7,7 +7,7 @@
 
 #include "Renderable.h"
 #include "Constants.h"
-#include "Vector3D.h"
+#include "Math/Vectors.h"
 
 #include "GL/glut.h"
 
@@ -24,39 +24,43 @@ public:
 	void draw();
 	void update();
 
-	Vector3D getMassCenter();
-	void setMassCenter(Vector3D c);
-
-	float getMaxRadius();
-	int getMoleculeCount();
-
-	Vector3D getDisplacement(int i);
-	float getRadius(int i);
+	Vector3 &getMassCenter();
+	void setMassCenter(Vector3 c);
 
 	float getTotalMass();
 	float getTotalInertia();
 
-	void setRotationalVelocity(Vector3D a);
-	void setRotationAxis(Vector3D rot);
+	Vector3 getAngularVelocity();
+	void setAngularVelocity(Vector3 a);
 
-	float randMM(float min, float max);
+	Vector3 getLinearVelocity();
+	void setLinearVelocity(Vector3 a);
 
-	void applyForce(Molecule &m, Vector3D &cp, Vector3D &cn);
+	float getMaxRadius();
+	int getMoleculeCount();
 
-	void collisionHandler(Vector3D dir);
+	Vector3 getDisplacement(int i);
+	float getRadius(int i);
+
+	void applyForce(Molecule &m, Vector3 &cp, Vector3 &cn);
+
+	void collisionHandler(Vector3 dir);
 	void collisionHandler(Molecule &q);
 
 private:
 	vector<float> radius, mass;
-	vector<Vector3D> displacement, color;
-	Vector3D massCenter;
-	Vector3D velocity;
-	float th;
-	Vector3D rotationalVelocity;
-	Vector3D rotationAxis;
+	vector<Vector3> displacement, color;
+	Vector3 massCenter;
+	Vector3 linearVelocity;
+
+	Vector3 orientation;
+	Vector3 angularVelocity;
+
 	float maxRadius;
 	float totalInertia;
 	float totalMass;
+
+	float randMM(float min, float max);
 
 };
 

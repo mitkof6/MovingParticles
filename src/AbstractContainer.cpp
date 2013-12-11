@@ -14,3 +14,21 @@ AbstractContainer::AbstractContainer(void){
 AbstractContainer::~AbstractContainer(void){
 
 }
+
+void AbstractContainer::saveWallCollisions(){
+	wallCollisions.saveToMat(WALL_COLLISION_PATH);
+}
+
+void AbstractContainer::saveBallCollisions(){
+	ballCollisions.saveToMat(BALL_COLLISION_PATH);
+}
+
+void AbstractContainer::drawWallCollisions(){
+	wallCollisions.draw();
+}
+
+void AbstractContainer::drawBallCollisions(){
+	ballCollisions.draw();
+}
+
+

@@ -13,11 +13,11 @@ public:
 	virtual void draw() =0;
 	virtual void update() =0;
 
-	virtual void saveWallCollisions() =0;
-	virtual void saveBallCollisions() =0;
+	virtual void saveWallCollisions();
+	virtual void saveBallCollisions();
 
-	virtual void drawWallCollisions() =0;
-	virtual void drawBallCollisions() =0;
+	virtual void drawWallCollisions();
+	virtual void drawBallCollisions();
 
 	virtual void enable3rdPerson() =0;
 	virtual void changeTargert() =0;
