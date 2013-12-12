@@ -80,7 +80,7 @@ struct Vector3
     float       length() const;
 	float		lengthSq() const;
     float       distance(const Vector3& vec) const;     // distance between two vectors
-    Vector3&    normalize();                            //
+    Vector3    normalize() const;                            //
     float       dot(const Vector3& vec) const;          // dot product
     Vector3     cross(const Vector3& vec) const;        // cross product
     bool        equal(const Vector3& vec, float e) const; // compare with epsilon
@@ -379,18 +379,11 @@ inline float Vector3::distance(const Vector3& vec) const {
     return sqrtf((vec.x-x)*(vec.x-x) + (vec.y-y)*(vec.y-y) + (vec.z-z)*(vec.z-z));
 }
 
-inline Vector3& Vector3::normalize() {
+inline Vector3 Vector3::normalize() const{
     //@@const float EPSILON = 0.000001f;
-    float xxyyzz = x*x + y*y + z*z;
-    //@@if(xxyyzz < EPSILON)
-    //@@    return *this; // do nothing if it is ~zero vector
-
-    //float invLength = invSqrt(xxyyzz);
-    float invLength = 1.0f / sqrtf(xxyyzz);
-    x *= invLength;
-    y *= invLength;
-    z *= invLength;
-    return *this;
+	float d = length();
+    
+    return Vector3(x/d, y/d, z/d);
 }
 
 inline float Vector3::dot(const Vector3& rhs) const {

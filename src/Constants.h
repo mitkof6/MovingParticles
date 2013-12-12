@@ -20,7 +20,7 @@
 #define WIRED false
 
 //box
-#define BOX_SIZE 25
+#define BOX_SIZE 20
 
 //particles
 #define PARTICLES 20
