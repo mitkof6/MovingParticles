@@ -5,11 +5,6 @@
 #define WALL_COLLISION_PATH	"wall.dat"
 #define BALL_COLLISION_PATH	"ball.dat"
 
-//molecule
-#define MOLECULE false
-#define MOL_TH 90
-#define MAX_MOL 4
-
 //real velocity collision
 #define BALL_COLLISION_REAL_MODE true
 

@@ -18,8 +18,6 @@
     <ClCompile Include="src\CollisionCounter.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math\Matrices.cpp" />
-    <ClCompile Include="src\Molecule.cpp" />
-    <ClCompile Include="src\MoleculeContainer.cpp" />
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\ParticleContainer.cpp" />
     <ClCompile Include="src\Viewer.cpp" />
@@ -34,8 +32,6 @@
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Math\Matrices.h" />
     <ClInclude Include="src\Math\Vectors.h" />
-    <ClInclude Include="src\Molecule.h" />
-    <ClInclude Include="src\MoleculeContainer.h" />
     <ClInclude Include="src\Particle.h" />
     <ClInclude Include="src\ParticleContainer.h" />
     <ClInclude Include="src\Renderable.h" />

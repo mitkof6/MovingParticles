@@ -11,11 +11,7 @@
 #include "Box.h"
 #include "Constants.h"
 
-#include "MoleculeContainer.h"
-#include "Molecule.h"
-
 void generateParticles(AbstractContainer *pc, int size);
-void generateMolecules(AbstractContainer *mol, int size);
 float rand(float min, float max);
 
 int main(int argc, char** argv){
@@ -24,17 +20,10 @@ int main(int argc, char** argv){
 
 	Viewer viewer(argc, argv);
 
-	//molecule or particles
-	if(MOLECULE){
-		AbstractContainer *container = new MoleculeContainer(BALL_COLLISION_REAL_MODE);
-		generateMolecules(container, PARTICLES);
-		viewer.setContainer(container);
-		
-	}else{
-		AbstractContainer *container = new ParticleContainer(BALL_COLLISION_REAL_MODE);
-		generateParticles(container, PARTICLES);
-		viewer.setContainer(container);
-	}
+	//particles
+	AbstractContainer *container = new ParticleContainer(BALL_COLLISION_REAL_MODE);
+	generateParticles(container, PARTICLES);
+	viewer.setContainer(container);
 
 	//bounding box
 	Renderable *box = new Box(1.0f, 1.0, 1.0, BOX_SIZE);
@@ -45,15 +34,9 @@ int main(int argc, char** argv){
 
 	//clean up
 	delete box;
+	delete container;
 
 	return 0;
-}
-
-void generateMolecules(AbstractContainer *mol, int size){
-	for(int i = 0;i<size;i++){
-		Molecule m  = Molecule(rand(2, MAX_MOL));
-		((MoleculeContainer *)mol)->add(m);
-	}
 }
 
 void generateParticles(AbstractContainer *pc, int size){
