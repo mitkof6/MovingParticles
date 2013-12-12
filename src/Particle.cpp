@@ -105,7 +105,7 @@ void Particle::collisionHandler(Vector3 dir){
 	velocity = velocity - dir*velocity.dot(dir)*2;
 }
 
-void Particle::collisionHandler(Particle &p){
+void Particle::collisionHandler(Particle &p, bool collisionMode){
 
 	Vector3 displacement = position-p.getPosition();
 	Vector3 n = displacement.normalize();
@@ -117,7 +117,7 @@ void Particle::collisionHandler(Particle &p){
 	n = displacement.normalize();
 
 	//if simulation is not real mode (velocity change in direction)
-	if(!BALL_COLLISION_REAL_MODE){
+	if(!collisionMode){
 				
 		collisionHandler(n);
 		p.collisionHandler(n*(-1));

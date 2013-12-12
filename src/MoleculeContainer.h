@@ -11,7 +11,7 @@ using namespace std;
 
 class MoleculeContainer : public AbstractContainer{
 public:
-	MoleculeContainer();
+	MoleculeContainer(bool collisionMode);
 	~MoleculeContainer(void);
 
 	void add(Molecule &m);

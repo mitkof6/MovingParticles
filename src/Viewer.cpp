@@ -19,6 +19,11 @@ Viewer::Viewer(int argc, char** argv) {
 
 	thirdPerson = false;
 
+	stringColor[0] = .5;
+	stringColor[1] = .5;
+	stringColor[2] = .5;
+	stringColor[3] = 1.0;
+
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
@@ -125,20 +130,22 @@ void Viewer::render(){
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
 
+	showInfo();
+
 	if(wallHistogram){
 		//histogram
-		glTranslatef(-5, -5, -15);
+		glTranslatef(-4, -5, -15);
 		container->drawBallCollisions();
 	}else if(ballHistogram){
 		//histogram
-		glTranslatef(-5, -5, -15);
+		glTranslatef(-4, -5, -15);
 		container->drawWallCollisions();
 	}else{
 		//camera
 		if(!thirdPerson){
 			camera.draw();
 		}
-		
+
 		//particles
 		container->draw();
 
@@ -146,11 +153,7 @@ void Viewer::render(){
 		for(unsigned i = 0;i<drawable.size();i++){
 			drawable.at(i)->draw();
 		}
-	}
-	 
-
-	
-	
+	}	
 
 	glutSwapBuffers();
 }
@@ -198,7 +201,7 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 	case 'e':
 		camera.rotateY(-CAMERA_ROTATE_SPEED);
 		break;
-	case '1': //store wall collisions
+	case '1': //show
 		//container->saveWallCollisions();
 		wallHistogram = !wallHistogram;
 		break;
@@ -206,11 +209,17 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 		//container->saveBallCollisions();
 		ballHistogram = !ballHistogram;
 		break;
-	case '3': //3rd person camera enabled
+	case '3': //clear collisions
+		container->clearCollisions();
+		break;
+	case '4': //change collisions mode
+		container->changeCollisionMode(); 
+		break;
+	case '5': //3rd person camera enabled
 		container->enable3rdPerson();
 		thirdPerson = !thirdPerson;
 		break;
-	case '4': //3rd person camera change target
+	case '6': //3rd person camera change target
 		container->changeTargert();
 		break;
 	default:
@@ -252,6 +261,64 @@ void Viewer::mouseMove(int x, int y){
 	}
 	
 }
+
+void Viewer::drawString(const char *str, int x, int y, float color[4], void *font){
+    glPushAttrib(GL_LIGHTING_BIT | GL_CURRENT_BIT); // lighting and color mask
+    glDisable(GL_LIGHTING);     // need to disable lighting for proper text color
+    glDisable(GL_TEXTURE_2D);
+
+    glColor4fv(color);          // set text color
+    glRasterPos2i(x, y);        // place text position
+
+    // loop all characters in the string
+    while(*str)
+    {
+        glutBitmapCharacter(font, *str);
+        ++str;
+    }
+
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
+    glPopAttrib();
+}
+
+void Viewer::showInfo(){
+    // backup current model-view matrix
+    glPushMatrix();                     // save current modelview matrix
+    glLoadIdentity();                   // reset modelview matrix
+
+    // set to 2D orthogonal projection
+    glMatrixMode(GL_PROJECTION);        // switch to projection matrix
+    glPushMatrix();                     // save current projection matrix
+    glLoadIdentity();                   // reset projection matrix
+	gluOrtho2D(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT); // set to orthogonal projection
+
+    float color[4] = {1, 1, 1, 0.5};
+
+	drawString("Key 1: Wall Histogram", 0, WINDOW_HEIGHT-TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Key 2: Ball Histogram", 0, WINDOW_HEIGHT-2*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Key 3: Clear Data", 0, WINDOW_HEIGHT-3*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Key 4: Collision Mode", 0, WINDOW_HEIGHT-4*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Key 5: 3rd Person", 0, WINDOW_HEIGHT-5*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Key 6: Switch Target", 0, WINDOW_HEIGHT-6*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+
+	drawString("Movements: w, s, a, d", 0, 0, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Camera rotation: mouse",  0, TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+
+	drawString(container->getCameraMode()==true? "3rd Person Camera" : "Normal Camera",
+				0, 6*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString(container->getCollisionMode()==true? "Collision: real mode" : "Collision: false mode",
+				0, 5*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+    
+
+    // restore projection matrix
+    glPopMatrix();                   // restore to previous projection matrix
+
+    // restore modelview matrix
+    glMatrixMode(GL_MODELVIEW);      // switch to modelview matrix
+    glPopMatrix();                   // restore to previous modelview matrix
+}
+
 
 void Viewer::setDisplayFunction(){
 	instance->render();

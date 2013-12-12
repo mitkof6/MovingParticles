@@ -26,6 +26,7 @@ void CollisionCounter::registerEvent(){
 void CollisionCounter::clear(){
 	time = counter = 0;
 	timeSeq.clear();
+	counterSeq.clear();
 }
 
 void CollisionCounter::setName(string n){
@@ -45,7 +46,7 @@ void CollisionCounter::saveToMat(string path){
 	fclose(file);
 }
 
-
+/*
 void drawText(const char *str,float size, float r, float g, float b){
 
 	glPushMatrix();
@@ -56,25 +57,37 @@ void drawText(const char *str,float size, float r, float g, float b){
 	glPopMatrix();
 
 }
+*/
+
+void CollisionCounter::drawString(const char *str, int x, int y, float color[4], void *font){
+    glPushAttrib(GL_LIGHTING_BIT | GL_CURRENT_BIT); // lighting and color mask
+    glDisable(GL_LIGHTING);     // need to disable lighting for proper text color
+    glDisable(GL_TEXTURE_2D);
+
+    glColor4fv(color);          // set text color
+    glRasterPos2i(x, y);        // place text position
+
+    // loop all characters in the string
+    while(*str)
+    {
+        glutBitmapCharacter(font, *str);
+        ++str;
+    }
+
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
+    glPopAttrib();
+}
 
 void CollisionCounter::draw(){
 	
 	glPushMatrix();
 
-	glPushMatrix();
-		glTranslatef(10, 0, 0);
-		drawText("Time", 0.002f, 0, .5, .5);
-	glPopMatrix();
+	float color[] = {0.5,0.5,0.5,1.0};
 
-	glPushMatrix();
-		glTranslatef(0, 10, 0);
-		drawText("Collisions", 0.002f, 0, .5, .5);
-	glPopMatrix();
-
-	glPushMatrix();
-		glTranslatef(5, 10, 0);
-		drawText(name.c_str(), 0.004f, 0, .5, .5);
-	glPopMatrix();
+	drawString("Time", 10, 0, color, GLUT_BITMAP_8_BY_13);
+	drawString("Collisions", 0, 10, color, GLUT_BITMAP_8_BY_13);
+	drawString(name.c_str(), 5, 10, color, GLUT_BITMAP_8_BY_13);
 	
 	glColor3f(1, 0, 0);
 	glBegin(GL_LINE_STRIP);

@@ -1,7 +1,7 @@
 #include "ParticleContainer.h"
 
 
-ParticleContainer::ParticleContainer() : AbstractContainer(){
+ParticleContainer::ParticleContainer(bool collisionMode) : AbstractContainer(collisionMode){
 	
 }
 
@@ -136,7 +136,7 @@ void ParticleContainer::findParticleParticleCollisions(){
 					ballCollisions.incCounter();
 					ballCollisions.registerEvent();
 
-					particles[i].collisionHandler(particles[j]);
+					particles[i].collisionHandler(particles[j], collisionMode);
 
 				}
 			}

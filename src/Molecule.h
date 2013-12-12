@@ -45,7 +45,7 @@ public:
 	void applyForce(Molecule &m, Vector3 &cp, Vector3 &cn);
 
 	void collisionHandler(Vector3 dir);
-	void collisionHandler(Molecule &q);
+	void collisionHandler(Molecule &q, bool collisionMode);
 
 private:
 	vector<float> radius, mass;

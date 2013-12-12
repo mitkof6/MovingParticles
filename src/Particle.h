@@ -42,7 +42,7 @@ public:
 	void update();
 
 	void collisionHandler(Vector3 dir);
-	void collisionHandler(Particle &p);
+	void collisionHandler(Particle &p, bool collisionMode);
 
 private:
 	float radius, mass;

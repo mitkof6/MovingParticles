@@ -14,7 +14,7 @@ using namespace std;
 
 class ParticleContainer : public AbstractContainer{
 public:
-	ParticleContainer();
+	ParticleContainer(bool collisionMode);
 	~ParticleContainer(void);
 
 	void add(Particle p);

@@ -7,7 +7,7 @@
 
 class AbstractContainer : public Renderable{
 public:
-	AbstractContainer();
+	AbstractContainer(bool cm);
 	~AbstractContainer();
 
 	virtual void draw() =0;
@@ -22,6 +22,15 @@ public:
 	virtual void enable3rdPerson() =0;
 	virtual void changeTargert() =0;
 
+	virtual void changeCollisionMode();
+
+	virtual void clearCollisions();
+
+	virtual bool getCameraMode();
+	virtual int getTargetIndex();
+	virtual bool getCollisionMode();
+	
+
 protected:
 
 	CollisionCounter wallCollisions, ballCollisions;
@@ -29,6 +38,8 @@ protected:
 	Camera3rd camera;
 	bool thirdPerson;
 	int target;
+
+	bool collisionMode;
  
 };
 

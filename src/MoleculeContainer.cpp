@@ -1,7 +1,7 @@
 #include "MoleculeContainer.h"
 
 
-MoleculeContainer::MoleculeContainer(): AbstractContainer(){
+MoleculeContainer::MoleculeContainer(bool collisionMode): AbstractContainer(collisionMode){
 
 }
 
@@ -248,7 +248,7 @@ void MoleculeContainer::investigatePossibleCollision(Molecule &p, Molecule &q){
 				//TODO collision point
 				
 				//handle collision
-				p.collisionHandler(q);
+				p.collisionHandler(q, collisionMode);
 
 				ballCollisions.incCounter();
 				ballCollisions.registerEvent();

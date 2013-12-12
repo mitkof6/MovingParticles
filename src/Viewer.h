@@ -33,6 +33,8 @@ private:
 	int sX, sY, eX, eY;
 	bool mousePros;
 
+	float stringColor[4];
+
 	bool ballHistogram, wallHistogram;
 
 	void init();
@@ -44,6 +46,9 @@ private:
 	void keyboard (unsigned char key, int x, int y);
 	void mouseButton(int button, int state, int x, int y);
 	void mouseMove(int x, int y);
+
+	void drawString(const char *str, int x, int y, float color[4], void *font);
+	void showInfo();
 
 	static void setDisplayFunction();
 	static void setIdeleFunction();

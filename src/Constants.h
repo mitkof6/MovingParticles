@@ -70,6 +70,10 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR,
 #define WINDOW_X_POS 100
 #define WINDOW_Y_POS 100
 
+//text
+#define TEXT_WIDTH 8
+#define TEXT_HEIGHT 12
+
 //camera
 #define CAMERA_MOVE_SPEED 8
 #define CAMERA_ROTATE_SPEED 0.01

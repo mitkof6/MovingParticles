@@ -26,12 +26,12 @@ int main(int argc, char** argv){
 
 	//molecule or particles
 	if(MOLECULE){
-		AbstractContainer *container = new MoleculeContainer();
+		AbstractContainer *container = new MoleculeContainer(BALL_COLLISION_REAL_MODE);
 		generateMolecules(container);
 		viewer.setContainer(container);
 		
 	}else{
-		AbstractContainer *container = new ParticleContainer();
+		AbstractContainer *container = new ParticleContainer(BALL_COLLISION_REAL_MODE);
 		generateParticles(container);
 		viewer.setContainer(container);
 	}

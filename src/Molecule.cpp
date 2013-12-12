@@ -147,13 +147,13 @@ void Molecule::collisionHandler(Vector3 dir){
 	linearVelocity = linearVelocity - dir*linearVelocity.dot(dir)*2;
 }
 
-void Molecule::collisionHandler(Molecule &q){
+void Molecule::collisionHandler(Molecule &q, bool collisionMode){
 
 	Vector3 displacement = massCenter-q.getMassCenter();
 	Vector3 n = displacement.normalize();
 
 	//if simulation is not real mode (velocity change in direction)
-	if(!BALL_COLLISION_REAL_MODE){
+	if(!collisionMode){
 				
 		collisionHandler(n);
 		q.collisionHandler(n*(1));	  //TODO

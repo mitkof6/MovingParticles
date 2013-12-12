@@ -1,7 +1,9 @@
 #include "AbstractContainer.h"
 
 
-AbstractContainer::AbstractContainer(void){ 
+AbstractContainer::AbstractContainer(bool cm){
+	collisionMode = cm;
+
 	wallCollisions.setName("Wall");
 	ballCollisions.setName("Ball");
 
@@ -29,6 +31,27 @@ void AbstractContainer::drawWallCollisions(){
 
 void AbstractContainer::drawBallCollisions(){
 	ballCollisions.draw();
+}
+
+void AbstractContainer::changeCollisionMode(){
+	collisionMode = !collisionMode;
+}
+
+void AbstractContainer::clearCollisions(){
+	wallCollisions.clear();
+	ballCollisions.clear();
+}
+
+bool AbstractContainer::getCameraMode(){
+	return thirdPerson;
+}
+
+int AbstractContainer::getTargetIndex(){
+	return target;
+}
+
+bool AbstractContainer::getCollisionMode(){
+	return collisionMode;
 }
 
 
