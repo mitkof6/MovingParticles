@@ -24,6 +24,11 @@ Viewer::Viewer(int argc, char** argv) {
 	stringColor[2] = .5;
 	stringColor[3] = 1.0;
 
+	wired = WIRED;
+	smooth = SMOOTH;
+	color = COLOR;
+	light = LIGHT;
+
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
@@ -70,7 +75,7 @@ void Viewer::start(){
 void Viewer::init(){
 
 	//shader
-	if(SMOTH){
+	if(smooth){
 		glShadeModel (GL_SMOOTH);
 	}else{
 		glShadeModel(GL_FLAT);
@@ -84,14 +89,14 @@ void Viewer::init(){
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// color
-	if(COLOR){
+	if(color){
 		glEnable(GL_COLOR_MATERIAL);
 		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE || GL_SPECULAR);
 	}
 	
   
 	//light source
-	if(LIGHT){
+	if(light){
 		GLfloat light_position[] = {L_POS_X, L_POS_Y, L_POS_Z, L_POS_W};
 		glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
@@ -108,7 +113,7 @@ void Viewer::init(){
 		glEnable(GL_LIGHT0);
 	}
 	
-	if(WIRED){
+	if(wired){
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	}else{
@@ -130,7 +135,7 @@ void Viewer::render(){
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
 
-	showInfo();
+	//showInfo();
 
 	if(wallHistogram){
 		//histogram
@@ -222,6 +227,41 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 	case '6': //3rd person camera change target
 		container->changeTargert();
 		break;
+	case '7': //wird
+		wired = !wired;
+		if(wired){
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		}else{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
+		break;
+	case '8': //smoth
+		smooth = !smooth;
+		if(smooth){
+			glShadeModel (GL_SMOOTH);
+		}else{
+			glShadeModel(GL_FLAT);
+		}
+		break;
+	case '9': //color
+		color = !color;
+		if(color){
+			glEnable(GL_COLOR_MATERIAL);
+			glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE || GL_SPECULAR);
+		}else{
+			glDisable(GL_COLOR_MATERIAL);
+		}
+		break;
+	case '0': //light
+		light = !light;
+		if(light){
+			glEnable(GL_LIGHTING);
+		}else{
+			glDisable(GL_LIGHTING);
+		}
+		
+		break;
 	default:
 		break;
 	}
@@ -301,6 +341,11 @@ void Viewer::showInfo(){
 	drawString("Key 4: Collision Mode", 0, WINDOW_HEIGHT-4*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
 	drawString("Key 5: 3rd Person", 0, WINDOW_HEIGHT-5*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
 	drawString("Key 6: Switch Target", 0, WINDOW_HEIGHT-6*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+
+	drawString("Key 7: Solid/Wired", 0, WINDOW_HEIGHT-8*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Key 8: Smooth/Flat", 0, WINDOW_HEIGHT-9*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Key 9: Color/Material", 0, WINDOW_HEIGHT-10*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Key 0: Light on/off", 0, WINDOW_HEIGHT-11*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
 
 	drawString("Movements: w, s, a, d", 0, 0, color, GLUT_BITMAP_HELVETICA_12);
 	drawString("Camera rotation: mouse",  0, TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);

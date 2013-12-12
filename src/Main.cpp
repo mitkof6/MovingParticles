@@ -14,8 +14,8 @@
 #include "MoleculeContainer.h"
 #include "Molecule.h"
 
-void generateParticles(AbstractContainer *pc);
-void generateMolecules(AbstractContainer *mol);
+void generateParticles(AbstractContainer *pc, int size);
+void generateMolecules(AbstractContainer *mol, int size);
 float rand(float min, float max);
 
 int main(int argc, char** argv){
@@ -27,12 +27,12 @@ int main(int argc, char** argv){
 	//molecule or particles
 	if(MOLECULE){
 		AbstractContainer *container = new MoleculeContainer(BALL_COLLISION_REAL_MODE);
-		generateMolecules(container);
+		generateMolecules(container, PARTICLES);
 		viewer.setContainer(container);
 		
 	}else{
 		AbstractContainer *container = new ParticleContainer(BALL_COLLISION_REAL_MODE);
-		generateParticles(container);
+		generateParticles(container, PARTICLES);
 		viewer.setContainer(container);
 	}
 
@@ -49,16 +49,16 @@ int main(int argc, char** argv){
 	return 0;
 }
 
-void generateMolecules(AbstractContainer *mol){
-	for(int i = 0;i<PARTICLES;i++){
+void generateMolecules(AbstractContainer *mol, int size){
+	for(int i = 0;i<size;i++){
 		Molecule m  = Molecule(rand(2, MAX_MOL));
 		((MoleculeContainer *)mol)->add(m);
 	}
 }
 
-void generateParticles(AbstractContainer *pc){
+void generateParticles(AbstractContainer *pc, int size){
 	
-	for(int i = 0;i<PARTICLES;i++){
+	for(int i = 0;i<size;i++){
 		
 		float mass = rand(MIN_M, MAX_M);
 		float radius = mass/(MAX_M-MIN_M);

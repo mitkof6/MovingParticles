@@ -108,8 +108,8 @@ void Particle::collisionHandler(Vector3 dir){
 void Particle::collisionHandler(Particle &p, bool collisionMode){
 
 	Vector3 displacement = position-p.getPosition();
-	Vector3 n = displacement.normalize();
 	float dr = (radius+p.getRadius()-displacement.length())/2;
+	Vector3 n = displacement.normalize();
 
 	//correction
 	position = position+n*dr;

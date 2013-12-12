@@ -1,6 +1,7 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
+//path for dat files (matlab import)
 #define WALL_COLLISION_PATH	"wall.dat"
 #define BALL_COLLISION_PATH	"ball.dat"
 
@@ -13,16 +14,16 @@
 #define BALL_COLLISION_REAL_MODE true
 
 //rendering setup
-#define SMOTH true
+#define SMOOTH true
 #define COLOR true
 #define LIGHT true
 #define WIRED false
 
 //box
-#define BOX_SIZE 20
+#define BOX_SIZE 25
 
 //particles
-#define PARTICLES 5
+#define PARTICLES 20
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f
@@ -42,7 +43,7 @@
 #define STACKS 15
 
 //simulation
-#define dt 0.002
+#define dt 0.001
 
 //metirial
 #define AB_MIN 0

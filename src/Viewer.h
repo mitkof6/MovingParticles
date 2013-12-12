@@ -37,6 +37,8 @@ private:
 
 	bool ballHistogram, wallHistogram;
 
+	bool wired, smooth, color, light;
+
 	void init();
 
 	void render();
