@@ -80,7 +80,7 @@ struct Vector3
     float       length() const;
 	float		lengthSq() const;
     float       distance(const Vector3& vec) const;     // distance between two vectors
-    Vector3    normalize() const;                            //
+    Vector3		normalize() const;                            //
     float       dot(const Vector3& vec) const;          // dot product
     Vector3     cross(const Vector3& vec) const;        // cross product
     bool        equal(const Vector3& vec, float e) const; // compare with epsilon

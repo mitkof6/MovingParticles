@@ -74,7 +74,7 @@ float Matrix3::getDeterminant()
 // inverse 3x3 matrix
 // If cannot find inverse, set identity matrix
 ///////////////////////////////////////////////////////////////////////////////
-Matrix3& Matrix3::invert()
+Matrix3 Matrix3::invert()  //&
 {
     float determinant, invDeterminant;
     float tmp[9];
@@ -98,6 +98,7 @@ Matrix3& Matrix3::invert()
 
     // divide by the determinant
     invDeterminant = 1.0f / determinant;
+	/*
     m[0] = invDeterminant * tmp[0];
     m[1] = invDeterminant * tmp[1];
     m[2] = invDeterminant * tmp[2];
@@ -107,10 +108,36 @@ Matrix3& Matrix3::invert()
     m[6] = invDeterminant * tmp[6];
     m[7] = invDeterminant * tmp[7];
     m[8] = invDeterminant * tmp[8];
+	*/
+	tmp[0] = invDeterminant * tmp[0];
+    tmp[1] = invDeterminant * tmp[1];
+    tmp[2] = invDeterminant * tmp[2];
+    tmp[3] = invDeterminant * tmp[3];
+    tmp[4] = invDeterminant * tmp[4];
+    tmp[5] = invDeterminant * tmp[5];
+    tmp[6] = invDeterminant * tmp[6];
+    tmp[7] = invDeterminant * tmp[7];
+    tmp[8] = invDeterminant * tmp[8];
 
-    return *this;
+    return Matrix3(tmp);//return *this
 }
 
+Matrix3 Matrix3::transpose()//Matrix3& Matrix3::transpose()
+{
+	float tmp[9];
+
+	tmp[0] = m[0];
+	tmp[1] = m[3];
+	tmp[2] = m[6];
+	tmp[3] = m[1];
+	tmp[4] = m[4];
+	tmp[5] = m[7];
+	tmp[6] = m[2];
+	tmp[7] = m[5];
+	tmp[8] = m[8]; 
+
+    return Matrix3(tmp);
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////

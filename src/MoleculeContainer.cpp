@@ -59,7 +59,7 @@ void MoleculeContainer::findWallCollisions(){
 	for(unsigned i = 0;i<molecules.size();i++){
 		Wall wall;
 		if(possibleCollision(molecules[i], wall)){//possible collision check
-
+		
 			investigatePossibleCollision(molecules[i], wall);
 			
 		}
@@ -89,11 +89,11 @@ bool MoleculeContainer::possibleCollision(Molecule &m, Wall &w){
 		
 	}else if(pos.z-r<=-BOX_SIZE/2.0f){
 
-		w = Wall(WALL_NEAR);
+		w = Wall(WALL_FAR);
 		
 	}else if(pos.z+r>=BOX_SIZE/2.0f){
 
-		w = Wall(WALL_FAR);
+		w = Wall(WALL_NEAR);
 		
 	}else{
 		return false;
@@ -106,22 +106,20 @@ void MoleculeContainer::investigatePossibleCollision(Molecule &m, Wall &wall){
 	for(int j = 0;j<m.getMoleculeCount();j++){//per molecule check
 		
 		if(checkForCollision(
-			m, m.getMassCenter()+m.getDisplacement(j), m.getRadius(j),
+			m, (m.getMassCenter()+m.getDisplacement(j)), m.getRadius(j),
 			wall)){
 
 			//TODO collision point
-			/*
+			
 			Vector3 cp, cn;
 			calculateCollisionPoint(
 				m.getMassCenter()+m.getDisplacement(j), m.getRadius(j),
 				m.getMassCenter()+m.getDisplacement(j)+wall.getWallDirection()*m.getRadius(j), 0,
 				cp, cn);
 			
-			m.applyForce(m, cp, cn);
-			*/
-
+			//std::cout<<m.getDisplacement(j)<<std::endl;
 			//handle collision
-			m.collisionHandler(wall.getWallDirection());
+			m.collisionHandler(m, cp, cn);
 					
 			//counter
 			wallCollisions.incCounter();
@@ -134,7 +132,7 @@ void MoleculeContainer::investigatePossibleCollision(Molecule &m, Wall &wall){
 }
 
 bool MoleculeContainer::checkForCollision(
-	Molecule &m, const Vector3 &pos, float radius,
+	Molecule &m, const Vector3 pos, float radius,
 	Wall &wallDir){
 
 	switch(wallDir.getWall()){
@@ -179,7 +177,7 @@ bool MoleculeContainer::checkForCollision(
 			}else{
 				return false;
 			}
-		case WALL_NEAR :
+		case WALL_FAR :
 			if(pos.z-radius	<=-BOX_SIZE/2.0f){
 				//correction
 				float dis = -BOX_SIZE/2.0f-(pos.z-radius);
@@ -190,7 +188,7 @@ bool MoleculeContainer::checkForCollision(
 				
 				return false;
 			}
-		case WALL_FAR:
+		case WALL_NEAR:
 			if(pos.z+radius	>= BOX_SIZE/2.0f){
 				//correction
 				float dis = BOX_SIZE/2.0f-(pos.z+radius);
@@ -240,18 +238,27 @@ bool MoleculeContainer::possibleCollision(Molecule &p, Molecule &q){
 void MoleculeContainer::investigatePossibleCollision(Molecule &p, Molecule &q){
 	
 	for(int i = 0;i<p.getMoleculeCount();i++){
+
 		for(int j = 0;j<q.getMoleculeCount();j++){
+			
 			if(checkForCollision(
 				p, p.getMassCenter()+p.getDisplacement(i), p.getRadius(i),
 				q, q.getMassCenter()+q.getDisplacement(j), q.getRadius(j))){
-
-				//TODO collision point
 				
-				//handle collision
-				p.collisionHandler(q, collisionMode);
+				Vector3 cp, cn;
+				calculateCollisionPoint(
+					p.getMassCenter()+p.getDisplacement(i), p.getRadius(i),
+					q.getMassCenter()+q.getDisplacement(j), q.getRadius(j),
+					cp, cn);
+
+				p.setColor(i, 1, 1, 1);
+				q.setColor(j, 1, 1, 1);
+				p.collisionHandler(p, q, cp, cn);
 
 				ballCollisions.incCounter();
 				ballCollisions.registerEvent();
+
+				return;
 			}
 		}
 	}
@@ -267,9 +274,11 @@ bool MoleculeContainer::checkForCollision(
 
 	if(displacement.lengthSq()<r*r){
 		//correction
+		//std::cout<<"Before: "<<p.getMassCenter()<<std::endl;
 		Vector3 n = displacement.normalize();
 		float dr = (pR+qR-displacement.length())/2;
 		p.setMassCenter(p.getMassCenter()+n*dr);
+		//std::cout<<"After: "<<p.getMassCenter()<<std::endl;
 
 		return true;
 	}else{

@@ -96,11 +96,12 @@ public:
     void        setColumn(int index, const Vector3& v);
 
     const float* get() const;
+	const float* toGLMatrix4() const;
     float       getDeterminant();
 
     Matrix3&    identity();
-    Matrix3&    transpose();                            // transpose itself and return reference
-    Matrix3&    invert();
+    Matrix3    transpose(); //Matrix3&                           // transpose itself and return reference
+    Matrix3    invert(); //Matrix3&    invert();
 
     // operators
     Matrix3     operator+(const Matrix3& rhs) const;    // add rhs
@@ -283,7 +284,6 @@ inline const float* Matrix2::get() const
 {
     return m;
 }
-
 
 
 inline Matrix2& Matrix2::identity()
@@ -488,7 +488,28 @@ inline const float* Matrix3::get() const
     return m;
 }
 
+inline const float* Matrix3::toGLMatrix4() const{
+	float *t = new float[16];
+	
+	t[0] = m[0];
+	t[1] = m[3];
+	t[2] = m[6];
+	t[3] = 0;
+	t[4] = m[1];
+	t[5] = m[4];
+	t[6] = m[7];
+	t[7] = 0;
+	t[8] = m[2];
+	t[9] = m[5];
+	t[10] = m[8];
+	t[11] = 0;
+	t[12] = 0;
+	t[13] = 0;
+	t[14] = 0;
+	t[15] = 1;
 
+	return t;
+}
 
 inline Matrix3& Matrix3::identity()
 {

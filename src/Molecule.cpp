@@ -1,34 +1,48 @@
 ﻿#include "Molecule.h"
 
+#include "glm.hpp"
+
 
 Molecule::Molecule(int n){
 
+	//center
+	massCenter = Vector3( 
+		randMM(MIN_X+2*MOL_RADIUS, MAX_X-2*MOL_RADIUS),
+		randMM(MIN_Y+2*MOL_RADIUS, MAX_Y-2*MOL_RADIUS),
+		randMM(MIN_Z+2*MOL_RADIUS, MAX_Z-2*MOL_RADIUS));
+	
+	float m = randMM(MOL_MASS_MIN, MOL_MASS_MAX);
+	
 	for(int i = 0;i<n;i++){
 		if(i==0){
-			displacement.push_back(Vector3(
-				randMM(MIN_X+2*MAX_M/(MAX_M-MIN_M), MAX_X-2*MAX_M/(MAX_M-MIN_M)),
-				randMM(MIN_Y+2*MAX_M/(MAX_M-MIN_M), MAX_Y-2*MAX_M/(MAX_M-MIN_M)),
-				randMM(MIN_Z+2*MAX_M/(MAX_M-MIN_M), MAX_Z-2*MAX_M/(MAX_M-MIN_M))));
+			displacement.push_back(massCenter);
+		}else if(i<5){
+			displacement.push_back(
+				massCenter+Vector3(
+				2*MOL_RADIUS*sin((i-1)*MOL_TH*PI/180.0),
+				2*MOL_RADIUS*cos((i-1)*MOL_TH*PI/180.0),
+				0));
 
-			mass.push_back(randMM(MIN_M, MAX_M));
-
-			radius.push_back(mass[i]/(MAX_M-MIN_M));
 		}else{
-			displacement.push_back(displacement[0]+Vector3(
-				radius[0]*sin((i-1)*MOL_TH*PI/180.0),radius[0]*cos((i-1)*MOL_TH*PI/180.0), 0));
-
-			mass.push_back(randMM(MIN_M, MAX_M));
-
-			radius.push_back(mass[i]/(MAX_M-MIN_M));
+			displacement.push_back(
+				massCenter+Vector3(
+				0,
+				2*MOL_RADIUS*sin((i-5)*2*MOL_TH*PI/180.0),
+				2*MOL_RADIUS*cos((i-5)*2*MOL_TH*PI/180.0)));
 		}
+
+		mass.push_back(m);
+		radius.push_back(MOL_RADIUS);
+
+		//color
+		color.push_back(
+			Vector3(randMM(0, 1), randMM(0, 1), randMM(0, 1)));
 	}
 
-	//center
+	
+	totalMass = 0.0f;
 	massCenter = Vector3(0, 0, 0);
-	totalMass = 0;
 	for(unsigned i = 0;i<displacement.size();i++){
-		//color
-		color.push_back(Vector3(randMM(0, 1), randMM(0, 1), randMM(0, 1)));
 
 		//center
 		totalMass += mass[i];
@@ -43,7 +57,7 @@ Molecule::Molecule(int n){
 	}
 
 	//define max radius
-	maxRadius = 0;
+	maxRadius = 0.0f;
 	for(unsigned i = 0;i<displacement.size();i++){
 		float temp = (displacement[i]).length()+radius[i];
 
@@ -59,37 +73,70 @@ Molecule::Molecule(int n){
 		randMM(MIN_VX, MAX_VX));
 
 	//angular velosity and orientation
-	orientation = Vector3(
-		randMM(MIN_VX, MAX_VX),
-		randMM(MIN_VX, MAX_VX),
-		randMM(MIN_VX, MAX_VX));
+	R = Matrix3(
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f);
+
 	angularVelocity = Vector3(
-		randMM(MIN_VX, MAX_VX),
-		randMM(MIN_VX, MAX_VX),
-		randMM(MIN_VX, MAX_VX));
+		0.0f,
+		10.0f,
+		10.0f);
 
 	//calculate total inertia
-	//Σ(mi*r^2+mi*di^2)
-	totalInertia = 0;
+	float Ixx = 0.0f, Ixy = 0.0f, Ixz = 0.0f;
+	float Iyx = 0.0f, Iyy = 0.0f, Iyz = 0.0f;
+	float Izx = 00.f, Izy = 0.0f, Izz = 0.0f;
 	for(unsigned i = 0;i<displacement.size();i++){
-		totalInertia += 2/3*mass[i]*radius[i]*radius[i]+
-			mass[i]*displacement[i].lengthSq();
+		Vector3 d = displacement[i];
+		
+		Ixx += mass[i]*(d.z*d.z+d.y*d.y);
+		
+		//Ixy += -2.0f/5*mass[i]*(d.x*d.y);
+		//Ixz += -2.0f/5*mass[i]*(d.x*d.z);
+
+		Iyy += mass[i]*(d.z*d.z+d.x*d.x);
+		//Iyz += -2.0f/5*mass[i]*(d.y*d.z);
+
+		Izz += mass[i]*(d.x*d.x+d.y*d.y);
 	}
+	//Iyx = Ixy;
+	//Izx = Ixz;
+	//Izy = Iyz;
 	
+	inertia = Matrix3(
+		Ixx, Ixy, Ixz,
+		Iyx, Iyy, Iyz,
+		Izx, Izy, Izz);
+	
+	//std::cout<<inertia;
+	inertiaInv = inertia.invert();
+
+	//update R, I, Iinv
+	//updateRotationMatrix();
+
 }
 
 
 Molecule::~Molecule(void){
 
 }
+Vector3 ccp(0, 0, 0);
 
 void Molecule::draw(){
 
 	glPushMatrix();
 
 	glTranslatef(massCenter.x, massCenter.y, massCenter.z);
-	glRotatef(orientation.length(), 
-		orientation.x, orientation.y, orientation.z);
+	//glRotatef(th.length(), 
+		//th.x, th.y, th.z);
+	glColor3f(1, 1, 1);
+	glBegin(GL_LINE_LOOP);
+		glVertex3f(0, 0, 0);
+		glVertex3f(angularVelocity.x, angularVelocity.y, angularVelocity.z);
+	glEnd();
+	
+	glMultMatrixf(R.toGLMatrix4());
 	
 
 	for(unsigned i = 0;i<displacement.size();i++){
@@ -107,11 +154,18 @@ void Molecule::draw(){
 
 	glPopMatrix();
 
+	glPushMatrix();
+	glTranslatef(ccp.x, ccp.y, ccp.z);
+	glColor3f(1, 1, 1);
+	glutWireSphere(0.5, SLICES, STACKS);
+
+	glPopMatrix();
 }
 
 void Molecule::update(){
 	massCenter = massCenter + linearVelocity*dt;
-	orientation = orientation + angularVelocity*dt;
+	
+	updateRotationMatrix();
 }
 
 Vector3 &Molecule::getMassCenter(){
@@ -138,56 +192,161 @@ float Molecule::getRadius(int i){
 	return radius[i];
 }
 
+Matrix3 Molecule::getInertiaInv(){
+	return inertiaInv;
+}
+
 float Molecule::randMM(float min, float max){
 	return (min+rand()*(max-min)/RAND_MAX);
 }
 
-void Molecule::collisionHandler(Vector3 dir){
-	//reflect velocity
-	linearVelocity = linearVelocity - dir*linearVelocity.dot(dir)*2;
+float Molecule::impulseMagnitude(
+	Vector3 vA, Vector3 wA, Vector3 rA, Matrix3 iInvA, float mA,
+	Vector3 vB, Vector3 wB, Vector3 rB, Matrix3 iInvB, float mB,
+	Vector3 n){
+	//if((vA+wA.cross(rA)-vB-wB.cross(rB)).dot(n)<0.0f) return 0;
+	float j = 
+		(-2*(vA+wA.cross(rA)-vB-wB.cross(rB)).dot(n))/
+		(((iInvA*(rA.cross(n))).cross(rA)+(iInvB*(rB.cross(n))).cross(rB)).dot(n) +1/mA+1/mB);
+
+	//std::cout<<"Uref: "<<(vA+wA.cross(rA)-vB-wB.cross(rB)).dot(n)<<std::endl;
+	return j;
 }
 
-void Molecule::collisionHandler(Molecule &q, bool collisionMode){
+float Molecule::impulseMagnitude(
+	Vector3 vA, Vector3 wA, Vector3 rA, Matrix3 iInvA, float mA,
+	Vector3 n){
 
-	Vector3 displacement = massCenter-q.getMassCenter();
-	Vector3 n = displacement.normalize();
+	float j = 
+		(-2*(vA+wA.cross(rA)).dot(n))/
+		(((iInvA*(rA.cross(n))).cross(rA)).dot(n) +1/mA);
 
-	//if simulation is not real mode (velocity change in direction)
-	if(!collisionMode){
-				
-		collisionHandler(n);
-		q.collisionHandler(n*(1));	  //TODO
+	return j;
+}
+
+void Molecule::collisionHandler(Molecule &m, Vector3 cp, Vector3 cn){
+	//cn = cn*(-1);
+	Vector3 rA = cp - m.getMassCenter();
+	Matrix3 iInvA = m.getInertiaInv();
+	float mA = m.getTotalMass();
+
+	float j = impulseMagnitude(
+		m.getLinearVelocity(), m.getAngularVelocity(), rA, iInvA, mA,
+		cn); 
+	
+	Vector3 J = j*cn;
+	//std::cout<<"J "<<J<<std::endl;
+	//std::cout<<"Linear before: "<<m.getLinearVelocity().length()<<std::endl;
+	m.setLinearVelocity(J/mA+m.getLinearVelocity());
+	//std::cout<<"Angular Before: "<<m.getAngularVelocity().length()<<"\n";
+	m.setAngularVelocity(iInvA*(rA.cross(J))+m.getAngularVelocity());
+	//std::cout<<"Angular After: "<<m.getAngularVelocity().length()<<"\n";
+	//std::cout<<"Linear after: "<<m.getLinearVelocity().length()<<std::endl;;
+	
+	ccp = cp;
+}
+
+void Molecule::collisionHandler(Molecule &p, Molecule &q, Vector3 cp, Vector3 cn){
+	Vector3 rA = cp - p.getMassCenter();
+	Matrix3 iInvA = p.getInertiaInv();
+	float mA = p.getTotalMass();
+
+//	ccp = cp;
+
+	Vector3 rB = cp - q.getMassCenter();
+	Matrix3 iInvB = q.getInertiaInv();
+	float mB = q.getTotalMass();
+
+	float j = impulseMagnitude(
+		p.getLinearVelocity(), p.getAngularVelocity(), rA, iInvA, mA,
+		q.getLinearVelocity(), q.getAngularVelocity(), rB, iInvB, mB,
+		cn); 
+	
+	Vector3 J = j*cn;
+	
+	p.setLinearVelocity(J/mA+p.getLinearVelocity());
+	p.setAngularVelocity(iInvA*(rA.cross(J))+p.getAngularVelocity());
+
+	q.setLinearVelocity(-J/mB+q.getLinearVelocity());
+	q.setAngularVelocity(iInvB*(rB.cross(-J))+p.getAngularVelocity());
+}
+
+void Molecule::updateRotationMatrix(){
+	Vector3 w = angularVelocity.normalize();
+	Quaternion q = Quaternion(w, 1.0f);
+	q.rotate(angularVelocity.length()*dt);
+	//q = q.rotatedVector(angularVelocity);
+	R =R*q.rotationMatrix();
+	/*
+	float V = sqrtf(w.y*w.y+w.z*w.z);
+	float L = w.length();
+
+	Matrix3 DR;
+	std::cout<<"V: "<<V<<std::endl;
+	if(V==0.0f){
+		std::cout<<"v = 0\n";
+		DR = Matrix3(
+			1.0f, 0.0f, 0.0f,
+			0.0f, cosf(L*dt), -sinf(L*dt),
+			0.0f, sinf(L*dt), cosf(L*dt));
+
+	}else{
+		Matrix3 r = Matrix3(
+			V/L, 0.0f, w.x/L,
+			-(w.x*w.y)/(V*L), w.z, w.y/L,
+			-(w.x*w.y)/(V*L), -w.y/V, w.z/L);
+
+		Matrix3 rot = Matrix3(
+			cosf(L*dt), -sinf(L*dt), 0.0f,
+			sinf(L*dt), cosf(L*dt), 0.0f,
+			0.0f, 0.0f, 1.0f);
 		
-		return;
+
+		Matrix3 rt = Matrix3(
+			V/L, -(w.x*w.y)/(V*L), -(w.x*w.y)/(V*L),
+			0, w.z, -w.y/V,
+			w.x/L, w.y/L, w.z/L);
+
+		DR = r*rot*rt;
+		//std::cout<<DR;
 	}
 
-	//TODO real collision
+	//update
+	R = R*DR;
+	//std::cout<<"RR: " <<Matrix4(R.toGLMatrix4());
+	
+	*/
+	//update inertia tensor
+	updateInertia();
+}
+
+void Molecule::updateInertia(){
+	
+	inertia = R*inertia*R.transpose();
+	inertiaInv = R*inertiaInv*R.transpose();
 }
 
 float Molecule::getTotalMass(){
 	return totalMass;
 }
 
-float Molecule::getTotalInertia(){
-	return totalInertia;
+Vector3 Molecule::getLinearVelocity(){
+	return linearVelocity;
+}
+
+void Molecule::setLinearVelocity(Vector3 v){
+	linearVelocity = v;
 }
 
 Vector3 Molecule::getAngularVelocity(){
 	return angularVelocity;
 }
 
-void Molecule::setAngularVelocity(Vector3 a){
-	angularVelocity = a;
+void Molecule::setAngularVelocity(Vector3 w){
+	angularVelocity = w;
 }
 
-void Molecule::applyForce(Molecule &m, Vector3 &cp, Vector3 &cn){
-	Vector3 f = cn*m.getTotalMass();
-	
-	Vector3 t = cp.cross(f);
-
-	Vector3 a = t/m.getTotalInertia();
-
-	//m.setRotationAxis((((cp-m.getMassCenter()).cross(cn)+rotationAxis)/2).normalize());
-	//m.setRotationalVelocity(Vector3(0, 0, 0));
-	
+void Molecule::setColor(int i, float r, float g, float b){
+	color[i] = Vector3(r, g, b);
 }
+

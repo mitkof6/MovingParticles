@@ -29,7 +29,7 @@ private:
 	bool possibleCollision(Molecule &m, Wall &w);
 	void investigatePossibleCollision(Molecule &m, Wall &wall);
 	bool checkForCollision(
-		Molecule &m, const Vector3 &pos, float radius, 
+		Molecule &m, const Vector3 pos, float radius, 
 		Wall &wallDir);
 
 	void findMoleculeMoleculeCollisions();

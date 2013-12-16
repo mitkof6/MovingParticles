@@ -8,14 +8,15 @@
 #include "ParticleContainer.h"
 #include "Particle.h"
 
-#include "Box.h"
-#include "Constants.h"
-
 #include "MoleculeContainer.h"
 #include "Molecule.h"
 
+#include "Box.h"
+#include "Constants.h"
+
+
 void generateParticles(AbstractContainer *pc, int size);
-void generateMolecules(AbstractContainer *mol, int size);
+void generateMolecules(AbstractContainer *rbc, int size);
 float rand(float min, float max);
 
 int main(int argc, char** argv){
@@ -25,7 +26,7 @@ int main(int argc, char** argv){
 	Viewer viewer(argc, argv);
 
 	//molecule or particles
-	if(MOLECULE){
+	if(RIGID_BODY){
 		AbstractContainer *container = new MoleculeContainer(BALL_COLLISION_REAL_MODE);
 		generateMolecules(container, PARTICLES);
 		viewer.setContainer(container);
@@ -49,10 +50,10 @@ int main(int argc, char** argv){
 	return 0;
 }
 
-void generateMolecules(AbstractContainer *mol, int size){
+void generateMolecules(AbstractContainer *rbc, int size){
 	for(int i = 0;i<size;i++){
-		Molecule m  = Molecule(rand(2, MAX_MOL));
-		((MoleculeContainer *)mol)->add(m);
+
+		((MoleculeContainer *)rbc)->add(Molecule(MAX_MOL));
 	}
 }
 

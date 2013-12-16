@@ -108,14 +108,14 @@ bool ParticleContainer::checkForCollision(Particle &p, Wall &w){
 		float dis = -BOX_SIZE/2.0f-(pos.z-r);
 		p.setPosition(pos+Vector3(0, 0, dis));
 
-		w = Wall(WALL_NEAR);
+		w = Wall(WALL_FAR);
 		
 	}else if(pos.z+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.z+r);
 		p.setPosition(pos+Vector3(0, 0, dis));
 
-		w = Wall(WALL_FAR);
+		w = Wall(WALL_NEAR);
 		
 	}else{
 		return false;
