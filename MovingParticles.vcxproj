@@ -22,6 +22,7 @@
     <ClCompile Include="src\MoleculeContainer.cpp" />
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\ParticleContainer.cpp" />
+    <ClCompile Include="src\RigidBody.cpp" />
     <ClCompile Include="src\Viewer.cpp" />
     <ClCompile Include="src\Wall.cpp" />
   </ItemGroup>
@@ -33,12 +34,14 @@
     <ClInclude Include="src\CollisionCounter.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Math\Matrices.h" />
+    <ClInclude Include="src\Math\Quaternion.h" />
     <ClInclude Include="src\Math\Vectors.h" />
     <ClInclude Include="src\Molecule.h" />
     <ClInclude Include="src\MoleculeContainer.h" />
     <ClInclude Include="src\Particle.h" />
     <ClInclude Include="src\ParticleContainer.h" />
     <ClInclude Include="src\Renderable.h" />
+    <ClInclude Include="src\RigidBody.h" />
     <ClInclude Include="src\Viewer.h" />
     <ClInclude Include="src\Wall.h" />
   </ItemGroup>
@@ -73,7 +76,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Users\crow\Documents\Visual Studio 2010\Projects\MovingParticles\MovingParticles\Glut\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\crow\Documents\Visual Studio 2010\Projects\MovingParticles\MovingParticles\Glut\include;D:\Lib\glm\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
