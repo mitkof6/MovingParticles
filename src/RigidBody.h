@@ -2,8 +2,8 @@
 #define RIGIDBODY_H_
 
 #include "Renderable.h"
-#include "Math\Matrices.h"
-#include "Math\Vectors.h"
+#include "Math/Matrices.h"
+#include "Math/Vectors.h"
 
 
 class RigidBody : public Renderable{

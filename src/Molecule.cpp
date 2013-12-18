@@ -1,12 +1,10 @@
 ﻿#include "Molecule.h"
 
-#include "glm.hpp"
-
 
 Molecule::Molecule(int n){
 
 	//center
-	massCenter = Vector3( 
+	center = Vector3( 
 		randMM(MIN_X+2*MOL_RADIUS, MAX_X-2*MOL_RADIUS),
 		randMM(MIN_Y+2*MOL_RADIUS, MAX_Y-2*MOL_RADIUS),
 		randMM(MIN_Z+2*MOL_RADIUS, MAX_Z-2*MOL_RADIUS));
@@ -15,17 +13,17 @@ Molecule::Molecule(int n){
 	
 	for(int i = 0;i<n;i++){
 		if(i==0){
-			displacement.push_back(massCenter);
+			displacement.push_back(center);
 		}else if(i<5){
 			displacement.push_back(
-				massCenter+Vector3(
+				center+Vector3(
 				2*MOL_RADIUS*sin((i-1)*MOL_TH*PI/180.0),
 				2*MOL_RADIUS*cos((i-1)*MOL_TH*PI/180.0),
 				0));
 
 		}else{
 			displacement.push_back(
-				massCenter+Vector3(
+				center+Vector3(
 				0,
 				2*MOL_RADIUS*sin((i-5)*2*MOL_TH*PI/180.0),
 				2*MOL_RADIUS*cos((i-5)*2*MOL_TH*PI/180.0)));
@@ -41,20 +39,20 @@ Molecule::Molecule(int n){
 
 	
 	totalMass = 0.0f;
-	massCenter = Vector3(0, 0, 0);
+	center = Vector3(0, 0, 0);
+
 	for(unsigned i = 0;i<displacement.size();i++){
 
 		//center
 		totalMass += mass[i];
-		massCenter = massCenter + displacement[i]*mass[i];
+		center = center + displacement[i]*mass[i];
 	}
-	massCenter = massCenter/totalMass;
+	center = center/totalMass;
 
 	//correct relative displacement
 	for(unsigned i = 0;i<displacement.size();i++){
-		Vector3 newD = displacement[i] - massCenter;
+		Vector3 newD = displacement[i] - center;
 		displacement[i] = newD;
-		dis.push_back(newD);
 	}
 
 	//define max radius
@@ -73,7 +71,7 @@ Molecule::Molecule(int n){
 		randMM(MIN_VX, MAX_VX),
 		randMM(MIN_VX, MAX_VX));
 
-	//angular velosity and orientation
+	//angular velocity and orientation
 	R = Matrix3(
 		1.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f,
@@ -89,8 +87,6 @@ Molecule::Molecule(int n){
 	float Iyx = 0.0f, Iyy = 0.0f, Iyz = 0.0f;
 	float Izx = 00.f, Izy = 0.0f, Izz = 0.0f;
 	
-	float d = displacement[1].length();
-		
 	if(MAX_MOL == 5){
 		Ixx = 3*(2.0f/5*mass[0]*radius[0]*radius[0])+
 			2*(2.0f/5*mass[0]*radius[0]*radius[0]+mass[0]*(2*radius[0])*(2*radius[0]));
@@ -107,50 +103,27 @@ Molecule::Molecule(int n){
 			4*(2.0f/5*mass[0]*radius[0]*radius[0]+mass[0]*(2*radius[0])*(2*radius[0]));
 	}
 		
-	
-	
-	
 	inertia = Matrix3(
 		Ixx, Ixy, Ixz,
 		Iyx, Iyy, Iyz,
 		Izx, Izy, Izz);
-	
-	//std::cout<<inertia;
+
 	inertiaInv = inertia.invert();
-	//std::cout<<inertiaInv;
-	//update R, I, Iinv
-	//updateRotationMatrix();
 
-	//
-	Vector3 vv = Vector3(0, 1, 0);
-	Quaternion qq = Quaternion(vv, 1.0);
-	qq.rotate(45*2*PI/360.0f);
 
-	Matrix3 rr = qq.rotationMatrix();
-	std::cout<<Matrix4(rr.toGLMatrix4());
-
-	updateRotationMatrix();
 }
 
 
 Molecule::~Molecule(void){
 
 }
-Vector3 ccp(0, 0, 0);
 
 void Molecule::draw(){
 
 	glPushMatrix();
 
-	glTranslatef(massCenter.x, massCenter.y, massCenter.z);
+	glTranslatef(center.x, center.y, center.z);
 
-	glColor3f(1, 1, 1);
-	glBegin(GL_LINE_LOOP);
-		glVertex3f(0, 0, 0);
-		glVertex3f(angularVelocity.x, angularVelocity.y, angularVelocity.z);
-	glEnd();
-
-	
 	for(unsigned i = 0;i<displacement.size();i++){	
 			
 		
@@ -159,8 +132,8 @@ void Molecule::draw(){
 
 			glColor3f(color[i].x, color[i].y, color[i].z);
 
+			//glutWireSphere(radius[i], SLICES, STACKS);
 			glutSolidSphere(radius[i], SLICES, STACKS);
-			
 		glPopMatrix();
 	}
 	
@@ -180,31 +153,24 @@ void Molecule::draw(){
 			
 		glPopMatrix();
 	}
-	*/  
+	*/
 	//glutWireSphere(maxRadius, SLICES, STACKS);
-
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(ccp.x, ccp.y, ccp.z);
-	glColor3f(1, 1, 1);
-	glutWireSphere(0.5, SLICES, STACKS);
 
 	glPopMatrix();
 }
 
 void Molecule::update(){
-	massCenter = massCenter + linearVelocity*dt;
+	center = center + linearVelocity*dt;
 	
 	updateRotationMatrix();
 }
 
-Vector3 &Molecule::getMassCenter(){
-	return massCenter;
+Vector3 &Molecule::getCenter(){
+	return center;
 }
 
-void Molecule::setMassCenter(Vector3 c){
-	massCenter = c;
+void Molecule::setCenter(Vector3 c){
+	center = c;
 }
 
 float Molecule::getMaxRadius(){
@@ -258,7 +224,7 @@ float Molecule::impulseMagnitude(
 
 void Molecule::collisionHandler(Molecule &m, Vector3 cp, Vector3 cn){
 	//cn = cn*(-1);
-	Vector3 rA = cp - m.getMassCenter();
+	Vector3 rA = cp - m.getCenter();
 	Matrix3 iInvA = m.getInertiaInv();
 	float mA = m.getTotalMass();
 
@@ -268,25 +234,22 @@ void Molecule::collisionHandler(Molecule &m, Vector3 cp, Vector3 cn){
 	
 	Vector3 J = j*cn;
 	//std::cout<<"J "<<J<<std::endl;
-	std::cout<<"Total before: "<<m.getLinearVelocity().length()+m.getAngularVelocity().length()<<std::endl;
+	//std::cout<<"Total before: "<<m.getLinearVelocity().length()+m.getAngularVelocity().length()<<std::endl;
 
 	m.setLinearVelocity(J/mA+m.getLinearVelocity());
 	
 	m.setAngularVelocity(iInvA*(rA.cross(J))+m.getAngularVelocity()*0.95);
 
-   std::cout<<"Total after: "<<m.getLinearVelocity().length()+m.getAngularVelocity().length()<<std::endl;
-	
-	ccp = cp;
+	//std::cout<<"Total after: "<<m.getLinearVelocity().length()+m.getAngularVelocity().length()<<std::endl;
+
 }
 
 void Molecule::collisionHandler(Molecule &p, Molecule &q, Vector3 cp, Vector3 cn){
-	Vector3 rA = cp - p.getMassCenter();
+	Vector3 rA = cp - p.getCenter();
 	Matrix3 iInvA = p.getInertiaInv();
 	float mA = p.getTotalMass();
 
-	ccp = cp;
-
-	Vector3 rB = cp - q.getMassCenter();
+	Vector3 rB = cp - q.getCenter();
 	Matrix3 iInvB = q.getInertiaInv();
 	float mB = q.getTotalMass();
 
@@ -305,63 +268,25 @@ void Molecule::collisionHandler(Molecule &p, Molecule &q, Vector3 cp, Vector3 cn
 }
 
 void Molecule::updateRotationMatrix(){
-	Quaternion q = Quaternion(angularVelocity.normalize(), 1.0f);
-	q.rotate(dt*angularVelocity.length());
-
+	//Quaternion q = Quaternion(angularVelocity.normalize(), 1.0f);
+	//q.rotate(dt*angularVelocity.length());
+	Quaternion q = Quaternion();
+	q.scaledAxis(angularVelocity*dt);
 	R =R*q.rotationMatrix();
-	//std::cout<<R;
-
-
-	/*
-	float V = sqrtf(w.y*w.y+w.z*w.z);
-	float L = w.length();
-
-	Matrix3 DR;
-	std::cout<<"V: "<<V<<std::endl;
-	if(V==0.0f){
-		std::cout<<"v = 0\n";
-		DR = Matrix3(
-			1.0f, 0.0f, 0.0f,
-			0.0f, cosf(L*dt), -sinf(L*dt),
-			0.0f, sinf(L*dt), cosf(L*dt));
-
-	}else{
-		Matrix3 r = Matrix3(
-			V/L, 0.0f, w.x/L,
-			-(w.x*w.y)/(V*L), w.z, w.y/L,
-			-(w.x*w.y)/(V*L), -w.y/V, w.z/L);
-
-		Matrix3 rot = Matrix3(
-			cosf(L*dt), -sinf(L*dt), 0.0f,
-			sinf(L*dt), cosf(L*dt), 0.0f,
-			0.0f, 0.0f, 1.0f);
-		
-
-		Matrix3 rt = Matrix3(
-			V/L, -(w.x*w.y)/(V*L), -(w.x*w.y)/(V*L),
-			0, w.z, -w.y/V,
-			w.x/L, w.y/L, w.z/L);
-
-		DR = r*rot*rt;
-		//std::cout<<DR;
-	}
-
-	//update
-	R = R*DR;
-	//std::cout<<"RR: " <<Matrix4(R.toGLMatrix4());
 	
-	*/
+
+	//update displacement
+	for(unsigned i = 1;i<displacement.size();i++){
+
+		displacement[i] = q.rotatedVector(displacement[i]);
+		//displacement[i] = R*displacement[i];
+	}
 
 	//update inertia tensor
 	inertia = R*inertia*R.transpose();
 	inertiaInv = R*inertiaInv*R.transpose();
 
-	//update displacement
-	for(unsigned i = 1;i<displacement.size();i++){
-		
-		displacement[i] = q.rotatedVector(displacement[i]);
-		//displacement[i] = R*displacement[i];
-	}
+
 }
 
 

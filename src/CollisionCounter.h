@@ -34,7 +34,7 @@ private:
 	unsigned long time, counter;
 	vector<unsigned long> timeSeq, counterSeq;
 
-	void CollisionCounter::drawString(const char *str, int x, int y, float color[4], void *font);
+	void drawString(const char *str, int x, int y, float color[4], void *font);
 };
 
 #endif

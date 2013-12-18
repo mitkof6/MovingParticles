@@ -33,7 +33,7 @@
 #define BOX_SIZE 30
 
 //particles
-#define PARTICLES 10
+#define PARTICLES 14
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f

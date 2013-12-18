@@ -14,7 +14,7 @@ public:
 	MoleculeContainer(bool collisionMode);
 	~MoleculeContainer(void);
 
-	void add(Molecule &m);
+	void add(Molecule m);
 
 	void draw();
 	void update();

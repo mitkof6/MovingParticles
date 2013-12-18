@@ -7,9 +7,9 @@
 
 #include "Renderable.h"
 #include "Constants.h"
-#include "Math\Vectors.h"
-#include "Math\Matrices.h"
-#include "Math\Quaternion.h"
+#include "Math/Vectors.h"
+#include "Math/Matrices.h"
+#include "Math/Quaternion.h"
 
 #include "GL/glut.h"
 
@@ -26,8 +26,8 @@ public:
 	void draw();
 	void update();
 
-	Vector3 &getMassCenter();
-	void setMassCenter(Vector3 c);
+	Vector3 &getCenter();
+	void setCenter(Vector3 c);
 
 	float getTotalMass();
 
@@ -52,8 +52,8 @@ public:
 
 private:
 	vector<float> radius, mass;
-	vector<Vector3> displacement, dis, color;
-	Vector3 massCenter;
+	vector<Vector3> displacement, color;
+	Vector3 center;
 	Vector3 linearVelocity;
 
 	Vector3 angularVelocity;
