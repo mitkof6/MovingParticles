@@ -26,13 +26,15 @@ int main(int argc, char** argv){
 	Viewer viewer(argc, argv);
 
 	//molecule or particles
-	if(RIGID_BODY){
-		AbstractContainer *container = new MoleculeContainer(BALL_COLLISION_REAL_MODE);
-		generateMolecules(container, PARTICLES);
+	if(MOLECULE){
+		AbstractContainer *container =
+				new MoleculeContainer(BALL_COLLISION_REAL_MODE);
+		generateMolecules(container, MOLECULES);
 		viewer.setContainer(container);
 		
 	}else{
-		AbstractContainer *container = new ParticleContainer(BALL_COLLISION_REAL_MODE);
+		AbstractContainer *container =
+				new ParticleContainer(BALL_COLLISION_REAL_MODE);
 		generateParticles(container, PARTICLES);
 		viewer.setContainer(container);
 	}
@@ -44,16 +46,13 @@ int main(int argc, char** argv){
 	//begin rendering
 	viewer.start();
 
-	//clean up
-	delete box;
-
 	return 0;
 }
 
 void generateMolecules(AbstractContainer *rbc, int size){
 	for(int i = 0;i<size;i++){
 
-		((MoleculeContainer *)rbc)->add(Molecule(MAX_MOL));
+		((MoleculeContainer *)rbc)->add(Molecule(MOLECULES_MAX));
 	}
 }
 
@@ -61,8 +60,8 @@ void generateParticles(AbstractContainer *pc, int size){
 	
 	for(int i = 0;i<size;i++){
 		
-		float mass = rand(MIN_M, MAX_M);
-		float radius = mass/(MAX_M-MIN_M);
+		float mass = rand(MASS_MIN, MASS_MAX);
+		float radius = mass/(MASS_MAX-MASS_MIN);
 
 		Particle p = Particle(
 				rand(0, 1),rand(0, 1),rand(0, 1),

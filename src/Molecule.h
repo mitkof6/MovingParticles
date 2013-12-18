@@ -7,6 +7,7 @@
 
 #include "Renderable.h"
 #include "Constants.h"
+#include "RigidBody.h"
 #include "Math/Vectors.h"
 #include "Math/Matrices.h"
 #include "Math/Quaternion.h"
@@ -17,7 +18,7 @@
 
 using namespace std;
 
-class Molecule : public Renderable{
+class Molecule : public Renderable, public RigidBody{
 
 public:
 	Molecule(int n);
@@ -26,21 +27,8 @@ public:
 	void draw();
 	void update();
 
-	Vector3 &getCenter();
-	void setCenter(Vector3 c);
-
-	float getTotalMass();
-
-	Vector3 getAngularVelocity();
-	void setAngularVelocity(Vector3 w);
-
-	Vector3 getLinearVelocity();
-	void setLinearVelocity(Vector3 v);
-
 	float getMaxRadius();
 	int getMoleculeCount();
-
-	Matrix3 getInertiaInv();
 
 	Vector3 getDisplacement(int i);
 	float getRadius(int i);
@@ -51,17 +39,10 @@ public:
 	void collisionHandler(Molecule &p, Molecule &q, Vector3 cp, Vector3 cn);
 
 private:
-	vector<float> radius, mass;
+	vector<float> radius, masses;
 	vector<Vector3> displacement, color;
-	Vector3 center;
-	Vector3 linearVelocity;
-
-	Vector3 angularVelocity;
 
 	float maxRadius;
-	Matrix3 inertia, inertiaInv;
-	Matrix3 R;
-	float totalMass;
 
 	float randMM(float min, float max);
 

@@ -1,25 +1,20 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
-//path for dat files (matlab import)
-#define WALL_COLLISION_PATH	"wall.dat"
-#define BALL_COLLISION_PATH	"ball.dat"
+//simulation
+#define dt 0.0005
 
-//rigid body
-#define RIGID_BODY true
-#define MOL_TH 90
-#define MOL_MASS_MIN 1
-#define MOL_MASS_MAX 10
-#define MOL_RADIUS 1
-#define MAX_MOL 7
-/*
-#define WIDTH_MIN 2
-#define WIDTH_MAX 4
-#define LENGTH_MIN 2
-#define LENGTH_MAX 4
-#define HEIGHT_MIN 2
-#define HEIGHT_MAX 4
-*/
+//box
+#define BOX_SIZE 30
+
+#define MOLECULE true
+
+//# of particles
+#define PARTICLES 14
+
+//# of molecules
+#define MOLECULES 10
+
 //real velocity collision
 #define BALL_COLLISION_REAL_MODE true
 
@@ -29,31 +24,43 @@
 #define LIGHT true
 #define WIRED false
 
-//box
-#define BOX_SIZE 30
+//molecule
+#define MOLECULE_ANGLE 90
+#define MOLECULE_MASS_MIN 5
+#define MOLECULE_MASS_MAX 10
+#define MOLECULES_MAX 7
 
-//particles
-#define PARTICLES 14
-#define MIN_X -BOX_SIZE/2.0f
-#define MAX_X BOX_SIZE/2.0f
-#define MIN_Y -BOX_SIZE/2.0f
-#define MAX_Y BOX_SIZE/2.0f
-#define MIN_Z -BOX_SIZE/2.0f
-#define MAX_Z BOX_SIZE/2.0f
+//angular velocity
+#define MIN_WX -5
+#define MAX_WX 5
+#define MIN_WY -5
+#define MAX_WY 5
+#define MIN_WZ -5
+#define MAX_WZ 5
+
+//linear velocity
 #define MIN_VX -200
 #define MAX_VX 200
 #define MIN_VY -200
 #define MAX_VY 200
 #define MIN_VZ -200
 #define MAX_VZ 200
-#define MIN_M 5
-#define MAX_M 20
 
+//particles
+#define MASS_MIN 5
+#define MASS_MAX 20
+
+//volume
+#define MIN_X -BOX_SIZE/2.0f
+#define MAX_X BOX_SIZE/2.0f
+#define MIN_Y -BOX_SIZE/2.0f
+#define MAX_Y BOX_SIZE/2.0f
+#define MIN_Z -BOX_SIZE/2.0f
+#define MAX_Z BOX_SIZE/2.0f
+
+//sphare
 #define SLICES 13
 #define STACKS 13
-
-//simulation
-#define dt 0.0005
 
 //metirial
 #define AB_MIN 0
@@ -103,5 +110,8 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR,
 #define OFFSET_Y 15
 #define OFFSET_Z 15
 
+//path for dat files (matlab import)
+#define WALL_COLLISION_PATH	"wall.dat"
+#define BALL_COLLISION_PATH	"ball.dat"
 
 #endif
