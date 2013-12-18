@@ -52,7 +52,7 @@ public:
 
 private:
 	vector<float> radius, mass;
-	vector<Vector3> displacement, color;
+	vector<Vector3> displacement, dis, color;
 	Vector3 massCenter;
 	Vector3 linearVelocity;
 
@@ -75,9 +75,6 @@ private:
 		Vector3 n);
 
 	void updateRotationMatrix();
-	void updateInertia();
-
-
 };
 
 #endif

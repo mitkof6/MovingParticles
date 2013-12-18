@@ -9,9 +9,9 @@
 #define RIGID_BODY true
 #define MOL_TH 90
 #define MOL_MASS_MIN 1
-#define MOL_MASS_MAX 5
+#define MOL_MASS_MAX 10
 #define MOL_RADIUS 1
-#define MAX_MOL 5
+#define MAX_MOL 7
 /*
 #define WIDTH_MIN 2
 #define WIDTH_MAX 4
@@ -30,10 +30,10 @@
 #define WIRED false
 
 //box
-#define BOX_SIZE 13
+#define BOX_SIZE 30
 
 //particles
-#define PARTICLES 1
+#define PARTICLES 10
 #define MIN_X -BOX_SIZE/2.0f
 #define MAX_X BOX_SIZE/2.0f
 #define MIN_Y -BOX_SIZE/2.0f
@@ -53,7 +53,7 @@
 #define STACKS 13
 
 //simulation
-#define dt 0.001
+#define dt 0.0005
 
 //metirial
 #define AB_MIN 0

@@ -258,7 +258,7 @@ void MoleculeContainer::investigatePossibleCollision(Molecule &p, Molecule &q){
 				ballCollisions.incCounter();
 				ballCollisions.registerEvent();
 
-				return;
+				//return;
 			}
 		}
 	}
