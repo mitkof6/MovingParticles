@@ -7,8 +7,8 @@
 //box
 #define BOX_SIZE 20
 
-#define MOLECULE true
-#define PARTICLE false
+#define MOLECULE false
+#define PARTICLE true
 
 //# of particles
 #define PARTICLES 20

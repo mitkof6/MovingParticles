@@ -31,9 +31,6 @@ public:
 
 	float getRadius();
 
-	Vector3 &getLinearVelocity();
-	void setLinearVelocity(Vector3 vv);
-
 	void draw();
 	void update();
 

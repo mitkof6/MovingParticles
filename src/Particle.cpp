@@ -55,14 +55,6 @@ float Particle::getRadius(){
 	return radius;
 }
 
-Vector3 &Particle::getLinearVelocity(){
-	return v;
-}
-
-void Particle::setLinearVelocity(Vector3 vv){
-	v = vv;
-}
-
 void Particle::draw(){
 	glPushMatrix();
 
