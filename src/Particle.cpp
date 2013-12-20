@@ -98,13 +98,7 @@ void Particle::collisionHandler(Vector3 dir){
 void Particle::collisionHandler(Particle &p, bool collisionMode){
 	
 	Vector3 displacement = x-p.getMassCenter();
-	float dr = (radius+p.getRadius()-displacement.length())/2;
 	Vector3 n = displacement.normalize();
-
-	//correction
-	x = x+n*dr;
-	displacement = x-p.getMassCenter();
-	n = displacement.normalize();
 
 	//if simulation is not real mode (velocity change in direction)
 	if(!collisionMode){

@@ -19,9 +19,10 @@ public:
 	void draw();
 	void update();
 
+	//void enable3rdPerson();
+	//void changeTargert();
 
 private:
-
 	vector<DoubleSpring> doubleSprings;
 };
 

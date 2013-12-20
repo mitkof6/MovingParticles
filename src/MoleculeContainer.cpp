@@ -38,7 +38,7 @@ void MoleculeContainer::update(){
 
 	findWallCollisions();
 
-	findMoleculeMoleculeCollisions();
+	findMoleculeCollisions();
 }
 
 void MoleculeContainer::enable3rdPerson(){
@@ -58,55 +58,20 @@ void MoleculeContainer::changeTargert(){
 void MoleculeContainer::findWallCollisions(){
 	for(unsigned i = 0;i<molecules.size();i++){
 		Wall wall;
-		if(possibleCollision(molecules[i], wall)){//possible collision check
+		if(collision.checkForWallCollision(Vector3(0, 0, 0), 
+			molecules[i].getMassCenter(), molecules[i].getMaxRadius(), wall)){//possible collision check
 		
-			investigatePossibleCollision(molecules[i], wall);
+			investigatePossibleWallCollision(molecules[i], wall);
 			
 		}
 	}
 }
 
-bool MoleculeContainer::possibleCollision(Molecule &m, Wall &w){
-	
-	Vector3 pos = m.getMassCenter();
-	float r = m.getMaxRadius();
-
-	if(pos.x-r<=-BOX_SIZE/2.0f){
-
-		w = Wall(WALL_LEFT);
-
-	}else if(pos.x+r>=BOX_SIZE/2.0f){
-
-		w = Wall(WALL_RIGHT);
-		
-	}else if(pos.y-r<=-BOX_SIZE/2.0f){
-	
-		w = Wall(WALL_BOTTOM);
-		
-	}else if(pos.y+r>=BOX_SIZE/2.0f){
-
-		w = Wall(WALL_TOP);
-		
-	}else if(pos.z-r<=-BOX_SIZE/2.0f){
-
-		w = Wall(WALL_FAR);
-		
-	}else if(pos.z+r>=BOX_SIZE/2.0f){
-
-		w = Wall(WALL_NEAR);
-		
-	}else{
-		return false;
-	}
-
-	return true;
-}
-
-void MoleculeContainer::investigatePossibleCollision(Molecule &m, Wall &wall){
+void MoleculeContainer::investigatePossibleWallCollision(Molecule &m, Wall &wall){
 	for(int j = 0;j<m.getMoleculeCount();j++){//per molecule check
 		
-		if(checkForCollision(
-			m, (m.getMassCenter()+m.getDisplacement(j)), m.getRadius(j),
+		if(collision.checkForWallCollision(
+			m.getMassCenter(), (m.getMassCenter()+m.getDisplacement(j)), m.getRadius(j),
 			wall)){
 
 			//TODO collision point
@@ -130,89 +95,18 @@ void MoleculeContainer::investigatePossibleCollision(Molecule &m, Wall &wall){
 	}
 }
 
-bool MoleculeContainer::checkForCollision(
-	Molecule &m, const Vector3 pos, float radius,
-	Wall &wallDir){
-
-	switch(wallDir.getWall()){
-		
-		case WALL_LEFT:
-			if(pos.x-radius	<=-BOX_SIZE/2.0f){
-				//correction
-				float dis = -BOX_SIZE/2.0f-(pos.x-radius);
-				m.setMassCenter(m.getMassCenter()+Vector3(dis, 0, 0));
-
-				return true;
-			}else{
-				return false;
-			}
-		case WALL_RIGHT:
-			if(pos.x+radius	>= BOX_SIZE/2.0f){
-				//correction
-				float dis = BOX_SIZE/2.0f-(pos.x+radius);
-				m.setMassCenter(m.getMassCenter()+Vector3(dis, 0, 0));
-
-				return true;
-			}else{
-				return false;
-			}
-		case WALL_BOTTOM:
-			if(pos.y-radius	<=-BOX_SIZE/2.0f){
-				//correction
-				float dis = -BOX_SIZE/2.0f-(pos.y-radius);
-				m.setMassCenter(m.getMassCenter()+Vector3(0, dis, 0));
-				
-				return true;
-			}else{
-				return false;
-			}
-		case WALL_TOP:
-			if(pos.y+radius	>= BOX_SIZE/2.0f){
-				//correction
-				float dis = BOX_SIZE/2.0f-(pos.y+radius);
-				m.setMassCenter(m.getMassCenter()+Vector3(0, dis, 0));
-
-				return true;
-			}else{
-				return false;
-			}
-		case WALL_FAR :
-			if(pos.z-radius	<=-BOX_SIZE/2.0f){
-				//correction
-				float dis = -BOX_SIZE/2.0f-(pos.z-radius);
-				m.setMassCenter(m.getMassCenter()+Vector3(0, 0, dis));
-
-				return true;
-			}else{
-				
-				return false;
-			}
-		case WALL_NEAR:
-			if(pos.z+radius	>= BOX_SIZE/2.0f){
-				//correction
-				float dis = BOX_SIZE/2.0f-(pos.z+radius);
-				m.setMassCenter(m.getMassCenter()+Vector3(0, 0, dis));
-
-				return true;
-			}else{
-				return false;
-			}
-		default:
-			
-			return false;
-	}
-}
-
-void MoleculeContainer::findMoleculeMoleculeCollisions(){
+void MoleculeContainer::findMoleculeCollisions(){
 	
 	for(unsigned i = 0;i<molecules.size();i++){
 
 		for(unsigned j = 0;j<molecules.size();j++){
 			
 			if(i<j){
-				if(	possibleCollision(molecules[i], molecules[j])){//check for possible collision
+				if(	collision.checkForSpheresCollision(
+					Vector3(0, 0, 0), molecules[i].getMassCenter(), molecules[i].getMaxRadius(),
+					molecules[j].getMassCenter(), molecules[j].getMaxRadius())){//check for possible collision
 
-					investigatePossibleCollision(molecules[i], molecules[j]);//per molecule check
+					investigatePossibleMoleculeCollision(molecules[i], molecules[j]);//per molecule check
 					
 				}
 
@@ -221,28 +115,15 @@ void MoleculeContainer::findMoleculeMoleculeCollisions(){
 	}
 }
 
-bool MoleculeContainer::possibleCollision(Molecule &p, Molecule &q){
-	Vector3 displacement = p.getMassCenter()-q.getMassCenter();
-
-	float r = (p.getMaxRadius()+q.getMaxRadius());
-
-	if(displacement.lengthSq()<r*r){
-		return true;
-	}else{
-		return false;
-	}
-
-}
-
-void MoleculeContainer::investigatePossibleCollision(Molecule &p, Molecule &q){
+void MoleculeContainer::investigatePossibleMoleculeCollision(Molecule &p, Molecule &q){
 	
 	for(int i = 0;i<p.getMoleculeCount();i++){
 
 		for(int j = 0;j<q.getMoleculeCount();j++){
 			
-			if(checkForCollision(
-				p, p.getMassCenter()+p.getDisplacement(i), p.getRadius(i),
-				q, q.getMassCenter()+q.getDisplacement(j), q.getRadius(j))){
+			if(collision.checkForSpheresCollision(
+				p.getMassCenter(), p.getMassCenter()+p.getDisplacement(i), p.getRadius(i),
+				q.getMassCenter()+q.getDisplacement(j), q.getRadius(j))){
 				
 				Vector3 cp, cn;
 				calculateCollisionPoint(
@@ -261,26 +142,6 @@ void MoleculeContainer::investigatePossibleCollision(Molecule &p, Molecule &q){
 				//return;
 			}
 		}
-	}
-}
-
-bool MoleculeContainer::checkForCollision(
-	Molecule &p, const Vector3 &pPos, float pR,
-	Molecule &q, const Vector3 &qPos, float qR){
-
-	Vector3 displacement = pPos-qPos;
-
-	float r = pR+qR;
-
-	if(displacement.lengthSq()<r*r){
-		//correction
-		Vector3 n = displacement.normalize();
-		float dr = (pR+qR-displacement.length())/2;
-		p.setMassCenter(p.getMassCenter()+n*dr);
-
-		return true;
-	}else{
-		return false;
 	}
 }
 

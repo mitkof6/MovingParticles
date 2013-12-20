@@ -15,6 +15,7 @@
     <ClCompile Include="src\Box.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Camera3rd.cpp" />
+    <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\CollisionCounter.cpp" />
     <ClCompile Include="src\DoubleSpring.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="src\Box.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Camera3rd.h" />
+    <ClInclude Include="src\Collision.h" />
     <ClInclude Include="src\CollisionCounter.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\DoubleSpring.h" />

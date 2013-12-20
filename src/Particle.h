@@ -9,7 +9,7 @@
 
 #include "GL/glut.h"
 
-class Particle :public Renderable, public RigidBody{
+class Particle : public Renderable, public RigidBody{
 
 public:
 	Particle(){};

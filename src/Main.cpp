@@ -30,7 +30,6 @@ int main(int argc, char** argv){
 	Viewer viewer(argc, argv);
 
 	//molecule or particles
-	AbstractContainer *container;
 	if(MOLECULE){
 		AbstractContainer *container =
 				new MoleculeContainer();
@@ -59,7 +58,7 @@ int main(int argc, char** argv){
 
 	//clean up
 	delete box;
-	delete container;
+//	delete container;
 
 	system("pause");
 	return 0;

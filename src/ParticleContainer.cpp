@@ -41,22 +41,7 @@ void ParticleContainer::update(){
 
 	findWallCollisions();
 
-	findParticleParticleCollisions();
-}
-
-void ParticleContainer::findWallCollisions(){
-
-	for(unsigned i = 0;i<particles.size();i++){
-		Wall temp;
-		if(checkForCollision(particles[i], temp)){
-			
-			wallCollisions.incCounter();
-			wallCollisions.registerEvent();
-
-			particles[i].collisionHandler(temp.getWallDirection());
-		}
-	}
-
+	findSphereCollisions();
 }
 
 void ParticleContainer::enable3rdPerson(){
@@ -74,67 +59,33 @@ void ParticleContainer::changeTargert(){
 
 }
 
-bool ParticleContainer::checkForCollision(Particle &p, Wall &w){
-	Vector3 pos = p.getMassCenter();
-	float r = p.getRadius();
+void ParticleContainer::findWallCollisions(){
 
-	if(pos.x-r<=-BOX_SIZE/2.0f){
-		//correction
-		float dis = -BOX_SIZE/2.0f-(pos.x-r);
-		p.setMassCenter(pos+Vector3(dis, 0, 0));
+	for(unsigned i = 0;i<particles.size();i++){
+		Wall temp;
+		if(collision.checkForWallCollision(
+			particles[i].getMassCenter(),particles[i].getMassCenter(), particles[i].getRadius(),
+			temp)){
+			
+			wallCollisions.incCounter();
+			wallCollisions.registerEvent();
 
-		w = Wall(WALL_LEFT);
-
-	}else if(pos.x+r>=BOX_SIZE/2.0f){
-		//correction
-		float dis = BOX_SIZE/2.0f-(pos.x+r);
-		p.setMassCenter(pos+Vector3(dis, 0, 0));
-
-		w = Wall(WALL_RIGHT);
-		
-	}else if(pos.y-r<=-BOX_SIZE/2.0f){
-		//correction
-		float dis = -BOX_SIZE/2.0f-(pos.y-r);
-		p.setMassCenter(pos+Vector3(0, dis, 0));
-
-		w = Wall(WALL_BOTTOM);
-		
-	}else if(pos.y+r>=BOX_SIZE/2.0f){
-		//correction
-		float dis = BOX_SIZE/2.0f-(pos.y+r);
-		p.setMassCenter(pos+Vector3(0, dis, 0));
-
-		w = Wall(WALL_TOP);
-		
-	}else if(pos.z-r<=-BOX_SIZE/2.0f){
-		//correction
-		float dis = -BOX_SIZE/2.0f-(pos.z-r);
-		p.setMassCenter(pos+Vector3(0, 0, dis));
-
-		w = Wall(WALL_FAR);
-		
-	}else if(pos.z+r>=BOX_SIZE/2.0f){
-		//correction
-		float dis = BOX_SIZE/2.0f-(pos.z+r);
-		p.setMassCenter(pos+Vector3(0, 0, dis));
-
-		w = Wall(WALL_NEAR);
-		
-	}else{
-		return false;
+			particles[i].collisionHandler(temp.getWallDirection());
+		}
 	}
 
-	return true;
 }
 
-void ParticleContainer::findParticleParticleCollisions(){
+void ParticleContainer::findSphereCollisions(){
 	
 	for(unsigned i = 0;i<particles.size();i++){
 		
 		for(unsigned j = 0;j<particles.size();j++){
 			
 			if(j>i){
-				if(checkForCollision(particles[i], particles[j])){
+				if(collision.checkForSpheresCollision(
+					particles[i].getMassCenter(), particles[i].getMassCenter(), particles[i].getRadius(),
+					particles[j].getMassCenter(), particles[j].getRadius())){
 					
 					ballCollisions.incCounter();
 					ballCollisions.registerEvent();
@@ -146,19 +97,3 @@ void ParticleContainer::findParticleParticleCollisions(){
 		}
 	}
 }
-
-bool ParticleContainer::checkForCollision(Particle &p, Particle &q){
-	Vector3 displacement = p.getMassCenter()-q.getMassCenter();
-
-	float r = (p.getRadius()+q.getRadius());
-
-	if(displacement.lengthSq()<r*r){
-		return true;
-	}else{
-
-		return false;
-	}
-
-}
-
-

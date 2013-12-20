@@ -14,7 +14,7 @@
 #define PARTICLES 20
 
 //# of molecules
-#define MOLECULES 10
+#define MOLECULES 3
 
 //# of springs systems
 #define SPRING_SYSTEMS 4

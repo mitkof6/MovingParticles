@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "AbstractContainer.h"
+#include "Collision.h"
 #include "Molecule.h"
 #include "Wall.h"
 
@@ -24,20 +25,13 @@ public:
 
 private:
 	vector<Molecule> molecules;
+	Collision collision;
 
 	void findWallCollisions();
-	bool possibleCollision(Molecule &m, Wall &w);
-	void investigatePossibleCollision(Molecule &m, Wall &wall);
-	bool checkForCollision(
-		Molecule &m, const Vector3 pos, float radius, 
-		Wall &wallDir);
+	void investigatePossibleWallCollision(Molecule &m, Wall &wall);
 
-	void findMoleculeMoleculeCollisions();
-	bool possibleCollision(Molecule &p, Molecule &q);
-	void investigatePossibleCollision(Molecule &p, Molecule &q);
-	bool checkForCollision(
-		Molecule &p, const Vector3 &pPos, float pR,
-		Molecule &q, const Vector3 &qPos, float qR);
+	void findMoleculeCollisions();
+	void investigatePossibleMoleculeCollision(Molecule &p, Molecule &q);
 
 	void calculateCollisionPoint(
 		const Vector3 &p1, float r1,
