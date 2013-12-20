@@ -16,6 +16,7 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Camera3rd.cpp" />
     <ClCompile Include="src\CollisionCounter.cpp" />
+    <ClCompile Include="src\DoubleSpring.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math\Matrices.cpp" />
     <ClCompile Include="src\Molecule.cpp" />
@@ -23,6 +24,7 @@
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\ParticleContainer.cpp" />
     <ClCompile Include="src\RigidBody.cpp" />
+    <ClCompile Include="src\SpringContainer.cpp" />
     <ClCompile Include="src\Viewer.cpp" />
     <ClCompile Include="src\Wall.cpp" />
   </ItemGroup>
@@ -33,6 +35,7 @@
     <ClInclude Include="src\Camera3rd.h" />
     <ClInclude Include="src\CollisionCounter.h" />
     <ClInclude Include="src\Constants.h" />
+    <ClInclude Include="src\DoubleSpring.h" />
     <ClInclude Include="src\Math\Matrices.h" />
     <ClInclude Include="src\Math\Quaternion.h" />
     <ClInclude Include="src\Math\Vectors.h" />
@@ -42,6 +45,7 @@
     <ClInclude Include="src\ParticleContainer.h" />
     <ClInclude Include="src\Renderable.h" />
     <ClInclude Include="src\RigidBody.h" />
+    <ClInclude Include="src\SpringContainer.h" />
     <ClInclude Include="src\Viewer.h" />
     <ClInclude Include="src\Wall.h" />
   </ItemGroup>

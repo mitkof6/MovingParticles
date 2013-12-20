@@ -49,3 +49,15 @@ Matrix3 RigidBody::getInertiaInv() const{
 Matrix3 RigidBody::getOrientation() const{
 	return orientation;
 }
+
+void RigidBody::applayForce(Vector3 f){
+	totalForce = totalForce + f;
+}
+
+void RigidBody::clearForce(){
+	totalForce = Vector3(0, 0, 0);
+}
+
+Vector3 RigidBody::getTotalForce() const{
+	return totalForce;
+}

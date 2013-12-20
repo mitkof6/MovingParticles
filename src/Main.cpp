@@ -11,12 +11,16 @@
 #include "MoleculeContainer.h"
 #include "Molecule.h"
 
+#include "SpringContainer.h"
+#include "DoubleSpring.h"
+
 #include "Box.h"
 #include "Constants.h"
 
 
 void generateParticles(AbstractContainer *pc, int size);
 void generateMolecules(AbstractContainer *rbc, int size);
+void generateSpringSystems(AbstractContainer *sc, int size);
 float rand(float min, float max);
 
 int main(int argc, char** argv){
@@ -29,14 +33,20 @@ int main(int argc, char** argv){
 	AbstractContainer *container;
 	if(MOLECULE){
 		AbstractContainer *container =
-				new MoleculeContainer(BALL_COLLISION_REAL_MODE);
+				new MoleculeContainer();
 		generateMolecules(container, MOLECULES);
 		viewer.setContainer(container);
 		
-	}else{
+	}else if(PARTICLE){
 		AbstractContainer *container =
 				new ParticleContainer(BALL_COLLISION_REAL_MODE);
 		generateParticles(container, PARTICLES);
+		viewer.setContainer(container);
+	}else{
+		AbstractContainer *container = 
+			new SpringContainer();
+		generateSpringSystems(container, SPRING_SYSTEMS);
+		
 		viewer.setContainer(container);
 	}
 
@@ -53,6 +63,13 @@ int main(int argc, char** argv){
 
 	system("pause");
 	return 0;
+}
+
+void generateSpringSystems(AbstractContainer *sc, int size){
+	for(int i = 0;i<size;i++){
+
+		((SpringContainer *)sc)->add(DoubleSpring());
+	}
 }
 
 void generateMolecules(AbstractContainer *rbc, int size){

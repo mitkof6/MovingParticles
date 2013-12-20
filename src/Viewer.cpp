@@ -29,6 +29,8 @@ Viewer::Viewer(int argc, char** argv) {
 	color = COLOR;
 	light = LIGHT;
 
+	container = 0;
+
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
@@ -152,7 +154,8 @@ void Viewer::render(){
 		}
 
 		//particles
-		container->draw();
+		if(container != 0)
+			container->draw();
 
 		//other objects
 		for(unsigned i = 0;i<drawable.size();i++){
@@ -165,8 +168,8 @@ void Viewer::render(){
 
 void Viewer::update(){
 
-
-	container->update();
+	if(container != 0)
+		container->update();
 
 	for(unsigned i = 0;i<drawable.size();i++){
 		drawable[i]->update();

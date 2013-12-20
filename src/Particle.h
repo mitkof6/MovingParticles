@@ -2,13 +2,14 @@
 #define PARTICLE_H_
 
 #include "Renderable.h"
+#include "RigidBody.h"
 #include "Math/Vectors.h"
 
 #include "Constants.h"
 
 #include "GL/glut.h"
 
-class Particle :public Renderable{
+class Particle :public Renderable, public RigidBody{
 
 public:
 	Particle(){};
@@ -30,13 +31,8 @@ public:
 
 	float getRadius();
 
-	float getMass();
-
-	Vector3 &getPosition();
-	void setPosition(Vector3 p);
-
-	Vector3 &getVelocity();
-	void setVelocity(Vector3 v);
+	Vector3 &getLinearVelocity();
+	void setLinearVelocity(Vector3 vv);
 
 	void draw();
 	void update();
@@ -45,8 +41,7 @@ public:
 	void collisionHandler(Particle &p, bool collisionMode);
 
 private:
-	float radius, mass;
-	Vector3 position, velocity;
+	float radius;
 
 	float red, green, blue;
 

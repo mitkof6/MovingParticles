@@ -7,6 +7,7 @@
 
 class AbstractContainer : public Renderable{
 public:
+	AbstractContainer();
 	AbstractContainer(bool cm);
 	virtual ~AbstractContainer();
 

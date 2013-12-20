@@ -2,27 +2,40 @@
 #define CONSTANTS_H_
 
 //simulation
-#define dt 0.0005
+#define dt 0.005
 
 //box
 #define BOX_SIZE 30
 
-#define MOLECULE true
+#define MOLECULE false
+#define PARTICLE false
 
 //# of particles
-#define PARTICLES 14
+#define PARTICLES 20
 
 //# of molecules
 #define MOLECULES 10
+
+//# of springs systems
+#define SPRING_SYSTEMS 4
 
 //real velocity collision
 #define BALL_COLLISION_REAL_MODE true
 
 //rendering setup
-#define SMOOTH false
+#define SMOOTH true
 #define COLOR true
-#define LIGHT true
+#define LIGHT true//BUG
 #define WIRED false
+
+//spring
+#define MIN_REST_LENGTH 3
+#define MAX_REST_LENGTH 6
+#define MIN_SPRING_K 20
+#define MAX_SPRING_K 40
+#define MIN_SPRING_B 0.2
+#define MAX_SPRING_B 0.8
+#define G 9.8
 
 //molecule
 #define MOLECULE_ANGLE 90
@@ -39,16 +52,16 @@
 #define MAX_WZ 5
 
 //linear velocity
-#define MIN_VX -200
-#define MAX_VX 200
-#define MIN_VY -200
-#define MAX_VY 200
-#define MIN_VZ -200
-#define MAX_VZ 200
+#define MIN_VX -10
+#define MAX_VX 10
+#define MIN_VY -10
+#define MAX_VY 10
+#define MIN_VZ -10
+#define MAX_VZ 10
 
 //particles
 #define MASS_MIN 5
-#define MASS_MAX 20
+#define MASS_MAX 10
 
 //volume
 #define MIN_X -BOX_SIZE/2.0f

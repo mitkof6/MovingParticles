@@ -58,7 +58,7 @@ void ParticleContainer::findWallCollisions(){
 
 void ParticleContainer::enable3rdPerson(){
 	thirdPerson = !thirdPerson;
-	camera.lock(particles[target].getPosition());
+	camera.lock(particles[target].getMassCenter());
 
 }
 
@@ -67,53 +67,53 @@ void ParticleContainer::changeTargert(){
 	if(target==particles.size()){
 		target = 0;
 	}
-	camera.lock(particles[target].getPosition());
+	camera.lock(particles[target].getMassCenter());
 
 }
 
 bool ParticleContainer::checkForCollision(Particle &p, Wall &w){
-	Vector3 pos = p.getPosition();
+	Vector3 pos = p.getMassCenter();
 	float r = p.getRadius();
 
 	if(pos.x-r<=-BOX_SIZE/2.0f){
 		//correction
 		float dis = -BOX_SIZE/2.0f-(pos.x-r);
-		p.setPosition(pos+Vector3(dis, 0, 0));
+		p.setMassCenter(pos+Vector3(dis, 0, 0));
 
 		w = Wall(WALL_LEFT);
 
 	}else if(pos.x+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.x+r);
-		p.setPosition(pos+Vector3(dis, 0, 0));
+		p.setMassCenter(pos+Vector3(dis, 0, 0));
 
 		w = Wall(WALL_RIGHT);
 		
 	}else if(pos.y-r<=-BOX_SIZE/2.0f){
 		//correction
 		float dis = -BOX_SIZE/2.0f-(pos.y-r);
-		p.setPosition(pos+Vector3(0, dis, 0));
+		p.setMassCenter(pos+Vector3(0, dis, 0));
 
 		w = Wall(WALL_BOTTOM);
 		
 	}else if(pos.y+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.y+r);
-		p.setPosition(pos+Vector3(0, dis, 0));
+		p.setMassCenter(pos+Vector3(0, dis, 0));
 
 		w = Wall(WALL_TOP);
 		
 	}else if(pos.z-r<=-BOX_SIZE/2.0f){
 		//correction
 		float dis = -BOX_SIZE/2.0f-(pos.z-r);
-		p.setPosition(pos+Vector3(0, 0, dis));
+		p.setMassCenter(pos+Vector3(0, 0, dis));
 
 		w = Wall(WALL_FAR);
 		
 	}else if(pos.z+r>=BOX_SIZE/2.0f){
 		//correction
 		float dis = BOX_SIZE/2.0f-(pos.z+r);
-		p.setPosition(pos+Vector3(0, 0, dis));
+		p.setMassCenter(pos+Vector3(0, 0, dis));
 
 		w = Wall(WALL_NEAR);
 		
@@ -145,7 +145,7 @@ void ParticleContainer::findParticleParticleCollisions(){
 }
 
 bool ParticleContainer::checkForCollision(Particle &p, Particle &q){
-	Vector3 displacement = p.getPosition()-q.getPosition();
+	Vector3 displacement = p.getMassCenter()-q.getMassCenter();
 
 	float r = (p.getRadius()+q.getRadius());
 

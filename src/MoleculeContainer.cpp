@@ -1,7 +1,7 @@
 #include "MoleculeContainer.h"
 
 
-MoleculeContainer::MoleculeContainer(bool collisionMode): AbstractContainer(collisionMode){
+MoleculeContainer::MoleculeContainer(): AbstractContainer(){
 
 }
 

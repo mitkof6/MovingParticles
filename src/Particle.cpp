@@ -12,8 +12,8 @@ Particle::Particle(
 
 	radius = rad;
 	mass = m;
-	position = Vector3(px, py, pz);
-	velocity = Vector3(vx, vy, vz);
+	x = Vector3(px, py, pz);
+	v = Vector3(vx, vy, vz);
 }
 
 
@@ -55,24 +55,12 @@ float Particle::getRadius(){
 	return radius;
 }
 
-float Particle::getMass(){
-	return mass;
+Vector3 &Particle::getLinearVelocity(){
+	return v;
 }
 
-Vector3 &Particle::getPosition(){
-	return position;
-}
-
-void Particle::setPosition(Vector3 p){
-	position = p;
-}
-
-Vector3 &Particle::getVelocity(){
-	return velocity;
-}
-
-void Particle::setVelocity(Vector3 v){
-	velocity = v;
+void Particle::setLinearVelocity(Vector3 vv){
+	v = vv;
 }
 
 void Particle::draw(){
@@ -86,7 +74,7 @@ void Particle::draw(){
 		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
 		glMaterialf(GL_FRONT, GL_SHININESS, shininess);
 
-		glTranslatef(position.x, position.y, position.z);
+		glTranslatef(x.x, x.y, x.z);
 
 		glutSolidSphere(radius, SLICES, STACKS);
 
@@ -94,7 +82,8 @@ void Particle::draw(){
 }
 
 void Particle::update(){
-	position = position + velocity*dt;
+	x = x + v*dt;
+	//std::cout<<v<<std::endl;
 }
 
 /**
@@ -102,18 +91,18 @@ void Particle::update(){
 */
 void Particle::collisionHandler(Vector3 dir){
 	//reflect velocity
-	velocity = velocity - dir*velocity.dot(dir)*2;
+	v = v - dir*v.dot(dir)*2;
 }
 
 void Particle::collisionHandler(Particle &p, bool collisionMode){
 
-	Vector3 displacement = position-p.getPosition();
+	Vector3 displacement = x-p.getMassCenter();
 	float dr = (radius+p.getRadius()-displacement.length())/2;
 	Vector3 n = displacement.normalize();
 
 	//correction
-	position = position+n*dr;
-	displacement = position-p.getPosition();
+	x = x+n*dr;
+	displacement = x-p.getMassCenter();
 	n = displacement.normalize();
 
 	//if simulation is not real mode (velocity change in direction)
@@ -142,25 +131,25 @@ void Particle::collisionHandler(Particle &p, bool collisionMode){
 	float m11 = (mass-p.getMass())/(mass+p.getMass());
 	float m12 = 2*p.getMass()/(mass+p.getMass());
 
-	float v1n = n.dot(velocity)*m11+n.dot(p.getVelocity())*m12;
+	float v1n = n.dot(v)*m11+n.dot(p.getLinearVelocity())*m12;
 	//float v1t = t.dot(velocity)*m11+t.dot(p.getVelocity())*m12;
 	//float v1o = o.dot(velocity)*m11+o.dot(p.getVelocity())*m12;
-	float v1t = t.dot(velocity);
-	float v1o = o.dot(velocity);
+	float v1t = t.dot(v);
+	float v1o = o.dot(v);
 
 	//v2 = v2*m21+v1*m22
 	float m21 = (p.getMass()-mass)/(mass+p.getMass());
 	float m22 = 2*mass/(mass+p.getMass());
 
-	float v2n = n.dot(p.getVelocity())*m21+n.dot(velocity)*m22;
+	float v2n = n.dot(p.getLinearVelocity())*m21+n.dot(v)*m22;
 	//float v2t = t.dot(p.getVelocity())*m21+t.dot(velocity)*m22;
 	//float v2o = o.dot(p.getVelocity())*m21+o.dot(velocity)*m22;
-	float v2t = t.dot(p.getVelocity());
-	float v2o = o.dot(p.getVelocity());
+	float v2t = t.dot(p.getLinearVelocity());
+	float v2o = o.dot(p.getLinearVelocity());
 
 	//change velocity
-	velocity = n*v1n+t*v1t+o*v1o;
-	p.setVelocity(n*v2n+t*v2t+o*v2o);
+	v = n*v1n+t*v1t+o*v1o;
+	p.setLinearVelocity(n*v2n+t*v2t+o*v2o);
 }
 
 
