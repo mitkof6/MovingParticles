@@ -168,76 +168,6 @@ void Molecule::update(){
 }
 
 
-float Molecule::impulseMagnitude(
-	Vector3 vA, Vector3 wA, Vector3 rA, Matrix3 iInvA, float mA,
-	Vector3 vB, Vector3 wB, Vector3 rB, Matrix3 iInvB, float mB,
-	Vector3 n){
-
-	float j = 
-		(-2*(vA+wA.cross(rA)-vB-wB.cross(rB)).dot(n))/
-		(((iInvA*(rA.cross(n))).cross(rA)+(iInvB*(rB.cross(n))).cross(rB)).dot(n) +1/mA+1/mB);
-
-
-	return j;
-}
-
-float Molecule::impulseMagnitude(
-	Vector3 vA, Vector3 wA, Vector3 rA, Matrix3 iInvA, float mA,
-	Vector3 n){
-
-	
-	float j = 
-		(-2*(vA+wA.cross(rA)).dot(n))/
-		(((iInvA*(rA.cross(n))).cross(rA)).dot(n) +1/mA);
-
-	return j;
-}
-
-void Molecule::collisionHandler(Molecule &m, Vector3 cp, Vector3 cn){
-
-	Vector3 rA = cp - m.getMassCenter();
-	Matrix3 iInvA = m.getInertiaInv();
-	float mA = m.getMass();
-
-	float j = impulseMagnitude(
-		m.getLinearVelocity(), m.getAngularVelocity(), rA, iInvA, mA,
-		cn); 
-	
-	Vector3 J = j*cn;
-	//std::cout<<"J "<<J<<std::endl;
-	//std::cout<<"Total before: "<<m.getLinearVelocity().length()+m.getAngularVelocity().length()<<std::endl;
-
-	m.setLinearVelocity(J/mA+m.getLinearVelocity());
-	
-	m.setAngularVelocity(iInvA*(rA.cross(J))+m.getAngularVelocity());
-
-	//std::cout<<"Total after: "<<m.getLinearVelocity().length()+m.getAngularVelocity().length()<<std::endl;
-
-}
-
-void Molecule::collisionHandler(Molecule &p, Molecule &q, Vector3 cp, Vector3 cn){
-	Vector3 rA = cp - p.getMassCenter();
-	Matrix3 iInvA = p.getInertiaInv();
-	float mA = p.getMass();
-
-	Vector3 rB = cp - q.getMassCenter();
-	Matrix3 iInvB = q.getInertiaInv();
-	float mB = q.getMass();
-
-	float j = impulseMagnitude(
-		p.getLinearVelocity(), p.getAngularVelocity(), rA, iInvA, mA,
-		q.getLinearVelocity(), q.getAngularVelocity(), rB, iInvB, mB,
-		cn); 
-	
-	Vector3 J = j*cn;
-	
-	p.setLinearVelocity(J/mA+p.getLinearVelocity());
-	p.setAngularVelocity((iInvA*(rA.cross(J))+p.getAngularVelocity())*0.90);
-
-	q.setLinearVelocity(-J/mB+q.getLinearVelocity());
-	q.setAngularVelocity((iInvB*(rB.cross(-J))+p.getAngularVelocity())*0.90);
-}
-
 void Molecule::updateRotationMatrix(){
 
 	Quaternion q = Quaternion();
@@ -249,7 +179,7 @@ void Molecule::updateRotationMatrix(){
 	for(unsigned i = 1;i<displacement.size();i++){
 
 		displacement[i] = q.rotatedVector(displacement[i]);
-		//displacement[i] = R*displacement[i];
+		//displacement[i] = orientation*displacement[i];
 	}
 
 	//update inertia tensor

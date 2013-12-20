@@ -10,6 +10,8 @@
 
 using namespace std;
 
+#define GAIN 1.0
+
 class MoleculeContainer : public AbstractContainer{
 public:
 	MoleculeContainer();

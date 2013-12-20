@@ -18,7 +18,7 @@ void RigidBody::setMassCenter(Vector3 c){
 	x = c;
 }
 
-Vector3 RigidBody::getLinearVelocity() const{
+Vector3 &RigidBody::getLinearVelocity(){
 	return v;
 }
 
@@ -26,7 +26,7 @@ void RigidBody::setLinearVelocity(Vector3 vv){
 	v = vv;
 }
 
-Vector3 RigidBody::getAngularVelocity() const{
+Vector3 &RigidBody::getAngularVelocity(){
 	return omega;
 }
 

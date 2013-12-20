@@ -77,13 +77,15 @@ void MoleculeContainer::investigatePossibleWallCollision(Molecule &m, Wall &wall
 			//TODO collision point
 			
 			Vector3 cp, cn;
-			calculateCollisionPoint(
+			collision.calculateCollisionPoint(
 				m.getMassCenter()+m.getDisplacement(j), m.getRadius(j),
 				m.getMassCenter()+m.getDisplacement(j)+wall.getWallDirection()*m.getRadius(j), 0,
 				cp, cn);
 			
 			//handle collision
-			m.collisionHandler(m, cp, cn);
+			collision.handleWallCollision(
+				m.getMassCenter(), m.getLinearVelocity(), m.getAngularVelocity(), m.getInertiaInv(), m.getMass(),
+				cp, cn);
 					
 			//counter
 			wallCollisions.incCounter();
@@ -126,7 +128,7 @@ void MoleculeContainer::investigatePossibleMoleculeCollision(Molecule &p, Molecu
 				q.getMassCenter()+q.getDisplacement(j), q.getRadius(j))){
 				
 				Vector3 cp, cn;
-				calculateCollisionPoint(
+				collision.calculateCollisionPoint(
 					p.getMassCenter()+p.getDisplacement(i), p.getRadius(i),
 					q.getMassCenter()+q.getDisplacement(j), q.getRadius(j),
 					cp, cn);
@@ -134,7 +136,10 @@ void MoleculeContainer::investigatePossibleMoleculeCollision(Molecule &p, Molecu
 				//p.setColor(i, 1, 1, 1);
 				//q.setColor(j, 1, 1, 1);
 				//collision handler
-				p.collisionHandler(p, q, cp, cn);
+				collision.handleSphereCollision(
+					p.getMassCenter(), p.getLinearVelocity(), p.getAngularVelocity(), p.getInertiaInv(), p.getMass(),
+					q.getMassCenter(), q.getLinearVelocity(), q.getAngularVelocity(), q.getInertiaInv(), q.getMass(),
+					cp, cn, GAIN);
 
 				ballCollisions.incCounter();
 				ballCollisions.registerEvent();
@@ -143,15 +148,4 @@ void MoleculeContainer::investigatePossibleMoleculeCollision(Molecule &p, Molecu
 			}
 		}
 	}
-}
-
-void MoleculeContainer::calculateCollisionPoint(
-	const Vector3 &p1, float r1,
-	const Vector3 &p2, float r2,
-	Vector3 &cp, Vector3 &cn){
-
-	float t = r1/(r1+r2);
-
-	cp = p1+(p2-p1)*t;
-	cn = (p2-p1).normalize()*(-1);
 }

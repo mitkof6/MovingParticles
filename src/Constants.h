@@ -7,14 +7,14 @@
 //box
 #define BOX_SIZE 20
 
-#define MOLECULE false
+#define MOLECULE true
 #define PARTICLE false
 
 //# of particles
 #define PARTICLES 20
 
 //# of molecules
-#define MOLECULES 3
+#define MOLECULES 4
 
 //# of springs systems
 #define SPRING_SYSTEMS 4

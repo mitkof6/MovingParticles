@@ -13,8 +13,7 @@ SpringContainer::~SpringContainer(void){
 void SpringContainer::add(DoubleSpring &ds){
 	doubleSprings.push_back(ds);
 
-	ParticleContainer::add(ds.getP1());
-	ParticleContainer::add(ds.getP2());
+
 }
 
 void SpringContainer::draw(){

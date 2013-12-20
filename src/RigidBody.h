@@ -16,10 +16,10 @@ public:
 	void setMassCenter(Vector3 c);
 
 
-	Vector3 getLinearVelocity() const;
+	Vector3 &getLinearVelocity();
 	void setLinearVelocity(Vector3 vv);
 
-	Vector3 getAngularVelocity() const;
+	Vector3 &getAngularVelocity();
 	void setAngularVelocity(Vector3 w);
 
 	float getMass() const;
