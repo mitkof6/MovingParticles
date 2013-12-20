@@ -1,5 +1,8 @@
 #include "ParticleContainer.h"
 
+ParticleContainer::ParticleContainer() : AbstractContainer(true){
+	
+}
 
 ParticleContainer::ParticleContainer(bool collisionMode) : AbstractContainer(collisionMode){
 	
@@ -10,7 +13,7 @@ ParticleContainer::~ParticleContainer(void){
 
 }
 
-void ParticleContainer::add(Particle p){
+void ParticleContainer::add(Particle &p){
 	particles.push_back(p);
 }
 
@@ -46,7 +49,7 @@ void ParticleContainer::findWallCollisions(){
 	for(unsigned i = 0;i<particles.size();i++){
 		Wall temp;
 		if(checkForCollision(particles[i], temp)){
-
+			
 			wallCollisions.incCounter();
 			wallCollisions.registerEvent();
 

@@ -92,10 +92,11 @@ void Particle::update(){
 void Particle::collisionHandler(Vector3 dir){
 	//reflect velocity
 	v = v - dir*v.dot(dir)*2;
+	
 }
 
 void Particle::collisionHandler(Particle &p, bool collisionMode){
-
+	
 	Vector3 displacement = x-p.getMassCenter();
 	float dr = (radius+p.getRadius()-displacement.length())/2;
 	Vector3 n = displacement.normalize();

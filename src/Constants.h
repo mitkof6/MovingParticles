@@ -5,7 +5,7 @@
 #define dt 0.005
 
 //box
-#define BOX_SIZE 30
+#define BOX_SIZE 20
 
 #define MOLECULE false
 #define PARTICLE false

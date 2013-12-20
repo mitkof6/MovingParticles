@@ -133,6 +133,14 @@ void DoubleSpring::update(){
 	p2.clearForce();
 }
 
+Particle &DoubleSpring::getP1(){
+	return p1;
+}
+
+Particle &DoubleSpring::getP2(){
+	return p2;
+}
+
 float DoubleSpring::randMM(float min, float max){
 	return (min+rand()*(max-min)/RAND_MAX);
 }

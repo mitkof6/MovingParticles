@@ -1,7 +1,7 @@
 #include "SpringContainer.h"
 
 
-SpringContainer::SpringContainer() : AbstractContainer(){
+SpringContainer::SpringContainer() : ParticleContainer(){
 
 }
 
@@ -10,8 +10,12 @@ SpringContainer::~SpringContainer(void){
 	
 }
 
-void SpringContainer::add(DoubleSpring ds){
+void SpringContainer::add(DoubleSpring &ds){
 	doubleSprings.push_back(ds);
+
+	
+	ParticleContainer::add(ds.getP1());
+	ParticleContainer::add(ds.getP2());
 }
 
 void SpringContainer::draw(){
@@ -21,15 +25,21 @@ void SpringContainer::draw(){
 }
 
 void SpringContainer::update(){
+	wallCollisions.incTime();
+	ballCollisions.incTime();
+
+	if(thirdPerson){
+		camera.update();
+	}
+
 	for(unsigned i = 0;i<doubleSprings.size();i++){
 		doubleSprings[i].update();
 	}
-}
 
-void SpringContainer::enable3rdPerson(){
 
-}
+	findWallCollisions();
 
-void SpringContainer::changeTargert(){
+	findParticleParticleCollisions();
 
 }
+

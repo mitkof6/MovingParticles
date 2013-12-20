@@ -20,6 +20,9 @@ public:
 	void draw();
 	void update();
 
+	Particle &getP1();
+	Particle &getP2();
+
 private:
 	Particle p1, p2;
 	Vector3 anchor;

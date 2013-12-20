@@ -14,10 +14,11 @@ using namespace std;
 
 class ParticleContainer : public AbstractContainer{
 public:
+	ParticleContainer();
 	ParticleContainer(bool collisionMode);
-	~ParticleContainer(void);
+	virtual ~ParticleContainer(void);
 
-	void add(Particle p);
+	void add(Particle &p);
 
 	void draw();
 	void update();
@@ -26,14 +27,17 @@ public:
 	void changeTargert();
 	   
 
-private:
-	vector<Particle> particles;
+protected:
 
 	void findWallCollisions();
 	bool checkForCollision(Particle &p, Wall &w);
 
 	void findParticleParticleCollisions();
 	bool checkForCollision(Particle &p, Particle &q);
+
+
+private:
+	vector<Particle> particles;
 
 };
 
