@@ -10,7 +10,7 @@ class RigidBody{
 public:
 
 	RigidBody(void);
-	~RigidBody(void);
+	virtual ~RigidBody(void);
 
 	Vector3 &getMassCenter();
 	void setMassCenter(Vector3 c);

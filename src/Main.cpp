@@ -26,6 +26,7 @@ int main(int argc, char** argv){
 	Viewer viewer(argc, argv);
 
 	//molecule or particles
+	AbstractContainer *container;
 	if(MOLECULE){
 		AbstractContainer *container =
 				new MoleculeContainer(BALL_COLLISION_REAL_MODE);
@@ -46,6 +47,11 @@ int main(int argc, char** argv){
 	//begin rendering
 	viewer.start();
 
+	//clean up
+	delete box;
+	delete container;
+
+	system("pause");
 	return 0;
 }
 

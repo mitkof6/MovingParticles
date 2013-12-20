@@ -8,7 +8,7 @@
 class AbstractContainer : public Renderable{
 public:
 	AbstractContainer(bool cm);
-	~AbstractContainer();
+	virtual ~AbstractContainer();
 
 	virtual void draw() =0;
 	virtual void update() =0;

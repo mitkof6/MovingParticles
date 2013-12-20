@@ -40,7 +40,7 @@ public:
 
 private:
 	vector<float> radius, masses;
-	vector<Vector3> displacement, color;
+	vector<Vector3> displacement, dis, color;
 
 	float maxRadius;
 

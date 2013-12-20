@@ -1,6 +1,9 @@
+#include <iostream>
+
 #include "Box.h"
 #include "GL/glut.h"
 
+using namespace std;
 Box::Box(float r, float g, float b, float s){
 
 	red = r;
@@ -12,7 +15,7 @@ Box::Box(float r, float g, float b, float s){
 
 
 Box::~Box(void){
-
+	
 }
 
 void Box::draw(){

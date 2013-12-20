@@ -54,6 +54,7 @@ Molecule::Molecule(int n){
 	for(unsigned i = 0;i<displacement.size();i++){
 		Vector3 newD = displacement[i] - x;
 		displacement[i] = newD;
+		dis.push_back(newD);
 	}
 
 	//define max radius
@@ -139,7 +140,7 @@ void Molecule::draw(){
 	}
 	
 	/*
-	glMultMatrixf(R.toGLMatrix4());
+	glMultMatrixf(orientation.toGLMatrix4());
 	
 
 	for(unsigned i = 0;i<displacement.size();i++){	
@@ -154,7 +155,7 @@ void Molecule::draw(){
 			
 		glPopMatrix();
 	}
-	*/
+	//*/
 	//glutWireSphere(maxRadius, SLICES, STACKS);
 
 	glPopMatrix();
@@ -241,7 +242,7 @@ void Molecule::updateRotationMatrix(){
 
 	Quaternion q = Quaternion();
 	q.scaledAxis(omega*dt);
-	orientation =orientation*q.rotationMatrix();
+	orientation = orientation*q.rotationMatrix();
 	
 
 	//update displacement
