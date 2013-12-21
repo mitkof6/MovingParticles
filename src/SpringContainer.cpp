@@ -1,7 +1,7 @@
 #include "SpringContainer.h"
 
 
-SpringContainer::SpringContainer() : ParticleContainer(){
+SpringContainer::SpringContainer() : AbstractContainer(){
 
 }
 
@@ -42,4 +42,58 @@ void SpringContainer::update(){
 
 	findSphereCollisions();
 
+}
+
+
+void SpringContainer::findWallCollisions(){
+
+	for(unsigned i = 0;i<doubleSprings.size();i++){
+		checkWall(doubleSprings[i].getP1());
+		checkWall(doubleSprings[i].getP2());
+	}
+
+}
+
+void SpringContainer::checkWall(Particle &p){
+	Wall temp;
+	if(collision.checkForWallCollision(
+		p.getMassCenter(),p.getMassCenter(), p.getRadius(),
+		temp)){
+			
+		wallCollisions.incCounter();
+		wallCollisions.registerEvent();
+
+		p.collisionHandler(temp.getWallDirection());
+	}
+}
+
+void SpringContainer::findSphereCollisions(){
+	
+	for(unsigned i = 0;i<doubleSprings.size();i++){
+		
+		for(unsigned j = 0;j<doubleSprings.size();j++){
+			
+			if(j>i){
+				checkSpheres(doubleSprings[i].getP1(), doubleSprings[j].getP1());
+				checkSpheres(doubleSprings[i].getP1(), doubleSprings[j].getP2());
+				checkSpheres(doubleSprings[i].getP2(), doubleSprings[j].getP1());
+				checkSpheres(doubleSprings[i].getP2(), doubleSprings[j].getP2());
+
+				checkSpheres(doubleSprings[i].getP1(), doubleSprings[i].getP2());
+			}
+		}
+	}
+}
+
+void SpringContainer::checkSpheres(Particle &p, Particle &q){
+	if(collision.checkForSpheresCollision(
+		p.getMassCenter(), p.getMassCenter(), p.getRadius(),
+		q.getMassCenter(), q.getRadius())){
+					
+		ballCollisions.incCounter();
+		ballCollisions.registerEvent();
+
+		p.collisionHandler(q, collisionMode);
+
+	}
 }

@@ -3,13 +3,15 @@
 
 #include <vector>
 
-#include "ParticleContainer.h"
+#include "AbstractContainer.h"
 #include "DoubleSpring.h"
 #include "Particle.h"
+#include "Wall.h"
+#include "Collision.h"
 
 using namespace std;
 
-class SpringContainer : public ParticleContainer{
+class SpringContainer : public AbstractContainer{
 public:
 	SpringContainer();
 	~SpringContainer(void);
@@ -19,11 +21,18 @@ public:
 	void draw();
 	void update();
 
-	//void enable3rdPerson();
-	//void changeTargert();
+	void enable3rdPerson(){};
+	void changeTargert(){};
 
 private:
 	vector<DoubleSpring> doubleSprings;
+	Collision collision;
+
+	void findWallCollisions();
+	void checkWall(Particle &p);
+
+	void findSphereCollisions();
+	void checkSpheres(Particle &p, Particle &q);
 };
 
 #endif
