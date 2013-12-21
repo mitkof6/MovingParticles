@@ -15,7 +15,7 @@ Viewer::Viewer(int argc, char** argv) {
 
 	mousePros = false;
 
-	ballHistogram = wallHistogram = false;
+	sphereHistogram = wallHistogram = false;
 
 	thirdPerson = false;
 
@@ -143,7 +143,7 @@ void Viewer::render(){
 		//histogram
 		glTranslatef(-4, -5, -15);
 		container->drawBallCollisions();
-	}else if(ballHistogram){
+	}else if(sphereHistogram){
 		//histogram
 		glTranslatef(-4, -5, -15);
 		container->drawWallCollisions();
@@ -153,7 +153,7 @@ void Viewer::render(){
 			camera.draw();
 		}
 
-		//particles
+		//system
 		//if(container != 0)
 		container->draw();
 
@@ -215,7 +215,7 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 		break;
 	case '2': //store ball collisions
 		//container->saveBallCollisions();
-		ballHistogram = !ballHistogram;
+		sphereHistogram = !sphereHistogram;
 		break;
 	case '3': //clear collisions
 		container->clearCollisions();
@@ -230,7 +230,7 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 	case '6': //3rd person camera change target
 		container->changeTargert();
 		break;
-	case '7': //wird
+	case '7': //wired
 		wired = !wired;
 		if(wired){
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -239,7 +239,7 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 		break;
-	case '8': //smoth
+	case '8': //smooth
 		smooth = !smooth;
 		if(smooth){
 			glShadeModel (GL_SMOOTH);
@@ -306,16 +306,15 @@ void Viewer::mouseMove(int x, int y){
 }
 
 void Viewer::drawString(const char *str, int x, int y, float color[4], void *font){
-    glPushAttrib(GL_LIGHTING_BIT | GL_CURRENT_BIT); // lighting and color mask
-    glDisable(GL_LIGHTING);     // need to disable lighting for proper text color
+    glPushAttrib(GL_LIGHTING_BIT | GL_CURRENT_BIT);
+    glDisable(GL_LIGHTING);
     glDisable(GL_TEXTURE_2D);
 
-    glColor4fv(color);          // set text color
-    glRasterPos2i(x, y);        // place text position
+    glColor4fv(color);
+    glRasterPos2i(x, y);
 
     // loop all characters in the string
-    while(*str)
-    {
+    while(*str){
         glutBitmapCharacter(font, *str);
         ++str;
     }

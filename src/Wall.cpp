@@ -29,7 +29,7 @@ Vector3 Wall::getWallDirection() {
 		case WALL_BOTTOM:
 			return Vector3(0, -1, 0);
 		default:
-			return Vector3(1, 1, 1);//TODO
+			return Vector3(1, 1, 1);
 			break;
 	}
 }

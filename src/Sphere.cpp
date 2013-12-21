@@ -14,6 +14,15 @@ Sphere::Sphere(
 	mass = m;
 	x = Vector3(px, py, pz);
 	v = Vector3(vx, vy, vz);
+
+	//
+	omega = Vector3(0, 0, 0);
+	orientation = Matrix3(1,0,0,0,1,0,0,0,1);
+	inertia = Matrix3(
+			2.0f/5*mass*radius*radius, 0, 0,
+			0, 2.0f/5*mass*radius*radius, 0,
+			0, 0, 2.0f/5*mass*radius*radius);
+	inertiaInv = inertia.invert();
 }
 
 
@@ -60,7 +69,7 @@ void Sphere::draw(){
 
 		glColor3f(red, green, blue);
 
-		//metirial
+		//Material
 		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
@@ -80,7 +89,6 @@ void Sphere::update(){
 void Sphere::collisionHandler(Vector3 dir){
 	//reflect velocity
 	v = v - dir*v.dot(dir)*2;
-	
 }
 
 void Sphere::collisionHandler(Sphere &p, bool collisionMode){
@@ -103,7 +111,6 @@ void Sphere::collisionHandler(Sphere &p, bool collisionMode){
 
 	//if t, n parallel
 	if(t.length()==0){
-		//std::cout<<"papalel\n";
 		Vector3 t(0, 1, 0);
 		t = n.cross(t).normalize();
 	}
