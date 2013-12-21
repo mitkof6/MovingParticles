@@ -12,14 +12,9 @@ SpringContainer::~SpringContainer(void){
 
 void SpringContainer::add(DoubleSpring &ds){
 	doubleSprings.push_back(ds);
-
-
 }
 
 void SpringContainer::draw(){
-	if(thirdPerson){
-		camera.update();
-	}
 
 	for(unsigned i = 0;i<doubleSprings.size();i++){
 		doubleSprings[i].draw();
@@ -30,10 +25,6 @@ void SpringContainer::update(){
 	wallCollisions.incTime();
 	ballCollisions.incTime();
 
-	if(thirdPerson){
-		camera.update();
-	}
-
 	for(unsigned i = 0;i<doubleSprings.size();i++){
 		doubleSprings[i].update();
 	}
@@ -42,6 +33,8 @@ void SpringContainer::update(){
 
 	findSphereCollisions();
 
+	wallCollisions.registerEvent();
+	ballCollisions.registerEvent();
 }
 
 
@@ -64,6 +57,8 @@ void SpringContainer::checkWall(Particle &p){
 		wallCollisions.registerEvent();
 
 		p.collisionHandler(temp.getWallDirection());
+
+		wallCollisions.incCounter();
 	}
 }
 
@@ -94,6 +89,7 @@ void SpringContainer::checkSpheres(Particle &p, Particle &q){
 		ballCollisions.registerEvent();
 
 		p.collisionHandler(q, collisionMode);
-
+		
+		ballCollisions.incCounter();
 	}
 }

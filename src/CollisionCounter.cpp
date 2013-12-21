@@ -2,7 +2,7 @@
 
 
 CollisionCounter::CollisionCounter(){
-	time = counter = 0;
+	time = counter = difference = 0;
 }
 
 
@@ -15,6 +15,7 @@ void CollisionCounter::incTime(){
 }
 
 void CollisionCounter::incCounter(){
+	difference++;
 	counter++;
 }
 
@@ -112,4 +113,15 @@ void CollisionCounter::draw(){
 
 void CollisionCounter::update(){
 
+}
+
+unsigned long CollisionCounter::getDifference(){
+	short temp = difference;
+	difference = 0;
+	return temp;
+	
+}
+
+void CollisionCounter::add(unsigned long count){
+	counter += count;		
 }

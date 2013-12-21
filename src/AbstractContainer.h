@@ -4,6 +4,7 @@
 #include "Renderable.h"
 #include "CollisionCounter.h"
 #include "Camera3rd.h"
+#include "Collision.h"
 
 class AbstractContainer : public Renderable{
 public:
@@ -30,11 +31,15 @@ public:
 	virtual bool getCameraMode();
 	virtual int getTargetIndex();
 	virtual bool getCollisionMode();
+
+	virtual CollisionCounter &getWallCollisionCounter();
+	virtual CollisionCounter &getBallCollisionCounter();
 	
 
 protected:
 
 	CollisionCounter wallCollisions, ballCollisions;
+	Collision collision;
 
 	Camera3rd camera;
 	bool thirdPerson;

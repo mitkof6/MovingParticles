@@ -42,6 +42,9 @@ void ParticleContainer::update(){
 	findWallCollisions();
 
 	findSphereCollisions();
+
+	wallCollisions.registerEvent();
+	ballCollisions.registerEvent();
 }
 
 void ParticleContainer::enable3rdPerson(){
@@ -66,11 +69,10 @@ void ParticleContainer::findWallCollisions(){
 		if(collision.checkForWallCollision(
 			particles[i].getMassCenter(),particles[i].getMassCenter(), particles[i].getRadius(),
 			temp)){
-			
-			wallCollisions.incCounter();
-			wallCollisions.registerEvent();
 
 			particles[i].collisionHandler(temp.getWallDirection());
+
+			wallCollisions.incCounter();
 		}
 	}
 
@@ -87,11 +89,9 @@ void ParticleContainer::findSphereCollisions(){
 					particles[i].getMassCenter(), particles[i].getMassCenter(), particles[i].getRadius(),
 					particles[j].getMassCenter(), particles[j].getRadius())){
 					
-					ballCollisions.incCounter();
-					ballCollisions.registerEvent();
-
 					particles[i].collisionHandler(particles[j], collisionMode);
 
+					ballCollisions.incCounter();
 				}
 			}
 		}

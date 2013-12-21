@@ -2,10 +2,10 @@
 #define CONSTANTS_H_
 
 //simulation
-#define dt 0.005
+#define dt 0.05
 
 //box
-#define BOX_SIZE 40
+#define BOX_SIZE 50
 
 #define MOLECULE false
 #define PARTICLE false
@@ -14,10 +14,10 @@
 #define PARTICLES 20
 
 //# of molecules
-#define MOLECULES 4
+#define MOLECULES 1
 
 //# of springs systems
-#define SPRING_SYSTEMS 10
+#define SPRING_SYSTEMS 1
 
 //real velocity collision
 #define BALL_COLLISION_REAL_MODE true
@@ -33,8 +33,8 @@
 #define MAX_REST_LENGTH 6
 #define MIN_SPRING_K 20
 #define MAX_SPRING_K 40
-#define MIN_SPRING_B 0.2
-#define MAX_SPRING_B 0.8
+#define MIN_SPRING_B 0.1
+#define MAX_SPRING_B 0.2
 #define G 9.8
 
 //molecule

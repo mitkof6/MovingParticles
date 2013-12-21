@@ -29,9 +29,14 @@ public:
 
 	void saveToMat(string path);
 
+	unsigned long getDifference();
+
+	void add(unsigned long count);
+
 private:
 	string name;
 	unsigned long time, counter;
+	short difference;
 	vector<unsigned long> timeSeq, counterSeq;
 
 	void drawString(const char *str, int x, int y, float color[4], void *font);

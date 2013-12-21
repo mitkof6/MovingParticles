@@ -39,6 +39,9 @@ void MoleculeContainer::update(){
 	findWallCollisions();
 
 	findMoleculeCollisions();
+
+	wallCollisions.registerEvent();
+	ballCollisions.registerEvent();
 }
 
 void MoleculeContainer::enable3rdPerson(){
@@ -89,7 +92,6 @@ void MoleculeContainer::investigatePossibleWallCollision(Molecule &m, Wall &wall
 					
 			//counter
 			wallCollisions.incCounter();
-			wallCollisions.registerEvent();
 					
 			break;
 
@@ -142,7 +144,6 @@ void MoleculeContainer::investigatePossibleMoleculeCollision(Molecule &p, Molecu
 					cp, cn, GAIN);
 
 				ballCollisions.incCounter();
-				ballCollisions.registerEvent();
 
 				//return;
 			}

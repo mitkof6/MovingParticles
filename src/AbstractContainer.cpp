@@ -62,4 +62,12 @@ bool AbstractContainer::getCollisionMode(){
 	return collisionMode;
 }
 
+CollisionCounter &AbstractContainer::getWallCollisionCounter(){
+	return wallCollisions;
+}
+
+CollisionCounter &AbstractContainer::getBallCollisionCounter(){
+	return ballCollisions;
+}
+
 

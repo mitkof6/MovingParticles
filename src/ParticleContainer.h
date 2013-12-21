@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "AbstractContainer.h"
-#include "Collision.h"
 #include "Particle.h"
 #include "Constants.h"
 #include "Wall.h"
@@ -14,6 +13,8 @@ using namespace std;
 
 class ParticleContainer : public AbstractContainer{
 public:
+	vector<Particle> particles;
+
 	ParticleContainer();
 	ParticleContainer(bool collisionMode);
 	~ParticleContainer(void);
@@ -28,10 +29,6 @@ public:
 	   
 
 private:
-	vector<Particle> particles;
-	Collision collision;
-
-protected:
 	void findWallCollisions();
 
 	void findSphereCollisions();

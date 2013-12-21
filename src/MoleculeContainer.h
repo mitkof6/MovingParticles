@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "AbstractContainer.h"
-#include "Collision.h"
 #include "Molecule.h"
 #include "Wall.h"
 
@@ -14,6 +13,8 @@ using namespace std;
 
 class MoleculeContainer : public AbstractContainer{
 public:
+	vector<Molecule> molecules;
+
 	MoleculeContainer();
 	~MoleculeContainer(void);
 
@@ -25,10 +26,8 @@ public:
 	void enable3rdPerson();
 	void changeTargert();
 
-private:
-	vector<Molecule> molecules;
-	Collision collision;
 
+private:
 	void findWallCollisions();
 	void investigatePossibleWallCollision(Molecule &m, Wall &wall);
 

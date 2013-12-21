@@ -14,6 +14,8 @@
 #include "SpringContainer.h"
 #include "DoubleSpring.h"
 
+#include "MixedSystem.h"
+
 #include "Box.h"
 #include "Constants.h"
 
@@ -21,6 +23,7 @@
 void generateParticles(AbstractContainer *pc, int size);
 void generateMolecules(AbstractContainer *rbc, int size);
 void generateSpringSystems(AbstractContainer *sc, int size);
+
 float rand(float min, float max);
 
 int main(int argc, char** argv){
@@ -42,10 +45,15 @@ int main(int argc, char** argv){
 		generateParticles(container, PARTICLES);
 		viewer.setContainer(container);
 	}else{
+		SpringContainer springContainer = SpringContainer();
+		generateSpringSystems(&springContainer, SPRING_SYSTEMS);
+
+		MoleculeContainer moleculeContainer = MoleculeContainer();
+		generateMolecules(&moleculeContainer, MOLECULES);
+
 		AbstractContainer *container = 
-			new SpringContainer();
-		generateSpringSystems(container, SPRING_SYSTEMS);
-		
+			new MixedSystem(springContainer, moleculeContainer);
+
 		viewer.setContainer(container);
 	}
 
@@ -58,7 +66,6 @@ int main(int argc, char** argv){
 
 	//clean up
 	delete box;
-//	delete container;
 
 	system("pause");
 	return 0;

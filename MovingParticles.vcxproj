@@ -20,6 +20,7 @@
     <ClCompile Include="src\DoubleSpring.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math\Matrices.cpp" />
+    <ClCompile Include="src\MixedSystem.cpp" />
     <ClCompile Include="src\Molecule.cpp" />
     <ClCompile Include="src\MoleculeContainer.cpp" />
     <ClCompile Include="src\Particle.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="src\Math\Matrices.h" />
     <ClInclude Include="src\Math\Quaternion.h" />
     <ClInclude Include="src\Math\Vectors.h" />
+    <ClInclude Include="src\MixedSystem.h" />
     <ClInclude Include="src\Molecule.h" />
     <ClInclude Include="src\MoleculeContainer.h" />
     <ClInclude Include="src\Particle.h" />

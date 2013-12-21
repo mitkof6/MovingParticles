@@ -7,12 +7,13 @@
 #include "DoubleSpring.h"
 #include "Particle.h"
 #include "Wall.h"
-#include "Collision.h"
 
 using namespace std;
 
 class SpringContainer : public AbstractContainer{
 public:
+	vector<DoubleSpring> doubleSprings;
+
 	SpringContainer();
 	~SpringContainer(void);
 
@@ -25,9 +26,6 @@ public:
 	void changeTargert(){};
 
 private:
-	vector<DoubleSpring> doubleSprings;
-	Collision collision;
-
 	void findWallCollisions();
 	void checkWall(Particle &p);
 
