@@ -53,15 +53,15 @@ void MixedSystem::resolveSystemCollisions(){
 
 			for(int k = 0;k<moleculeContainer.molecules[i].getMoleculeCount();k++){
 				
-				checkSpheres(springContainer.doubleSprings[j].getP1(), moleculeContainer.molecules[i], k);	
-				checkSpheres(springContainer.doubleSprings[j].getP2(), moleculeContainer.molecules[i], k);
+				checkSpheres(springContainer.doubleSprings[j].getSphereOne(), moleculeContainer.molecules[i], k);	
+				checkSpheres(springContainer.doubleSprings[j].getSphereTwo(), moleculeContainer.molecules[i], k);
 				
 			}
 		}
 	}
 }
 
-void MixedSystem::checkSpheres(Particle &p, Molecule &m, int k){
+void MixedSystem::checkSpheres(Sphere &p, Molecule &m, int k){
 	if(collision.checkForSpheresCollision(
 		p.getMassCenter(), p.getMassCenter(), p.getRadius(),
 		m.getMassCenter()+m.getDisplacement(k), m.getRadius(k))){

@@ -15,7 +15,14 @@ public:
 	Box(float r, float g, float b, float s);
 	~Box(void);
 
+	/**
+	 * Render box
+	 */
 	void draw();
+
+	/**
+	 * Does nothing
+	 */
 	void update(){};
 
 	float getSize();

@@ -1,25 +1,25 @@
-#ifndef PARTICLECONTAINER_H_
-#define PARTICLECONTAINER_H_
+#ifndef SPHERECONTAINER_H_
+#define SPHERECONTAINER_H_
 
 #include <vector>
 
 #include "AbstractContainer.h"
-#include "Particle.h"
+#include "Sphere.h"
 #include "Constants.h"
 #include "Wall.h"
 #include "Math/Vectors.h"
 
 using namespace std;
 
-class ParticleContainer : public AbstractContainer{
+class SphereContainer : public AbstractContainer{
 public:
-	vector<Particle> particles;
+	vector<Sphere> particles;
 
-	ParticleContainer();
-	ParticleContainer(bool collisionMode);
-	~ParticleContainer(void);
+	SphereContainer();
+	SphereContainer(bool collisionMode);
+	~SphereContainer(void);
 
-	void add(Particle &p);
+	void add(Sphere &p);
 
 	void draw();
 	void update();

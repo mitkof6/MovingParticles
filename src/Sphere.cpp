@@ -1,6 +1,6 @@
-#include "Particle.h"
+#include "Sphere.h"
 
-Particle::Particle(
+Sphere::Sphere(
 	float r, float g, float b,
 	float px, float py, float pz,
 	float vx, float vy, float vz,
@@ -17,11 +17,11 @@ Particle::Particle(
 }
 
 
-Particle::~Particle(){
+Sphere::~Sphere(){
 
 }
 
-void Particle::setMatirial(
+void Sphere::setMatirial(
 		float ax, float ay, float az, float aw,
 		float dx, float dy, float dz, float dw,
 		float sx, float sy, float sz, float sw,
@@ -46,16 +46,16 @@ void Particle::setMatirial(
 	shininess = sh;
 }
 
-bool Particle::operator==(Particle &p){
+bool Sphere::operator==(Sphere &p){
 	if(this==&p) return true;
 	return false;
 }
 
-float Particle::getRadius(){
+float Sphere::getRadius(){
 	return radius;
 }
 
-void Particle::draw(){
+void Sphere::draw(){
 	glPushMatrix();
 
 		glColor3f(red, green, blue);
@@ -73,17 +73,17 @@ void Particle::draw(){
 	glPopMatrix();
 }
 
-void Particle::update(){
+void Sphere::update(){
 	x = x + v*dt;
 }
 
-void Particle::collisionHandler(Vector3 dir){
+void Sphere::collisionHandler(Vector3 dir){
 	//reflect velocity
 	v = v - dir*v.dot(dir)*2;
 	
 }
 
-void Particle::collisionHandler(Particle &p, bool collisionMode){
+void Sphere::collisionHandler(Sphere &p, bool collisionMode){
 	
 	Vector3 displacement = x-p.getMassCenter();
 	Vector3 n = displacement.normalize();

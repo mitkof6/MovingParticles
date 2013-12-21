@@ -50,7 +50,14 @@ public:
 	*/
 	void strafe(float speed);
 
+	/**
+	 * Set camera using glut.lookAt
+	 */
 	void draw();
+
+	/**
+	 * Does nothing
+	 */
 	void update(){};
 
 private:

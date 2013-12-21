@@ -25,7 +25,7 @@ private:
 	MoleculeContainer moleculeContainer;
 
 	void resolveSystemCollisions();
-	void checkSpheres(Particle &p, Molecule &m, int k);
+	void checkSpheres(Sphere &p, Molecule &m, int k);
 };
 
 #endif

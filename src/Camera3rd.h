@@ -37,7 +37,15 @@ public:
 	 */
 	void setOffset(float offsetX, float offsetY, float offsetZ);
 
+	/**
+	 * Set camera using glut.lookAt
+	 */
 	void draw();
+
+	/**
+	 * Update camera position based on the tractable
+	 * particle
+	 */
 	void update();
 
 private:

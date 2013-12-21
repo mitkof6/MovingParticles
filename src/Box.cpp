@@ -20,6 +20,10 @@ Box::~Box(void){
 
 void Box::draw(){
 
+	glPushAttrib(GL_LIGHTING_BIT | GL_CURRENT_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
 	glPushMatrix();
 
 		glColor3f(red, green, blue);
@@ -29,6 +33,10 @@ void Box::draw(){
 		glLineWidth(1);
 
 	glPopMatrix();
+
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_LIGHTING);
+	glPopAttrib();
 
 }
 

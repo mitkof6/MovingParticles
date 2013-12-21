@@ -5,7 +5,7 @@
 
 #include "AbstractContainer.h"
 #include "DoubleSpring.h"
-#include "Particle.h"
+#include "Sphere.h"
 #include "Wall.h"
 
 using namespace std;
@@ -27,10 +27,10 @@ public:
 
 private:
 	void findWallCollisions();
-	void checkWall(Particle &p);
+	void checkWall(Sphere &p);
 
 	void findSphereCollisions();
-	void checkSpheres(Particle &p, Particle &q);
+	void checkSpheres(Sphere &p, Sphere &q);
 };
 
 #endif

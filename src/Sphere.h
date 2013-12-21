@@ -1,5 +1,5 @@
-#ifndef PARTICLE_H_
-#define PARTICLE_H_
+#ifndef SPHERE_H_
+#define SPHERE_H_
 
 #include "Renderable.h"
 #include "RigidBody.h"
@@ -10,16 +10,16 @@
 #include "GL/glut.h"
 
 
-class Particle : public Renderable, public RigidBody{
+class Sphere : public Renderable, public RigidBody{
 
 public:
-	Particle(){};
-	Particle(
+	Sphere(){};
+	Sphere(
 		float r, float g, float b,
 		float px, float py, float pz,
 		float vx, float vy, float vz,
 		float rad, float m);
-	~Particle();
+	~Sphere();
 
 	void setMatirial(
 		float ax, float ay, float az, float aw,
@@ -28,7 +28,7 @@ public:
 		float sh);
 
 
-	bool operator==(Particle &p);
+	bool operator==(Sphere &p);
 
 	float getRadius();
 
@@ -36,7 +36,7 @@ public:
 	void update();
 
 	void collisionHandler(Vector3 dir);
-	void collisionHandler(Particle &p, bool collisionMode);
+	void collisionHandler(Sphere &p, bool collisionMode);
 
 private:
 	float radius;

@@ -1,23 +1,23 @@
-#include "ParticleContainer.h"
+#include "SphereContainer.h"
 
-ParticleContainer::ParticleContainer() : AbstractContainer(true){
+SphereContainer::SphereContainer() : AbstractContainer(true){
 	
 }
 
-ParticleContainer::ParticleContainer(bool collisionMode) : AbstractContainer(collisionMode){
+SphereContainer::SphereContainer(bool collisionMode) : AbstractContainer(collisionMode){
 	
 }
 
 
-ParticleContainer::~ParticleContainer(void){
+SphereContainer::~SphereContainer(void){
 
 }
 
-void ParticleContainer::add(Particle &p){
+void SphereContainer::add(Sphere &p){
 	particles.push_back(p);
 }
 
-void ParticleContainer::draw(){
+void SphereContainer::draw(){
 	if(thirdPerson){
 		camera.draw();
 	}
@@ -27,7 +27,7 @@ void ParticleContainer::draw(){
 	}
 }
 
-void ParticleContainer::update(){
+void SphereContainer::update(){
 	wallCollisions.incTime();
 	ballCollisions.incTime();
 
@@ -47,13 +47,13 @@ void ParticleContainer::update(){
 	ballCollisions.registerEvent();
 }
 
-void ParticleContainer::enable3rdPerson(){
+void SphereContainer::enable3rdPerson(){
 	thirdPerson = !thirdPerson;
 	camera.lock(particles[target].getMassCenter());
 
 }
 
-void ParticleContainer::changeTargert(){
+void SphereContainer::changeTargert(){
 	target++;
 	if(target==particles.size()){
 		target = 0;
@@ -62,7 +62,7 @@ void ParticleContainer::changeTargert(){
 
 }
 
-void ParticleContainer::findWallCollisions(){
+void SphereContainer::findWallCollisions(){
 
 	for(unsigned i = 0;i<particles.size();i++){
 		Wall temp;
@@ -78,7 +78,7 @@ void ParticleContainer::findWallCollisions(){
 
 }
 
-void ParticleContainer::findSphereCollisions(){
+void SphereContainer::findSphereCollisions(){
 	
 	for(unsigned i = 0;i<particles.size();i++){
 		
