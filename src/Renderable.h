@@ -5,7 +5,7 @@ class Renderable{
 public:
 	Renderable(){};
 
-	~Renderable(void){};
+	virtual ~Renderable(void){};
 
 	virtual void draw() =0;
 	virtual void update() =0;

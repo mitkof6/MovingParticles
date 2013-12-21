@@ -1,6 +1,5 @@
 #include "AbstractContainer.h"
 
-
 AbstractContainer::AbstractContainer(){
 	wallCollisions.setName("Wall");
 	ballCollisions.setName("Ball");

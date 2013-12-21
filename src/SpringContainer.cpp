@@ -10,7 +10,7 @@ SpringContainer::~SpringContainer(void){
 	
 }
 
-void SpringContainer::add(DoubleSpring &ds){
+void SpringContainer::add(DoubleSpring ds){
 	doubleSprings.push_back(ds);
 }
 

@@ -59,9 +59,12 @@ void MoleculeContainer::changeTargert(){
 }
 
 void MoleculeContainer::findWallCollisions(){
+	Vector3 dummy(0, 0, 0);
+
 	for(unsigned i = 0;i<molecules.size();i++){
 		Wall wall;
-		if(collision.checkForWallCollision(Vector3(0, 0, 0), 
+
+		if(collision.checkForWallCollision(dummy,
 			molecules[i].getMassCenter(), molecules[i].getMaxRadius(), wall)){//possible collision check
 		
 			investigatePossibleWallCollision(molecules[i], wall);
@@ -100,14 +103,16 @@ void MoleculeContainer::investigatePossibleWallCollision(Molecule &m, Wall &wall
 }
 
 void MoleculeContainer::findMoleculeCollisions(){
+	Vector3 dummy(0, 0, 0);
 	
 	for(unsigned i = 0;i<molecules.size();i++){
 
 		for(unsigned j = 0;j<molecules.size();j++){
 			
 			if(i<j){
+
 				if(	collision.checkForSpheresCollision(
-					Vector3(0, 0, 0), molecules[i].getMassCenter(), molecules[i].getMaxRadius(),
+					dummy, molecules[i].getMassCenter(), molecules[i].getMaxRadius(),
 					molecules[j].getMassCenter(), molecules[j].getMaxRadius())){//check for possible collision
 
 					investigatePossibleMoleculeCollision(molecules[i], molecules[j]);//per molecule check

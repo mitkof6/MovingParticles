@@ -14,10 +14,10 @@
 #define PARTICLES 20
 
 //# of molecules
-#define MOLECULES 1
+#define MOLECULES 10
 
 //# of springs systems
-#define SPRING_SYSTEMS 1
+#define SPRING_SYSTEMS 5
 
 //real velocity collision
 #define BALL_COLLISION_REAL_MODE true

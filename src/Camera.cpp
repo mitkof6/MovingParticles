@@ -51,8 +51,6 @@ void Camera::rotateY(float speed){
 	view.x = (float)(cos(speed)*dir.x + sin(speed)*dir.z);
 	view.y = dir.y;
 	view.z = (float)(-sin(speed)*dir.x + cos(speed)*dir.z);
-	
-
 }
 
 void Camera::strafe(float speed){
@@ -69,6 +67,5 @@ void Camera::strafe(float speed){
 	pos = pos + ortho;
 	view = view + ortho;
 	//view = view.normalize();
-
 }
 

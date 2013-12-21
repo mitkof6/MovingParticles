@@ -41,7 +41,7 @@ void CollisionCounter::saveToMat(string path){
 		return;
 
 	for(unsigned i = 0;i<timeSeq.size();i++){
-		fprintf(file, "%d %d\n", timeSeq[i], counterSeq[i]);
+		fprintf(file, "%lu %lu\n", timeSeq[i], counterSeq[i]);
 	}
 
 	fclose(file);

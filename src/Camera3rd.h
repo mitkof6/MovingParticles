@@ -6,13 +6,35 @@
 
 #include "GL/glut.h"
 
+/**
+ * Simple 3rd person camera
+ */
 class Camera3rd : public Renderable{
 public:
+
+	/**
+	 * Default constructor (does nothing)
+	 */
 	Camera3rd(){};
+
+	/**
+	 * Constructor
+	 *
+	 * @param (distance from target x, y, z)
+	 */
 	Camera3rd(float offsetX, float offsetY, float offsetZ);
 	~Camera3rd(void);
 
+	/**
+	 * Lock on target
+	 *
+	 * @param (position of target)
+	 */
 	void lock(Vector3 &pos);
+
+	/**
+	 * Sets new offset
+	 */
 	void setOffset(float offsetX, float offsetY, float offsetZ);
 
 	void draw();

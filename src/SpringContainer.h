@@ -17,7 +17,7 @@ public:
 	SpringContainer();
 	~SpringContainer(void);
 
-	void add(DoubleSpring &ds);
+	void add(DoubleSpring ds);
 
 	void draw();
 	void update();

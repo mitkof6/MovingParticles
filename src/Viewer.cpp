@@ -137,7 +137,7 @@ void Viewer::render(){
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
 
-	//showInfo();
+	showInfo();
 
 	if(wallHistogram){
 		//histogram

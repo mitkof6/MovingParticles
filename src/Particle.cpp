@@ -75,12 +75,8 @@ void Particle::draw(){
 
 void Particle::update(){
 	x = x + v*dt;
-	//std::cout<<v<<std::endl;
 }
 
-/**
-	@param dir must be normalized
-*/
 void Particle::collisionHandler(Vector3 dir){
 	//reflect velocity
 	v = v - dir*v.dot(dir)*2;
