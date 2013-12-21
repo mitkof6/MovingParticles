@@ -14,7 +14,7 @@ SphereContainer::~SphereContainer(void){
 }
 
 void SphereContainer::add(Sphere &p){
-	particles.push_back(p);
+	spheres.push_back(p);
 }
 
 void SphereContainer::draw(){
@@ -22,56 +22,62 @@ void SphereContainer::draw(){
 		camera.draw();
 	}
 
-	for(unsigned i = 0;i<particles.size();i++){
-		particles[i].draw();
+	for(unsigned i = 0;i<spheres.size();i++){
+		spheres[i].draw();
 	}
 }
 
 void SphereContainer::update(){
+	//histogram time
 	wallCollisionCounter.incTime();
 	sphereCollisionCounter.incTime();
 
+	//3rd person
 	if(thirdPerson){
 		camera.update();
 	}
 
-	for(unsigned i = 0;i<particles.size();i++){
-		particles[i].update();
+	//update states
+	for(unsigned i = 0;i<spheres.size();i++){
+		spheres[i].update();
 	}
 
+	//check for collisions
 	findWallCollisions();
-
 	findSphereCollisions();
 
+	//register histogram
 	wallCollisionCounter.registerEvent();
 	sphereCollisionCounter.registerEvent();
 }
 
 void SphereContainer::enable3rdPerson(){
 	thirdPerson = !thirdPerson;
-	camera.lock(particles[target].getMassCenter());
+	camera.lock(spheres[target].getMassCenter());
 
 }
 
 void SphereContainer::changeTargert(){
 	target++;
-	if(target==particles.size()){
+	if(target==spheres.size()){
 		target = 0;
 	}
-	camera.lock(particles[target].getMassCenter());
+	camera.lock(spheres[target].getMassCenter());
 
 }
 
 void SphereContainer::findWallCollisions(){
 
-	for(unsigned i = 0;i<particles.size();i++){
+	for(unsigned i = 0;i<spheres.size();i++){
 		Wall temp;
 		if(collision.checkForWallCollision(
-			particles[i].getMassCenter(),particles[i].getMassCenter(), particles[i].getRadius(),
+			spheres[i].getMassCenter(),spheres[i].getMassCenter(), spheres[i].getRadius(),
 			temp)){
 
-			particles[i].collisionHandler(temp.getWallDirection());
+			//handle wall collision
+			spheres[i].collisionHandler(temp.getWallDirection());
 
+			//inc counter
 			wallCollisionCounter.incCounter();
 		}
 	}
@@ -80,17 +86,19 @@ void SphereContainer::findWallCollisions(){
 
 void SphereContainer::findSphereCollisions(){
 	
-	for(unsigned i = 0;i<particles.size();i++){
+	for(unsigned i = 0;i<spheres.size();i++){
 		
-		for(unsigned j = 0;j<particles.size();j++){
+		for(unsigned j = 0;j<spheres.size();j++){
 			
 			if(j>i){
 				if(collision.checkForSpheresCollision(
-					particles[i].getMassCenter(), particles[i].getMassCenter(), particles[i].getRadius(),
-					particles[j].getMassCenter(), particles[j].getRadius())){
+					spheres[i].getMassCenter(), spheres[i].getMassCenter(), spheres[i].getRadius(),
+					spheres[j].getMassCenter(), spheres[j].getRadius())){
 					
-					particles[i].collisionHandler(particles[j], collisionMode);
+					//handle spheres collision
+					spheres[i].collisionHandler(spheres[j], collisionMode);
 
+					//inc counter
 					sphereCollisionCounter.incCounter();
 				}
 			}

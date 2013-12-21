@@ -22,17 +22,20 @@ void SpringContainer::draw(){
 }
 
 void SpringContainer::update(){
+	//histogram time
 	wallCollisionCounter.incTime();
 	sphereCollisionCounter.incTime();
 
+	//update state
 	for(unsigned i = 0;i<doubleSprings.size();i++){
 		doubleSprings[i].update();
 	}
 
+	//find collisions
 	findWallCollisions();
-
 	findSphereCollisions();
 
+	//register histogram
 	wallCollisionCounter.registerEvent();
 	sphereCollisionCounter.registerEvent();
 }
@@ -53,11 +56,10 @@ void SpringContainer::checkWall(Sphere &p){
 		p.getMassCenter(),p.getMassCenter(), p.getRadius(),
 		temp)){
 			
-		wallCollisionCounter.incCounter();
-		wallCollisionCounter.registerEvent();
-
+		//handle collision
 		p.collisionHandler(temp.getWallDirection());
 
+		//inc counter
 		wallCollisionCounter.incCounter();
 	}
 }
@@ -84,12 +86,11 @@ void SpringContainer::checkSpheres(Sphere &p, Sphere &q){
 	if(collision.checkForSpheresCollision(
 		p.getMassCenter(), p.getMassCenter(), p.getRadius(),
 		q.getMassCenter(), q.getRadius())){
-					
-		sphereCollisionCounter.incCounter();
-		sphereCollisionCounter.registerEvent();
 
+		//handle collision
 		p.collisionHandler(q, collisionMode);
 		
+		//inc counter
 		sphereCollisionCounter.incCounter();
 	}
 }
