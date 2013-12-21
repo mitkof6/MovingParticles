@@ -96,7 +96,7 @@ public:
 	/**
 	 * Accessor
 	 */
-	virtual CollisionCounter &getBallCollisionCounter();
+	virtual CollisionCounter &getSphereCollisionCounter();
 	
 
 protected:
@@ -104,7 +104,7 @@ protected:
 	/**
 	 * For histogram data
 	 */
-	CollisionCounter wallCollisions, ballCollisions;
+	CollisionCounter wallCollisionCounter, sphereCollisionCounter;
 
 	/**
 	 * For collision check and handling

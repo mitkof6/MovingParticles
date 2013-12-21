@@ -42,7 +42,7 @@
 #define MOLECULE_ANGLE 90
 #define MOLECULE_MASS_MIN 5
 #define MOLECULE_MASS_MAX 10
-#define MOLECULES_MAX 7
+#define MOLECULES_MAX 7//only 5, or 7
 
 //angular velocity
 #define MIN_WX -5

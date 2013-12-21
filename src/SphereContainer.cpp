@@ -28,8 +28,8 @@ void SphereContainer::draw(){
 }
 
 void SphereContainer::update(){
-	wallCollisions.incTime();
-	ballCollisions.incTime();
+	wallCollisionCounter.incTime();
+	sphereCollisionCounter.incTime();
 
 	if(thirdPerson){
 		camera.update();
@@ -43,8 +43,8 @@ void SphereContainer::update(){
 
 	findSphereCollisions();
 
-	wallCollisions.registerEvent();
-	ballCollisions.registerEvent();
+	wallCollisionCounter.registerEvent();
+	sphereCollisionCounter.registerEvent();
 }
 
 void SphereContainer::enable3rdPerson(){
@@ -72,7 +72,7 @@ void SphereContainer::findWallCollisions(){
 
 			particles[i].collisionHandler(temp.getWallDirection());
 
-			wallCollisions.incCounter();
+			wallCollisionCounter.incCounter();
 		}
 	}
 
@@ -91,7 +91,7 @@ void SphereContainer::findSphereCollisions(){
 					
 					particles[i].collisionHandler(particles[j], collisionMode);
 
-					ballCollisions.incCounter();
+					sphereCollisionCounter.incCounter();
 				}
 			}
 		}

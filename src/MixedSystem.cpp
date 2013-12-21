@@ -1,7 +1,7 @@
 #include "MixedSystem.h"
 
 
-MixedSystem::MixedSystem(SpringContainer &sC, MoleculeContainer &mC){
+MixedSystem::MixedSystem(SpringContainer &sC, MoleculeContainer &mC) : AbstractContainer(){
 	springContainer = sC;
 	moleculeContainer = mC;
 }
@@ -18,23 +18,25 @@ void MixedSystem::draw(){
 }
 	
 void MixedSystem::update(){
-	wallCollisions.incTime();
-	ballCollisions.incTime();
+	//inc histogram time
+	wallCollisionCounter.incTime();
+	sphereCollisionCounter.incTime();
 
 	moleculeContainer.update();
 	springContainer.update();
 
+	//resolve system->system collisions
 	resolveSystemCollisions();
 
-	//sync
-	//std::cout<<moleculeContainer.getWallCollisionCounter().getCounter()<<std::endl;
-	wallCollisions.add(moleculeContainer.getWallCollisionCounter().getDifference());
-	wallCollisions.add(springContainer.getWallCollisionCounter().getDifference());
-	ballCollisions.add(moleculeContainer.getBallCollisionCounter().getDifference());
-	ballCollisions.add(springContainer.getBallCollisionCounter().getDifference());
+	//sync collision counter
+	wallCollisionCounter.add(moleculeContainer.getWallCollisionCounter().getDifference());
+	wallCollisionCounter.add(springContainer.getWallCollisionCounter().getDifference());
+	sphereCollisionCounter.add(moleculeContainer.getSphereCollisionCounter().getDifference());
+	sphereCollisionCounter.add(springContainer.getSphereCollisionCounter().getDifference());
 
-	wallCollisions.registerEvent();
-	ballCollisions.registerEvent();
+	//register collisions
+	wallCollisionCounter.registerEvent();
+	sphereCollisionCounter.registerEvent();
 }
 
 void MixedSystem::enable3rdPerson(){
@@ -65,15 +67,13 @@ void MixedSystem::checkSpheres(Sphere &p, Molecule &m, int k){
 	if(collision.checkForSpheresCollision(
 		p.getMassCenter(), p.getMassCenter(), p.getRadius(),
 		m.getMassCenter()+m.getDisplacement(k), m.getRadius(k))){
-		//std::cout<<"Collision"<<std::endl;				
+
 		//find collision point
 		Vector3 cp, cn;
 		collision.calculateCollisionPoint(
 			p.getMassCenter(), p.getRadius(),
 			m.getMassCenter()+m.getDisplacement(k), m.getRadius(k),
 			cp, cn);
-
-		//std::cout<<cp<<std::endl;
 
 		//handle collision
 		collision.handleSphereCollision(
@@ -82,6 +82,7 @@ void MixedSystem::checkSpheres(Sphere &p, Molecule &m, int k){
 			cp, cn,
 			GAIN);
 
-		ballCollisions.incCounter();
+		//inc collision
+		sphereCollisionCounter.incCounter();
 	}
 }
