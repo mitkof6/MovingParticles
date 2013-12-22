@@ -1,6 +1,5 @@
 #include "SpringContainer.h"
 
-
 SpringContainer::SpringContainer() : AbstractContainer(){
 
 }

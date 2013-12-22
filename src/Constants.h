@@ -5,7 +5,7 @@
 #define dt 0.05
 
 //box
-#define BOX_SIZE 50
+#define BOX_SIZE 70
 
 #define MOLECULE false
 #define PARTICLE false
@@ -14,10 +14,10 @@
 #define PARTICLES 20
 
 //# of molecules
-#define MOLECULES 1
+#define MOLECULES 20
 
 //# of springs systems
-#define SPRING_SYSTEMS 1
+#define SPRING_SYSTEMS 30
 
 //real velocity collision
 #define BALL_COLLISION_REAL_MODE true
