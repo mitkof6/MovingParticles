@@ -106,9 +106,9 @@ void DoubleSpring::update(){
 
 	//forces
 	Vector3 dF1 = Vector3(
-		-k1*stretch1*(pos1.x-anchor.x)/L1 - b1*v1.x + k2*stretch2*(pos2.x-pos1.x)/L1,
-		-k1*stretch1*(pos1.y-anchor.y)/L1 - b1*v1.y + k2*stretch2*(pos2.y-pos1.y)/L1,
-		-k1*stretch1*(pos1.z-anchor.z)/L1 - b1*v1.z + k2*stretch2*(pos2.z-pos1.z)/L1);
+		-k1*stretch1*(pos1.x-anchor.x)/L1 - b1*v1.x + k2*stretch2*(pos2.x-pos1.x)/L2,
+		-k1*stretch1*(pos1.y-anchor.y)/L1 - b1*v1.y + k2*stretch2*(pos2.y-pos1.y)/L2,
+		-k1*stretch1*(pos1.z-anchor.z)/L1 - b1*v1.z + k2*stretch2*(pos2.z-pos1.z)/L2);
 	sphere1.applayForce(dF1);
 
 	Vector3 dF2 = Vector3(
