@@ -3,13 +3,26 @@
 
 #include "Renderable.h"
 
+/**
+ * Represents the bounding box
+ */
 class Box : public Renderable{
 
 public:
+	/**
+	 * @param (red, green, blue, size)
+	 */
 	Box(float r, float g, float b, float s);
 	~Box(void);
 
+	/**
+	 * Render box
+	 */
 	void draw();
+
+	/**
+	 * Does nothing
+	 */
 	void update(){};
 
 	float getSize();

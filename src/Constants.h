@@ -7,6 +7,7 @@
 //box
 #define BOX_SIZE 70
 
+//context
 #define MOLECULE false
 #define PARTICLE false
 
@@ -41,7 +42,7 @@
 #define MOLECULE_ANGLE 90
 #define MOLECULE_MASS_MIN 5
 #define MOLECULE_MASS_MAX 10
-#define MOLECULES_MAX 7
+#define MOLECULES_MAX 7//only 5, or 7
 
 //angular velocity
 #define MIN_WX -5
@@ -71,11 +72,11 @@
 #define MIN_Z -BOX_SIZE/2.0f
 #define MAX_Z BOX_SIZE/2.0f
 
-//sphare
+//sphere
 #define SLICES 13
 #define STACKS 13
 
-//metirial
+//Material
 #define AB_MIN 0
 #define AB_MAX 0.2
 #define DI_MIN 0.1
@@ -95,7 +96,7 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR,
 #define L_POS_W 0.0
 
 //window
-#define WINDOW_NAME "Viewer"
+#define WINDOW_NAME "Simulation"
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 #define WINDOW_X_POS 100

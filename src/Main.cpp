@@ -5,8 +5,8 @@
 #include "Renderable.h"
 #include "Constants.h"
 
-#include "ParticleContainer.h"
-#include "Particle.h"
+#include "SphereContainer.h"
+#include "Sphere.h"
 
 #include "MoleculeContainer.h"
 #include "Molecule.h"
@@ -19,20 +19,46 @@
 #include "Box.h"
 #include "Constants.h"
 
+/**
+ * Populates a sphere container with spheres
+ *
+ * @param (pointer to abstract container, # of particles)
+ */
+void generateParticles(AbstractContainer *sc, int n);
 
-void generateParticles(AbstractContainer *pc, int size);
-void generateMolecules(AbstractContainer *rbc, int size);
-void generateSpringSystems(AbstractContainer *sc, int size);
+/**
+ * Populates a moleclue's container with molecules
+ *
+ * @param (pointer to abstract container, # of particles)
+ */
+void generateMolecules(AbstractContainer *rbc, int n);
 
-float rand(float min, float max);
+/**
+ * Populates a spring container with springs
+ *
+ * @param (pointer to abstract container, # of particles)
+ */
+void generateSpringSystems(AbstractContainer *sc, int n);
 
+/**
+ * Generates random number between [min-max]
+ *
+ * @param (min, max)
+ */
+float randMM(float min, float max);
+
+
+/**
+ * Entry point
+ */
 int main(int argc, char** argv){
 	
 	srand((unsigned)time(NULL));
 
+	//renderer
 	Viewer viewer(argc, argv);
 
-	//molecule or particles
+	//molecule or spheres or mixed system
 	if(MOLECULE){
 		AbstractContainer *container =
 				new MoleculeContainer();
@@ -41,7 +67,7 @@ int main(int argc, char** argv){
 		
 	}else if(PARTICLE){
 		AbstractContainer *container =
-				new ParticleContainer(BALL_COLLISION_REAL_MODE);
+				new SphereContainer(BALL_COLLISION_REAL_MODE);
 		generateParticles(container, PARTICLES);
 		viewer.setContainer(container);
 	}else{
@@ -67,52 +93,51 @@ int main(int argc, char** argv){
 	//clean up
 	delete box;
 
-	system("pause");
 	return 0;
 }
 
-void generateSpringSystems(AbstractContainer *sc, int size){
-	for(int i = 0;i<size;i++){
+void generateSpringSystems(AbstractContainer *sc, int n){
+	for(int i = 0;i<n;i++){
 
 		((SpringContainer *)sc)->add(DoubleSpring());
 	}
 }
 
-void generateMolecules(AbstractContainer *rbc, int size){
-	for(int i = 0;i<size;i++){
+void generateMolecules(AbstractContainer *rbc, int n){
+	for(int i = 0;i<n;i++){
 
 		((MoleculeContainer *)rbc)->add(Molecule(MOLECULES_MAX));
 	}
 }
 
-void generateParticles(AbstractContainer *pc, int size){
+void generateParticles(AbstractContainer *sc, int n){
 	
-	for(int i = 0;i<size;i++){
+	for(int i = 0;i<n;i++){
 		
-		float mass = rand(MASS_MIN, MASS_MAX);
+		float mass = randMM(MASS_MIN, MASS_MAX);
 		float radius = mass/(MASS_MAX-MASS_MIN);
 
-		Particle p = Particle(
-				rand(0, 1),rand(0, 1),rand(0, 1),
-				rand(MIN_X+radius, MAX_X-radius),
-				rand(MIN_Y+radius, MAX_Y-radius),
-				rand(MIN_Z+radius, MAX_Z-radius),
-				rand(MIN_VX, MAX_VX),
-				rand(MIN_VX, MAX_VX),
-				rand(MIN_VX, MAX_VX), 
+		Sphere p = Sphere(
+				randMM(0, 1),randMM(0, 1),randMM(0, 1),
+				randMM(MIN_X+radius, MAX_X-radius),
+				randMM(MIN_Y+radius, MAX_Y-radius),
+				randMM(MIN_Z+radius, MAX_Z-radius),
+				randMM(MIN_VX, MAX_VX),
+				randMM(MIN_VX, MAX_VX),
+				randMM(MIN_VX, MAX_VX), 
 				radius,
 				mass);
 		p.setMatirial(
-			rand(AB_MIN, AB_MAX), rand(AB_MIN, AB_MAX), rand(AB_MIN, AB_MAX), 1.0,
-			rand(DI_MIN, DI_MAX), rand(DI_MIN, DI_MAX), rand(DI_MIN, AB_MAX), 1.0,
-			rand(SP_MIN, SP_MAX), rand(SP_MIN, SP_MAX), rand(SP_MIN, AB_MAX), 1.0,
-			rand(SH_MIN, SH_MAX));
+			randMM(AB_MIN, AB_MAX), randMM(AB_MIN, AB_MAX), randMM(AB_MIN, AB_MAX), 1.0,
+			randMM(DI_MIN, DI_MAX), randMM(DI_MIN, DI_MAX), randMM(DI_MIN, AB_MAX), 1.0,
+			randMM(SP_MIN, SP_MAX), randMM(SP_MIN, SP_MAX), randMM(SP_MIN, AB_MAX), 1.0,
+			randMM(SH_MIN, SH_MAX));
 
-		((ParticleContainer *)pc)->add(p);
+		((SphereContainer *)sc)->add(p);
 	}
 }
 
-float rand(float min, float max){
+float randMM(float min, float max){
 	return (min+rand()*(max-min)/RAND_MAX);
 }
 

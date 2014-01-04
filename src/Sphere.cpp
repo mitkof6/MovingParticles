@@ -1,6 +1,6 @@
-#include "Particle.h"
+#include "Sphere.h"
 
-Particle::Particle(
+Sphere::Sphere(
 	float r, float g, float b,
 	float px, float py, float pz,
 	float vx, float vy, float vz,
@@ -14,14 +14,23 @@ Particle::Particle(
 	mass = m;
 	x = Vector3(px, py, pz);
 	v = Vector3(vx, vy, vz);
+
+	//
+	omega = Vector3(0, 0, 0);
+	orientation = Matrix3(1,0,0,0,1,0,0,0,1);
+	inertia = Matrix3(
+			2.0f/5*mass*radius*radius, 0, 0,
+			0, 2.0f/5*mass*radius*radius, 0,
+			0, 0, 2.0f/5*mass*radius*radius);
+	inertiaInv = inertia.invert();
 }
 
 
-Particle::~Particle(){
+Sphere::~Sphere(){
 
 }
 
-void Particle::setMatirial(
+void Sphere::setMatirial(
 		float ax, float ay, float az, float aw,
 		float dx, float dy, float dz, float dw,
 		float sx, float sy, float sz, float sw,
@@ -46,21 +55,21 @@ void Particle::setMatirial(
 	shininess = sh;
 }
 
-bool Particle::operator==(Particle &p){
+bool Sphere::operator==(Sphere &p){
 	if(this==&p) return true;
 	return false;
 }
 
-float Particle::getRadius(){
+float Sphere::getRadius(){
 	return radius;
 }
 
-void Particle::draw(){
+void Sphere::draw(){
 	glPushMatrix();
 
 		glColor3f(red, green, blue);
 
-		//metirial
+		//Material
 		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
 		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
@@ -73,21 +82,16 @@ void Particle::draw(){
 	glPopMatrix();
 }
 
-void Particle::update(){
+void Sphere::update(){
 	x = x + v*dt;
-	//std::cout<<v<<std::endl;
 }
 
-/**
-	@param dir must be normalized
-*/
-void Particle::collisionHandler(Vector3 dir){
+void Sphere::collisionHandler(Vector3 dir){
 	//reflect velocity
 	v = v - dir*v.dot(dir)*2;
-	
 }
 
-void Particle::collisionHandler(Particle &p, bool collisionMode){
+void Sphere::collisionHandler(Sphere &p, bool collisionMode){
 	
 	Vector3 displacement = x-p.getMassCenter();
 	Vector3 n = displacement.normalize();
@@ -107,7 +111,6 @@ void Particle::collisionHandler(Particle &p, bool collisionMode){
 
 	//if t, n parallel
 	if(t.length()==0){
-		//std::cout<<"papalel\n";
 		Vector3 t(0, 1, 0);
 		t = n.cross(t).normalize();
 	}

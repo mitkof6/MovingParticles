@@ -7,6 +7,7 @@ Molecule::Molecule(int n){
 	float m = randMM(MOLECULE_MASS_MIN, MOLECULE_MASS_MAX);
 	float r = m/(MOLECULE_MASS_MAX-MOLECULE_MASS_MIN);
 	
+	//mass center
 	x = Vector3(
 		randMM(MIN_X+2*r, MAX_X-2*r),
 		randMM(MIN_Y+2*r, MAX_Y-2*r),
@@ -38,10 +39,9 @@ Molecule::Molecule(int n){
 			Vector3(randMM(0, 1), randMM(0, 1), randMM(0, 1)));
 	}
 
-	
+	//calculates mass center Σmi*xi/Σmi
 	mass = 0.0f;
 	x = Vector3(0, 0, 0);
-
 	for(unsigned i = 0;i<displacement.size();i++){
 
 		//center
@@ -57,7 +57,7 @@ Molecule::Molecule(int n){
 		dis.push_back(newD);
 	}
 
-	//define max radius
+	//find max radius
 	maxRadius = 0.0f;
 	for(unsigned i = 0;i<displacement.size();i++){
 		float temp = (displacement[i]).length()+radius[i];
@@ -111,8 +111,6 @@ Molecule::Molecule(int n){
 		Izx, Izy, Izz);
 
 	inertiaInv = inertia.invert();
-
-
 }
 
 
@@ -163,18 +161,17 @@ void Molecule::draw(){
 
 void Molecule::update(){
 	x = x + v*dt;
-	
-	updateRotationMatrix();
+	updateOrientation();
 }
 
 
-void Molecule::updateRotationMatrix(){
+void Molecule::updateOrientation(){
 
+	//quaternion rotation
 	Quaternion q = Quaternion();
 	q.scaledAxis(omega*dt);
 	orientation = orientation*q.rotationMatrix();
 	
-
 	//update displacement
 	for(unsigned i = 1;i<displacement.size();i++){
 
@@ -204,10 +201,10 @@ float Molecule::getRadius(int i){
 	return radius[i];
 }
 
-float Molecule::randMM(float min, float max){
-	return (min+rand()*(max-min)/RAND_MAX);
-}
-
 void Molecule::setColor(int i, float r, float g, float b){
 	color[i] = Vector3(r, g, b);
+}
+
+float Molecule::randMM(float min, float max){
+	return (min+rand()*(max-min)/RAND_MAX);
 }

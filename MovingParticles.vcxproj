@@ -23,9 +23,9 @@
     <ClCompile Include="src\MixedSystem.cpp" />
     <ClCompile Include="src\Molecule.cpp" />
     <ClCompile Include="src\MoleculeContainer.cpp" />
-    <ClCompile Include="src\Particle.cpp" />
-    <ClCompile Include="src\ParticleContainer.cpp" />
     <ClCompile Include="src\RigidBody.cpp" />
+    <ClCompile Include="src\Sphere.cpp" />
+    <ClCompile Include="src\SphereContainer.cpp" />
     <ClCompile Include="src\SpringContainer.cpp" />
     <ClCompile Include="src\Viewer.cpp" />
     <ClCompile Include="src\Wall.cpp" />
@@ -45,10 +45,10 @@
     <ClInclude Include="src\MixedSystem.h" />
     <ClInclude Include="src\Molecule.h" />
     <ClInclude Include="src\MoleculeContainer.h" />
-    <ClInclude Include="src\Particle.h" />
-    <ClInclude Include="src\ParticleContainer.h" />
     <ClInclude Include="src\Renderable.h" />
     <ClInclude Include="src\RigidBody.h" />
+    <ClInclude Include="src\Sphere.h" />
+    <ClInclude Include="src\SphereContainer.h" />
     <ClInclude Include="src\SpringContainer.h" />
     <ClInclude Include="src\Viewer.h" />
     <ClInclude Include="src\Wall.h" />

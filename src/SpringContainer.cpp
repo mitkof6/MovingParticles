@@ -9,7 +9,7 @@ SpringContainer::~SpringContainer(void){
 	
 }
 
-void SpringContainer::add(DoubleSpring &ds){
+void SpringContainer::add(DoubleSpring ds){
 	doubleSprings.push_back(ds);
 }
 
@@ -21,43 +21,45 @@ void SpringContainer::draw(){
 }
 
 void SpringContainer::update(){
-	wallCollisions.incTime();
-	ballCollisions.incTime();
+	//histogram time
+	wallCollisionCounter.incTime();
+	sphereCollisionCounter.incTime();
 
+	//update state
 	for(unsigned i = 0;i<doubleSprings.size();i++){
 		doubleSprings[i].update();
 	}
 
+	//find collisions
 	findWallCollisions();
-
 	findSphereCollisions();
 
-	wallCollisions.registerEvent();
-	ballCollisions.registerEvent();
+	//register histogram
+	wallCollisionCounter.registerEvent();
+	sphereCollisionCounter.registerEvent();
 }
 
 
 void SpringContainer::findWallCollisions(){
 
 	for(unsigned i = 0;i<doubleSprings.size();i++){
-		checkWall(doubleSprings[i].getP1());
-		checkWall(doubleSprings[i].getP2());
+		checkWall(doubleSprings[i].getSphereOne());
+		checkWall(doubleSprings[i].getSphereTwo());
 	}
 
 }
 
-void SpringContainer::checkWall(Particle &p){
+void SpringContainer::checkWall(Sphere &p){
 	Wall temp;
 	if(collision.checkForWallCollision(
 		p.getMassCenter(),p.getMassCenter(), p.getRadius(),
 		temp)){
 			
-		wallCollisions.incCounter();
-		wallCollisions.registerEvent();
-
+		//handle collision
 		p.collisionHandler(temp.getWallDirection());
 
-		wallCollisions.incCounter();
+		//inc counter
+		wallCollisionCounter.incCounter();
 	}
 }
 
@@ -68,27 +70,26 @@ void SpringContainer::findSphereCollisions(){
 		for(unsigned j = 0;j<doubleSprings.size();j++){
 			
 			if(j>i){
-				checkSpheres(doubleSprings[i].getP1(), doubleSprings[j].getP1());
-				checkSpheres(doubleSprings[i].getP1(), doubleSprings[j].getP2());
-				checkSpheres(doubleSprings[i].getP2(), doubleSprings[j].getP1());
-				checkSpheres(doubleSprings[i].getP2(), doubleSprings[j].getP2());
+				checkSpheres(doubleSprings[i].getSphereOne(), doubleSprings[j].getSphereOne());
+				checkSpheres(doubleSprings[i].getSphereOne(), doubleSprings[j].getSphereTwo());
+				checkSpheres(doubleSprings[i].getSphereTwo(), doubleSprings[j].getSphereOne());
+				checkSpheres(doubleSprings[i].getSphereTwo(), doubleSprings[j].getSphereTwo());
 
-				checkSpheres(doubleSprings[i].getP1(), doubleSprings[i].getP2());
+				checkSpheres(doubleSprings[i].getSphereOne(), doubleSprings[i].getSphereTwo());
 			}
 		}
 	}
 }
 
-void SpringContainer::checkSpheres(Particle &p, Particle &q){
+void SpringContainer::checkSpheres(Sphere &p, Sphere &q){
 	if(collision.checkForSpheresCollision(
 		p.getMassCenter(), p.getMassCenter(), p.getRadius(),
 		q.getMassCenter(), q.getRadius())){
-					
-		ballCollisions.incCounter();
-		ballCollisions.registerEvent();
 
+		//handle collision
 		p.collisionHandler(q, collisionMode);
 		
-		ballCollisions.incCounter();
+		//inc counter
+		sphereCollisionCounter.incCounter();
 	}
 }

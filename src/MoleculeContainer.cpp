@@ -25,23 +25,27 @@ void MoleculeContainer::draw(){
 }
 
 void MoleculeContainer::update(){
-	wallCollisions.incTime();
-	ballCollisions.incTime();
+	//histogram time
+	wallCollisionCounter.incTime();
+	sphereCollisionCounter.incTime();
 
+	//3rd person camera
 	if(thirdPerson){
 		camera.update();
 	}
 
+	//update states
 	for(unsigned i = 0;i<molecules.size();i++){
 		molecules[i].update();
 	}
 
+	//collision check
 	findWallCollisions();
-
 	findMoleculeCollisions();
 
-	wallCollisions.registerEvent();
-	ballCollisions.registerEvent();
+	//register collisions
+	wallCollisionCounter.registerEvent();
+	sphereCollisionCounter.registerEvent();
 }
 
 void MoleculeContainer::enable3rdPerson(){
@@ -59,9 +63,12 @@ void MoleculeContainer::changeTargert(){
 }
 
 void MoleculeContainer::findWallCollisions(){
+	Vector3 dummy(0, 0, 0);
+
 	for(unsigned i = 0;i<molecules.size();i++){
 		Wall wall;
-		if(collision.checkForWallCollision(Vector3(0, 0, 0), 
+
+		if(collision.checkForWallCollision(dummy,
 			molecules[i].getMassCenter(), molecules[i].getMaxRadius(), wall)){//possible collision check
 		
 			investigatePossibleWallCollision(molecules[i], wall);
@@ -77,8 +84,7 @@ void MoleculeContainer::investigatePossibleWallCollision(Molecule &m, Wall &wall
 			m.getMassCenter(), (m.getMassCenter()+m.getDisplacement(j)), m.getRadius(j),
 			wall)){
 
-			//TODO collision point
-			
+			//collision point
 			Vector3 cp, cn;
 			collision.calculateCollisionPoint(
 				m.getMassCenter()+m.getDisplacement(j), m.getRadius(j),
@@ -90,24 +96,26 @@ void MoleculeContainer::investigatePossibleWallCollision(Molecule &m, Wall &wall
 				m.getMassCenter(), m.getLinearVelocity(), m.getAngularVelocity(), m.getInertiaInv(), m.getMass(),
 				cp, cn);
 					
-			//counter
-			wallCollisions.incCounter();
+			//inc wall collisions
+			wallCollisionCounter.incCounter();
 					
-			break;
+			return;
 
 		}
 	}
 }
 
 void MoleculeContainer::findMoleculeCollisions(){
+	Vector3 dummy(0, 0, 0);
 	
 	for(unsigned i = 0;i<molecules.size();i++){
 
 		for(unsigned j = 0;j<molecules.size();j++){
 			
 			if(i<j){
+
 				if(	collision.checkForSpheresCollision(
-					Vector3(0, 0, 0), molecules[i].getMassCenter(), molecules[i].getMaxRadius(),
+					dummy, molecules[i].getMassCenter(), molecules[i].getMaxRadius(),
 					molecules[j].getMassCenter(), molecules[j].getMaxRadius())){//check for possible collision
 
 					investigatePossibleMoleculeCollision(molecules[i], molecules[j]);//per molecule check
@@ -129,6 +137,7 @@ void MoleculeContainer::investigatePossibleMoleculeCollision(Molecule &p, Molecu
 				p.getMassCenter(), p.getMassCenter()+p.getDisplacement(i), p.getRadius(i),
 				q.getMassCenter()+q.getDisplacement(j), q.getRadius(j))){
 				
+				//collision point
 				Vector3 cp, cn;
 				collision.calculateCollisionPoint(
 					p.getMassCenter()+p.getDisplacement(i), p.getRadius(i),
@@ -143,7 +152,8 @@ void MoleculeContainer::investigatePossibleMoleculeCollision(Molecule &p, Molecu
 					q.getMassCenter(), q.getLinearVelocity(), q.getAngularVelocity(), q.getInertiaInv(), q.getMass(),
 					cp, cn, GAIN);
 
-				ballCollisions.incCounter();
+				//inc molecule collisions
+				sphereCollisionCounter.incCounter();
 
 				//return;
 			}

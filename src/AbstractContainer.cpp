@@ -1,9 +1,8 @@
 #include "AbstractContainer.h"
 
-
 AbstractContainer::AbstractContainer(){
-	wallCollisions.setName("Wall");
-	ballCollisions.setName("Ball");
+	wallCollisionCounter.setName("Wall");
+	sphereCollisionCounter.setName("Ball");
 
 	camera = Camera3rd(OFFSET_X, OFFSET_Y, OFFSET_Z);
 	thirdPerson = false;
@@ -12,8 +11,8 @@ AbstractContainer::AbstractContainer(){
 
 AbstractContainer::AbstractContainer(bool cm){
 	collisionMode = cm;
-	wallCollisions.setName("Wall");
-	ballCollisions.setName("Ball");
+	wallCollisionCounter.setName("Wall");
+	sphereCollisionCounter.setName("Ball");
 
 	camera = Camera3rd(OFFSET_X, OFFSET_Y, OFFSET_Z);
 	thirdPerson = false;
@@ -26,19 +25,19 @@ AbstractContainer::~AbstractContainer(void){
 }
 
 void AbstractContainer::saveWallCollisions(){
-	wallCollisions.saveToMat(WALL_COLLISION_PATH);
+	wallCollisionCounter.saveToMat(WALL_COLLISION_PATH);
 }
 
 void AbstractContainer::saveBallCollisions(){
-	ballCollisions.saveToMat(BALL_COLLISION_PATH);
+	sphereCollisionCounter.saveToMat(BALL_COLLISION_PATH);
 }
 
 void AbstractContainer::drawWallCollisions(){
-	wallCollisions.draw();
+	wallCollisionCounter.draw();
 }
 
 void AbstractContainer::drawBallCollisions(){
-	ballCollisions.draw();
+	sphereCollisionCounter.draw();
 }
 
 void AbstractContainer::changeCollisionMode(){
@@ -46,8 +45,8 @@ void AbstractContainer::changeCollisionMode(){
 }
 
 void AbstractContainer::clearCollisions(){
-	wallCollisions.clear();
-	ballCollisions.clear();
+	wallCollisionCounter.clear();
+	sphereCollisionCounter.clear();
 }
 
 bool AbstractContainer::getCameraMode(){
@@ -63,11 +62,11 @@ bool AbstractContainer::getCollisionMode(){
 }
 
 CollisionCounter &AbstractContainer::getWallCollisionCounter(){
-	return wallCollisions;
+	return wallCollisionCounter;
 }
 
-CollisionCounter &AbstractContainer::getBallCollisionCounter(){
-	return ballCollisions;
+CollisionCounter &AbstractContainer::getSphereCollisionCounter(){
+	return sphereCollisionCounter;
 }
 
 
