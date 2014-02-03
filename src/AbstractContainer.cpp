@@ -2,7 +2,7 @@
 
 AbstractContainer::AbstractContainer(){
 	wallCollisionCounter.setName("Wall");
-	sphereCollisionCounter.setName("Ball");
+	sphereCollisionCounter.setName("Particles");
 
 	camera = Camera3rd(OFFSET_X, OFFSET_Y, OFFSET_Z);
 	thirdPerson = false;
@@ -12,7 +12,7 @@ AbstractContainer::AbstractContainer(){
 AbstractContainer::AbstractContainer(bool cm){
 	collisionMode = cm;
 	wallCollisionCounter.setName("Wall");
-	sphereCollisionCounter.setName("Ball");
+	sphereCollisionCounter.setName("Particles");
 
 	camera = Camera3rd(OFFSET_X, OFFSET_Y, OFFSET_Z);
 	thirdPerson = false;
