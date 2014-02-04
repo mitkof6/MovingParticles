@@ -43,7 +43,7 @@ public:
 	 *
 	 * @param (abstract container)
 	 */
-	void setContainer(AbstractContainer *c);
+	void addContainer(AbstractContainer *c);
 
 	/**
 	 * Begin main loop
@@ -58,7 +58,8 @@ private:
 	/**
 	 * Container (system)
 	 */
-	AbstractContainer *container;
+	vector<AbstractContainer *> container;
+	int containerIndex;
 
 	/**
 	 * Camera and 3rd person flag

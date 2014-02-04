@@ -30,6 +30,7 @@ Viewer::Viewer(int argc, char** argv) {
 	light = LIGHT;
 
 	//container = 0;
+	containerIndex = 0;
 
 	glutInit(&argc, argv);
 
@@ -58,7 +59,11 @@ Viewer::~Viewer() {
 	for(unsigned i = 0;i<drawable.size();i++){
 		delete drawable.at(i);
 	}
-	delete container;
+
+	for(unsigned i = 0;i<container.size();i++){
+		delete container.at(i);
+	}
+	
 	delete instance;
 }
 
@@ -66,8 +71,8 @@ void Viewer::addToDraw(Renderable *r){
 	drawable.push_back(r);	
 }
 
-void Viewer::setContainer(AbstractContainer *c){
-	container = c;
+void Viewer::addContainer(AbstractContainer *c){
+	container.push_back(c);
 }
 
 void Viewer::start(){
@@ -142,11 +147,11 @@ void Viewer::render(){
 	if(wallHistogram){
 		//histogram
 		glTranslatef(-4, -5, -15);
-		container->drawBallCollisions();
+		container[containerIndex]->drawBallCollisions();
 	}else if(sphereHistogram){
 		//histogram
 		glTranslatef(-4, -5, -15);
-		container->drawWallCollisions();
+		container[containerIndex]->drawWallCollisions();
 	}else{
 		//camera
 		if(!thirdPerson){
@@ -155,7 +160,7 @@ void Viewer::render(){
 
 		//system
 		//if(container != 0)
-		container->draw();
+		container[containerIndex]->draw();
 
 		//other objects
 		for(unsigned i = 0;i<drawable.size();i++){
@@ -169,7 +174,7 @@ void Viewer::render(){
 void Viewer::update(){
 
 	//if(container != 0)
-	container->update();
+	container[containerIndex]->update();
 
 	for(unsigned i = 0;i<drawable.size();i++){
 		drawable[i]->update();
@@ -218,17 +223,17 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 		sphereHistogram = !sphereHistogram;
 		break;
 	case '3': //clear collisions
-		container->clearCollisions();
+		container[containerIndex]->clearCollisions();
 		break;
 	case '4': //change collisions mode
-		container->changeCollisionMode(); 
+		container[containerIndex]->changeCollisionMode(); 
 		break;
 	case '5': //3rd person camera enabled
-		container->enable3rdPerson();
+		container[containerIndex]->enable3rdPerson();
 		thirdPerson = !thirdPerson;
 		break;
 	case '6': //3rd person camera change target
-		container->changeTargert();
+		container[containerIndex]->changeTargert();
 		break;
 	case '7': //wired
 		wired = !wired;
@@ -264,6 +269,16 @@ void Viewer::keyboard (unsigned char key, int x, int y){
 			glDisable(GL_LIGHTING);
 		}
 		
+		break;
+	case '-' : //container--
+		if(containerIndex!=0){
+			containerIndex--;	
+		}
+		break;
+	case '=' : //container--
+		if(containerIndex<container.size()-1){
+			containerIndex++;	
+		}
 		break;
 	default:
 		break;
@@ -349,12 +364,15 @@ void Viewer::showInfo(){
 	drawString("Key 9: Color/Material", 0, WINDOW_HEIGHT-10*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
 	drawString("Key 0: Light on/off", 0, WINDOW_HEIGHT-11*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
 
+	drawString("Key -: Previous System", 0, WINDOW_HEIGHT-13*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+	drawString("Key =: Next System", 0, WINDOW_HEIGHT-14*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
+
 	drawString("Movements: w, s, a, d", 0, 0, color, GLUT_BITMAP_HELVETICA_12);
 	drawString("Camera rotation: mouse",  0, TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
 
-	drawString(container->getCameraMode()==true? "3rd Person Camera" : "Normal Camera",
+	drawString(container[containerIndex]->getCameraMode()==true? "3rd Person Camera" : "Normal Camera",
 				0, 6*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
-	drawString(container->getCollisionMode()==true? "Collision: real mode" : "Collision: false mode",
+	drawString(container[containerIndex]->getCollisionMode()==true? "Collision: real mode" : "Collision: false mode",
 				0, 5*TEXT_HEIGHT, color, GLUT_BITMAP_HELVETICA_12);
     
 

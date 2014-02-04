@@ -58,30 +58,31 @@ int main(int argc, char** argv){
 	//renderer
 	Viewer viewer(argc, argv);
 
-	//molecule or spheres or mixed system
-	if(MOLECULE){
-		AbstractContainer *container =
+	//molecules
+	AbstractContainer *molecules =
 				new MoleculeContainer();
-		generateMolecules(container, MOLECULES);
-		viewer.setContainer(container);
-		
-	}else if(PARTICLE){
-		AbstractContainer *container =
+	generateMolecules(molecules, MOLECULES);
+	viewer.addContainer(molecules);
+
+	//spheres
+	AbstractContainer *spheres =
 				new SphereContainer(BALL_COLLISION_REAL_MODE);
-		generateParticles(container, PARTICLES);
-		viewer.setContainer(container);
-	}else{
-		SpringContainer springContainer = SpringContainer();
-		generateSpringSystems(&springContainer, SPRING_SYSTEMS);
+	generateParticles(spheres, PARTICLES);
+	viewer.addContainer(spheres);
 
-		MoleculeContainer moleculeContainer = MoleculeContainer();
-		generateMolecules(&moleculeContainer, MOLECULES);
+	//mixed
+	SpringContainer springContainer = SpringContainer();
+	generateSpringSystems(&springContainer, SPRING_SYSTEMS);
 
-		AbstractContainer *container = 
+	MoleculeContainer moleculeContainer = MoleculeContainer();
+	generateMolecules(&moleculeContainer, MOLECULES);
+
+	AbstractContainer *mixedSystem = 
 			new MixedSystem(springContainer, moleculeContainer);
 
-		viewer.setContainer(container);
-	}
+	viewer.addContainer(mixedSystem);
+
+	
 
 	//bounding box
 	Renderable *box = new Box(1.0f, 1.0, 1.0, BOX_SIZE);
@@ -92,6 +93,9 @@ int main(int argc, char** argv){
 
 	//clean up
 	delete box;
+	delete molecules;
+	delete spheres;
+	delete mixedSystem;
 
 	return 0;
 }

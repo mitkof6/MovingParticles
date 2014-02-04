@@ -5,17 +5,13 @@
 #define dt 0.05
 
 //box
-#define BOX_SIZE 30
-
-//context
-#define MOLECULE false
-#define PARTICLE true
+#define BOX_SIZE 50
 
 //# of particles
-#define PARTICLES 30
+#define PARTICLES 50
 
 //# of molecules
-#define MOLECULES 20
+#define MOLECULES 10
 
 //# of springs systems
 #define SPRING_SYSTEMS 10
@@ -61,8 +57,8 @@
 #define MAX_VZ 10
 
 //particles
-#define MASS_MIN 5
-#define MASS_MAX 10
+#define MASS_MIN 10
+#define MASS_MAX 15
 
 //volume
 #define MIN_X -BOX_SIZE/2.0f
@@ -92,7 +88,7 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR,
 //light
 #define L_POS_X 20.0
 #define L_POS_Y 50.0
-#define L_POS_Z 50.0
+#define L_POS_Z 100.0
 #define L_POS_W 0.0
 
 //window
@@ -111,7 +107,7 @@ enum WallNorm {WALL_LEFT, WALL_RIGHT, WALL_FAR,
 #define CAMERA_ROTATE_SPEED 0.01
 #define CAM_POS_X 0
 #define CAM_POS_Y 0
-#define CAM_POS_Z 25
+#define CAM_POS_Z 50
 #define CAM_VIEW_X 0
 #define CAM_VIEW_Y 0
 #define CAM_VIEW_Z 0
