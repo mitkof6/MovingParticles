@@ -39,7 +39,7 @@ public:
 	void addToDraw(Renderable *r);
 
 	/**
-	 * Sets a system container
+	 * Adds a system container
 	 *
 	 * @param (abstract container)
 	 */
