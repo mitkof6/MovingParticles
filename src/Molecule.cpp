@@ -79,6 +79,8 @@ Molecule::Molecule(int n){
 		0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 1.0f);
 
+	R0 = orientation;
+
 	omega = Vector3(
 		0.0f,
 		0.0f,
@@ -109,7 +111,7 @@ Molecule::Molecule(int n){
 		Ixx, Ixy, Ixz,
 		Iyx, Iyy, Iyz,
 		Izx, Izy, Izz);
-
+	std::cout<<inertia<<"\n"<<"Radius: "<<radius[0]<<"Mass: "<<masses[0];
 	inertiaInv = inertia.invert();
 }
 
@@ -124,6 +126,7 @@ void Molecule::draw(){
 
 	glTranslatef(x.x, x.y, x.z);
 
+
 	for(unsigned i = 0;i<displacement.size();i++){	
 			
 		
@@ -137,10 +140,10 @@ void Molecule::draw(){
 		glPopMatrix();
 	}
 	
-	/*
+	
 	glMultMatrixf(orientation.toGLMatrix4());
 	
-
+	/*
 	for(unsigned i = 0;i<displacement.size();i++){	
 			
 		
@@ -170,13 +173,13 @@ void Molecule::updateOrientation(){
 	//quaternion rotation
 	Quaternion q = Quaternion();
 	q.scaledAxis(omega*dt);
-	orientation = orientation*q.rotationMatrix();
+	orientation = R0*q.rotationMatrix();
 	
 	//update displacement
 	for(unsigned i = 1;i<displacement.size();i++){
 
-		displacement[i] = q.rotatedVector(displacement[i]);
-		//displacement[i] = orientation*displacement[i];
+		//displacement[i] = q.rotatedVector(displacement[i]);
+		displacement[i] = orientation*displacement[i];
 	}
 
 	//update inertia tensor

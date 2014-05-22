@@ -76,6 +76,8 @@ private:
 	 */
 	vector<float> radius, masses;
 
+	Matrix3 R0;
+
 	/**
 	 * Displacement from mass center and collor
 	 */

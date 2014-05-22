@@ -8,13 +8,13 @@
 #define BOX_SIZE 50
 
 //# of particles
-#define PARTICLES 50
+#define PARTICLES 100
 
 //# of molecules
 #define MOLECULES 10
 
 //# of springs systems
-#define SPRING_SYSTEMS 10
+#define SPRING_SYSTEMS 5
 
 //real velocity collision
 #define BALL_COLLISION_REAL_MODE true
@@ -26,7 +26,7 @@
 #define WIRED false
 
 //spring
-#define MIN_REST_LENGTH 3
+#define MIN_REST_LENGTH 2
 #define MAX_REST_LENGTH 6
 #define MIN_SPRING_K 20
 #define MAX_SPRING_K 40

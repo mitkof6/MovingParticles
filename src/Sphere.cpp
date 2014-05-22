@@ -18,6 +18,7 @@ Sphere::Sphere(
 	//
 	omega = Vector3(0, 0, 0);
 	orientation = Matrix3(1,0,0,0,1,0,0,0,1);
+	if(radius == 0) return;
 	inertia = Matrix3(
 			2.0f/5*mass*radius*radius, 0, 0,
 			0, 2.0f/5*mass*radius*radius, 0,

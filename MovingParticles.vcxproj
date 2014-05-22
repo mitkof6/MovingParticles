@@ -18,6 +18,7 @@
     <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\CollisionCounter.cpp" />
     <ClCompile Include="src\DoubleSpring.cpp" />
+    <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Math\Matrices.cpp" />
     <ClCompile Include="src\MixedSystem.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="src\CollisionCounter.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\DoubleSpring.h" />
+    <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\Math\Matrices.h" />
     <ClInclude Include="src\Math\Quaternion.h" />
     <ClInclude Include="src\Math\Vectors.h" />

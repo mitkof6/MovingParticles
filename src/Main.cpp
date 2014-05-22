@@ -19,6 +19,8 @@
 #include "Box.h"
 #include "Constants.h"
 
+#include "Grid.h"
+
 /**
  * Populates a sphere container with spheres
  *
@@ -82,7 +84,10 @@ int main(int argc, char** argv){
 
 	viewer.addContainer(mixedSystem);
 
+
 	
+	//Renderable *grid = new Grid(3, 3);
+	//viewer.addToDraw(grid);
 
 	//bounding box
 	Renderable *box = new Box(1.0f, 1.0, 1.0, BOX_SIZE);
